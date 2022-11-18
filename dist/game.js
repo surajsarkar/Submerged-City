@@ -2913,22 +2913,94 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   }, "default");
 
   // code/helpers.js
-  no();
-  var createGameScene = /* @__PURE__ */ __name((scene_id, level, level_options) => {
+  var createGameScene = /* @__PURE__ */ __name((scene_id2, level2, level_options2, time_left = "00:00") => {
     scene(
-      scene_id,
+      scene_id2,
       () => {
+        gravity(200);
+        const score_board = add([
+          rect(250, 50),
+          outline(2, color(255, 255, 0)),
+          pos(10, 10),
+          color(255, 125, 0)
+        ]);
+        const score_label = add([
+          text(`Time Left: ${time_left}`, { size: 18, font: "sink" }),
+          pos(score_board.pos.x + 10, 25)
+        ]);
         addLevel(
-          level,
-          level_options
+          level2,
+          level_options2
         );
       }
     );
   }, "createGameScene");
 
   // code/main.js
-  no();
-  createGameScene("level_one", void 0, { width: 1428, height: 612 });
+  no({ background: [255, 255, 128] });
+  loadSprite("fish", "../sprites/fish.png");
+  loadSprite("grass", "../sprites/sea_grass_two.png");
+  loadSprite("plant", "../sprites/sea_plant.png");
+  loadSprite("plant_top", "../sprites/sea_plant_top.png");
+  loadSprite("passage", "../sprites/passage.png");
+  loadSprite("bomb", "../sprites/bomb.png");
+  loadSprite("user", "../sprites/user.png");
+  var LEVEL_1 = [
+    "           ** ^  -  -  -  -  -  -  -                                   ",
+    "     ^     ** **    b    -    --   -                          u        ",
+    "^   **      ** ** b - - - - b                            b             ",
+    "**  **   ^ **  **   -   -   - b   -   - b                              ",
+    " **  ** **  **  **  -  -  -  -  -  -                                   ",
+    "**  ** **  **  **  - -  - - -  b - -                                   ",
+    " **  ** ** **   ** - b  -  - -                                         ",
+    "**  **   ** ** **   -  -  -   -  -                                     ",
+    " **  ** **  * p *  - -  -  -                                           ",
+    "**  **  ** **  **                                                      ",
+    "ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg"
+  ];
+  createGameScene(
+    scene_id = "level_one",
+    level = LEVEL_1,
+    level_options = {
+      width: 20,
+      height: 20,
+      pos: vec2(0, height() - LEVEL_1.length * 20),
+      "*": () => [
+        sprite("plant"),
+        area()
+      ],
+      "^": () => [
+        sprite("plant_top"),
+        area()
+      ],
+      "-": () => [
+        sprite("fish"),
+        area(),
+        scale(rand(0.3, 1))
+      ],
+      "g": () => [
+        sprite("grass"),
+        area(),
+        scale(0.2, 0.8),
+        solid()
+      ],
+      "p": () => [
+        sprite("passage"),
+        solid(),
+        area()
+      ],
+      "b": () => [
+        sprite("bomb"),
+        area(),
+        scale(0.2, 0.3)
+      ],
+      "u": () => [
+        sprite("user"),
+        solid(),
+        area()
+      ]
+    }
+  );
   go("level_one");
 })();
 //# sourceMappingURL=game.js.map
