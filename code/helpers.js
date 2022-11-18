@@ -23,7 +23,7 @@ export const createGameScene = (scene_id, level, level_options, time_left = "00:
             const bomb_counter = add([
                 rect(80, 50),
                 outline(2, color(255, 255, 0),),
-                pos(280, 10),
+                pos(score_board.pos.x + 260, 10),
                 color(255, 125, 0),
             ])
 
@@ -41,6 +41,33 @@ export const createGameScene = (scene_id, level, level_options, time_left = "00:
                 level,
                 level_options,
             );//addLevel
+
+            const player = add([
+                sprite("user"),
+                pos(width() - 40, 30),
+                body(),
+                solid(),
+                area(),
+                health(100),
+            ]);
+
+            const player_health_box = add([
+                rect(100, 50),
+                outline(2, color(255, 255, 0),),
+                pos(bomb_counter.pos.x + 90, 10),
+                color(255, 125, 0),
+            ]);
+
+            const player_health_sprite = add([
+                sprite("grass"),
+                pos(player_health_box.pos.x + 5, 15),
+            ]);
+
+            const health_count_label = add([
+                text("", {size: 18, font: "sink"},),
+                pos(player_health_sprite.pos.x + 50, 25),
+                {update(){this.text = player.hp()}},
+            ]);
 
             // Todo: add score board
             // Todo: add health score

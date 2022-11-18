@@ -53,13 +53,6 @@ createGameScene(scene_id = "level_one",
         area(),
         scale(0.2, 0.3),
     ],//bomb
-    "u": () => [
-        sprite("user"),
-        solid(),
-        // body(),
-        area(),
-    ],//user
-
 },
 );
 

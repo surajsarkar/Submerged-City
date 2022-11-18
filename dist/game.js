@@ -2931,7 +2931,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         const bomb_counter = add([
           rect(80, 50),
           outline(2, color(255, 255, 0)),
-          pos(280, 10),
+          pos(score_board.pos.x + 260, 10),
           color(255, 125, 0)
         ]);
         const bomb_sprite_label = add([
@@ -2946,6 +2946,31 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           level2,
           level_options2
         );
+        const player = add([
+          sprite("user"),
+          pos(width() - 40, 30),
+          body(),
+          solid(),
+          area(),
+          health(100)
+        ]);
+        const player_health_box = add([
+          rect(100, 50),
+          outline(2, color(255, 255, 0)),
+          pos(bomb_counter.pos.x + 90, 10),
+          color(255, 125, 0)
+        ]);
+        const player_health_sprite = add([
+          sprite("grass"),
+          pos(player_health_box.pos.x + 5, 15)
+        ]);
+        const health_count_label = add([
+          text("", { size: 18, font: "sink" }),
+          pos(player_health_sprite.pos.x + 50, 25),
+          { update() {
+            this.text = player.hp();
+          } }
+        ]);
       }
     );
   }, "createGameScene");
@@ -2955,7 +2980,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     let no_of_box = Math.floor(width() / box_size2.width);
     let LEVEL_12 = [
       "           ** ^  -  -  -  -  -  -  -                                   ",
-      "     ^     ** **    b    -    --   -                          u        ",
+      "     ^     ** **    b    -    --   -                                   ",
       `^   **      ** ** b - - - - b${buildSeq(quantity = no_of_box - no_of_box * 0.5, symbol = " ")}b${buildSeq(quantity = no_of_box * 0.5, symbol = " ")}`,
       "**  **   ^ **  **   -   -   - b   -   - b                              ",
       " **  ** **  **  **  -  -  -  -  -  -                                   ",
@@ -3021,11 +3046,6 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         sprite("bomb"),
         area(),
         scale(0.2, 0.3)
-      ],
-      "u": () => [
-        sprite("user"),
-        solid(),
-        area()
       ]
     }
   );
