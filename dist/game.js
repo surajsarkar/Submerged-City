@@ -2950,15 +2950,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     );
   }, "createGameScene");
 
-  // code/main.js
-  no({ background: [255, 255, 128] });
-  loadSprite("fish", "../sprites/fish.png");
-  loadSprite("grass", "../sprites/sea_grass_two.png");
-  loadSprite("plant", "../sprites/sea_plant.png");
-  loadSprite("plant_top", "../sprites/sea_plant_top.png");
-  loadSprite("passage", "../sprites/passage.png");
-  loadSprite("bomb", "../sprites/bomb.png");
-  loadSprite("user", "../sprites/user.png");
+  // code/level.js
   var LEVEL_1 = [
     "           ** ^  -  -  -  -  -  -  -                                   ",
     "     ^     ** **    b    -    --   -                          u        ",
@@ -2972,6 +2964,16 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     "**  **  ** **  **                                                      ",
     "ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg"
   ];
+
+  // code/main.js
+  no({ background: [0, 105, 148] });
+  loadSprite("fish", "../sprites/fish.png");
+  loadSprite("grass", "../sprites/sea_grass_two.png");
+  loadSprite("plant", "../sprites/sea_plant.png");
+  loadSprite("plant_top", "../sprites/sea_plant_top.png");
+  loadSprite("passage", "../sprites/passage.png");
+  loadSprite("bomb", "../sprites/bomb.png");
+  loadSprite("user", "../sprites/user.png");
   createGameScene(
     scene_id = "level_one",
     level = LEVEL_1,

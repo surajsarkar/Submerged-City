@@ -1,10 +1,10 @@
 import kaboom from "kaboom";
 
 import { createGameScene } from "./helpers";
-
+import {LEVEL_1} from "./level";
 
 // initialize context
-kaboom({ background: [255, 255, 128] });
+kaboom({ background: [0, 105, 148] });
 
 loadSprite("fish", "../sprites/fish.png");
 loadSprite("grass", "../sprites/sea_grass_two.png");
@@ -15,19 +15,6 @@ loadSprite("bomb", "../sprites/bomb.png");
 loadSprite("user", "../sprites/user.png");
 
 
-const LEVEL_1 = [
-    "           ** ^  -  -  -  -  -  -  -                                   ",
-    "     ^     ** **    b    -    --   -                          u        ",
-    "^   **      ** ** b - - - - b                            b             ",
-    "**  **   ^ **  **   -   -   - b   -   - b                              ",
-    " **  ** **  **  **  -  -  -  -  -  -                                   ",
-    "**  ** **  **  **  - -  - - -  b - -                                   ",
-    " **  ** ** **   ** - b  -  - -                                         ",
-    "**  **   ** ** **   -  -  -   -  -                                     ",
-    " **  ** **  * p *  - -  -  -                                           ",
-    "**  **  ** **  **                                                      ",
-    "ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
-]
 
 createGameScene(scene_id = "level_one", level = LEVEL_1, level_options = {
     width: 20,

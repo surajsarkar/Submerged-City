@@ -1,5 +1,5 @@
 
-const LEVEL_1 = [
+export let LEVEL_1 = [
     "           ** ^  -  -  -  -  -  -  -                                   ",
     "     ^     ** **    b    -    --   -                          u        ",
     "^   **      ** ** b - - - - b                            b             ",
@@ -9,7 +9,8 @@ const LEVEL_1 = [
     " **  ** ** **   ** - b  -  - -                                         ",
     "**  **   ** ** **   -  -  -   -  -                                     ",
     " **  ** **  * p *  - -  -  -                                           ",
-    "**  **  ** **  **gggggggggggggggggggggggggggggggggggggggggggggggggggggg",
+    "**  **  ** **  **                                                      ",
+    "ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
 ]
 
 //Todo level 2 
@@ -18,7 +19,7 @@ const LEVEL_1 = [
 
 // Todo function to create lavel 
 const createLevel = (level, box_size, prefered_height, prefered_width, char) => {
-    
+
 }//createLevel
 
 //Todo func to create ground 
