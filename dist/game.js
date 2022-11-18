@@ -2913,7 +2913,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   }, "default");
 
   // code/helpers.js
-  var createGameScene = /* @__PURE__ */ __name((scene_id2, level2, level_options2, time_left = "00:00") => {
+  var createGameScene = /* @__PURE__ */ __name((scene_id2, level2, level_options2, time_left = "00:00", bomb_count = 0) => {
     scene(
       scene_id2,
       () => {
@@ -2927,6 +2927,20 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         const score_label = add([
           text(`Time Left: ${time_left}`, { size: 18, font: "sink" }),
           pos(score_board.pos.x + 10, 25)
+        ]);
+        const bomb_counter = add([
+          rect(80, 50),
+          outline(2, color(255, 255, 0)),
+          pos(280, 10),
+          color(255, 125, 0)
+        ]);
+        const bomb_sprite_label = add([
+          sprite("bomb"),
+          pos(bomb_counter.pos.x + 5, 15)
+        ]);
+        const bomb_count_label = add([
+          text(`${bomb_count}`, { font: "sink", size: 30 }),
+          pos(bomb_sprite_label.pos.x + 50, 20)
         ]);
         addLevel(
           level2,
