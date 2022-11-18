@@ -1,5 +1,9 @@
 # 👷🏽‍♂️How to contribute🏗️
 
+All our working code and the place you will make contribution is in ⬇️⬇️ path.
+```bash
+./code/
+```
 ## Stages of the game (scenes)
 
 * Welcome screen 
@@ -17,7 +21,7 @@
 * cursed animal
 * Villagers (only images of then)
 
-## Lavel Stories
+## Level Stories
 
 ## Powers 
 

@@ -2917,7 +2917,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     scene(
       scene_id2,
       () => {
-        gravity(200);
+        gravity(10);
         const score_board = add([
           rect(250, 50),
           outline(2, color(255, 255, 0)),
@@ -2939,8 +2939,13 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           pos(bomb_counter.pos.x + 5, 15)
         ]);
         const bomb_count_label = add([
-          text(`${bomb_count}`, { font: "sink", size: 30 }),
-          pos(bomb_sprite_label.pos.x + 50, 20)
+          text("", { font: "sink", size: 30 }),
+          pos(bomb_sprite_label.pos.x + 50, 20),
+          {
+            update() {
+              this.text = bomb_count;
+            }
+          }
         ]);
         addLevel(
           level2,
@@ -2971,6 +2976,39 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
             this.text = player.hp();
           } }
         ]);
+        onKeyDown("up", () => {
+          if (player.pos.y > 100) {
+            player.pos = vec2(player.pos.x, player.pos.y - 2);
+          }
+        });
+        onKeyDown("left", () => {
+          if (player.pos.x > 5) {
+            player.pos = vec2(player.pos.x - 2, player.pos.y);
+          }
+        });
+        onKeyDown("right", () => {
+          if (player.pos.x < width() - 45) {
+            player.pos = vec2(player.pos.x + 2, player.pos.y);
+          }
+        });
+        player.onCollide("bomb", (bomb) => {
+          if (bomb_count < 5) {
+            bomb_count++;
+            destroy(bomb);
+          }
+        });
+        player.onCollide(
+          "fish",
+          (fish) => {
+            player.hurt(0.5);
+          }
+        );
+        player.onCollide(
+          "passage",
+          (passage) => {
+            go("next_level_info");
+          }
+        );
       }
     );
   }, "createGameScene");
@@ -3029,7 +3067,8 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       "-": () => [
         sprite("fish"),
         area(),
-        scale(rand(0.3, 1))
+        scale(rand(0.3, 1)),
+        "fish"
       ],
       "g": () => [
         sprite("grass"),
@@ -3040,12 +3079,14 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       "p": () => [
         sprite("passage"),
         solid(),
-        area()
+        area(),
+        "passage"
       ],
       "b": () => [
         sprite("bomb"),
         area(),
-        scale(0.2, 0.3)
+        scale(0.8),
+        "bomb"
       ]
     }
   );

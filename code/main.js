@@ -36,6 +36,7 @@ createGameScene(scene_id = "level_one",
         sprite("fish"),
         area(),
         scale(rand(0.3, 1)),
+        "fish", //tag
     ],//fish
     "g": () => [
         sprite("grass"),
@@ -47,11 +48,13 @@ createGameScene(scene_id = "level_one",
         sprite("passage"),
         solid(),
         area(),
+        "passage", //tag
     ],//passage
     "b": () => [
         sprite("bomb"),
         area(),
-        scale(0.2, 0.3),
+        scale(0.8),
+        "bomb", //tag
     ],//bomb
 },
 );
