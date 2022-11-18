@@ -33,7 +33,7 @@ export const createGameScene = (scene_id, level, level_options, time_left = "00:
             ])
 
             const bomb_count_label = add([
-                text(`${bomb_count}`, {font: "sink", size: 30}),
+                text(`${bomb_count}`, { font: "sink", size: 30 }),
                 pos(bomb_sprite_label.pos.x + 50, 20)
             ])
 

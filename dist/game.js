@@ -2951,19 +2951,30 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   }, "createGameScene");
 
   // code/level.js
-  var LEVEL_1 = [
-    "           ** ^  -  -  -  -  -  -  -                                   ",
-    "     ^     ** **    b    -    --   -                          u        ",
-    "^   **      ** ** b - - - - b                            b             ",
-    "**  **   ^ **  **   -   -   - b   -   - b                              ",
-    " **  ** **  **  **  -  -  -  -  -  -                                   ",
-    "**  ** **  **  **  - -  - - -  b - -                                   ",
-    " **  ** ** **   ** - b  -  - -                                         ",
-    "**  **   ** ** **   -  -  -   -  -                                     ",
-    " **  ** **  * p *  - -  -  -                                           ",
-    "**  **  ** **  **                                                      ",
-    "ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg"
-  ];
+  var createLevelOne = /* @__PURE__ */ __name((box_size2) => {
+    let no_of_box = Math.floor(width() / box_size2.width);
+    let LEVEL_12 = [
+      "           ** ^  -  -  -  -  -  -  -                                   ",
+      "     ^     ** **    b    -    --   -                          u        ",
+      `^   **      ** ** b - - - - b${buildSeq(quantity = no_of_box - no_of_box * 0.5, symbol = " ")}b${buildSeq(quantity = no_of_box * 0.5, symbol = " ")}`,
+      "**  **   ^ **  **   -   -   - b   -   - b                              ",
+      " **  ** **  **  **  -  -  -  -  -  -                                   ",
+      "**  ** **  **  **  - -  - - -  b - -                                   ",
+      " **  ** ** **   ** - b  -  - -                                         ",
+      "**  **   ** ** **   -  -  -   -  -                                     ",
+      " **  ** **  * p *  - -  -  -                                           ",
+      "**  **  ** **  **                                                      ",
+      `${buildSeq(no_of_box, "g")}`
+    ];
+    return LEVEL_12;
+  }, "createLevelOne");
+  var buildSeq = /* @__PURE__ */ __name((quantity2, symbol2 = " ") => {
+    let base = "";
+    for (let i = 0; i < quantity2; i++) {
+      base += symbol2;
+    }
+    return base;
+  }, "buildSeq");
 
   // code/main.js
   no({ background: [0, 105, 148] });
@@ -2974,6 +2985,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   loadSprite("passage", "../sprites/passage.png");
   loadSprite("bomb", "../sprites/bomb.png");
   loadSprite("user", "../sprites/user.png");
+  var LEVEL_1 = createLevelOne(box_size = { width: 20, height: 20 });
   createGameScene(
     scene_id = "level_one",
     level = LEVEL_1,
@@ -2997,7 +3009,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       "g": () => [
         sprite("grass"),
         area(),
-        scale(0.2, 0.8),
+        scale(2),
         solid()
       ],
       "p": () => [

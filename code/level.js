@@ -1,3 +1,4 @@
+import kaboom from "kaboom";
 
 export let LEVEL_1 = [
     "           ** ^  -  -  -  -  -  -  -                                   ",
@@ -17,12 +18,30 @@ export let LEVEL_1 = [
 //Todo level 3
 //Todo level 4
 
-// Todo function to create lavel 
-const createLevel = (level, box_size, prefered_height, prefered_width, char) => {
+export const createLevelOne = (box_size) => {
+    let no_of_box = Math.floor(width()/box_size.width);
+    let LEVEL_1 = [
+    "           ** ^  -  -  -  -  -  -  -                                   ",
+    "     ^     ** **    b    -    --   -                          u        ",
+    `^   **      ** ** b - - - - b${buildSeq(quantity=no_of_box-no_of_box*0.5, symbol=' ')}b${buildSeq(quantity=no_of_box*0.5,symbol=' ')}`,
+    "**  **   ^ **  **   -   -   - b   -   - b                              ",
+    " **  ** **  **  **  -  -  -  -  -  -                                   ",
+    "**  ** **  **  **  - -  - - -  b - -                                   ",
+    " **  ** ** **   ** - b  -  - -                                         ",
+    "**  **   ** ** **   -  -  -   -  -                                     ",
+    " **  ** **  * p *  - -  -  -                                           ",
+    "**  **  ** **  **                                                      ",
+    `${buildSeq(no_of_box, "g")}`,
+]
+    return LEVEL_1;
 
 }//createLevel
 
-//Todo func to create ground 
-const createGround = (box_size, level, width) => {
-    //code here.
-}//createGround
+const buildSeq = (quantity, symbol=" ") => {
+    let base = "";
+    for (let i = 0; i < quantity; i++){
+        base += symbol
+    }//for
+
+    return base;
+}//buildSeq
