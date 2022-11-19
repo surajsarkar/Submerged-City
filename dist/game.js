@@ -2975,7 +2975,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           text("", { size: 18, font: "sink" }),
           pos(player_health_sprite.pos.x + 50, 25),
           { update() {
-            this.text = player.hp();
+            this.text = `${player.hp()}`;
           } }
         ]);
         onKeyDown("up", () => {
@@ -2993,26 +2993,41 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
             player.pos = vec2(player.pos.x + 2, player.pos.y);
           }
         });
-        onKeyPress("b", () => {
+        onKeyPress(["w", "a", "s", "d"], () => {
+          let directions = {
+            "w": vec2(-3, -4),
+            "a": vec2(-3, 4),
+            "s": vec2(0, 4),
+            "d": vec2(3, 4)
+          };
+          let key = "";
+          let keys = ["w", "a", "s", "d"];
+          for (let i = 0; i < keys.length; i++) {
+            if (isKeyPressed(keys[i])) {
+              key = keys[i];
+              break;
+            }
+          }
+          debug.log(key);
           if (bomb_count > 0) {
             bomb_count -= 1;
             let bomb = add([
               sprite("bomb"),
               pos(player.pos),
               area(),
+              move(directions[key], 50),
               z(0),
               "blast_bomb"
             ]);
-            bomb.move(vec2(-3, -4).scale(1e3));
-            every("fish", (fish) => {
-              if (getDistance(bomb.pos, fish.pos) < 84) {
-                wait(3, () => destroy(fish));
-              }
-            });
             wait(3, () => {
+              every("fish", (fish) => {
+                if (getDistance(bomb.pos, fish.pos) < 84) {
+                  destroy(fish);
+                }
+              });
               let player_bomb_distance = getDistance(player.pos, bomb.pos);
               if (player_bomb_distance < 100) {
-                let hurt_amount = 100 - player.hp() * player_bomb_distance / 100;
+                let hurt_amount = player.hp() - player.hp() * player_bomb_distance / 100;
                 player.hurt(hurt_amount);
               }
               destroy(bomb);

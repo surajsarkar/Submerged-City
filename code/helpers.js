@@ -79,7 +79,7 @@ export const createGameScene = (scene_id,
             const health_count_label = add([
                 text("", { size: 18, font: "sink" },),
                 pos(player_health_sprite.pos.x + 50, 25),
-                { update() { this.text = player.hp() } },
+                { update() { this.text = `${player.hp()}` } },
             ]);
 
             // movement of the user
@@ -103,37 +103,56 @@ export const createGameScene = (scene_id,
             });
 
             // adding bomb 
-            onKeyPress("b", () => {
-                if (bomb_count > 0){
-                    bomb_count -=1;
+            onKeyPress(["w", "a", "s", "d"], () => {
+                let directions = {
+                    "w": vec2(-3, -4), 
+                    "a": vec2(-3, 4), 
+                    "s": vec2(0, 4), 
+                    "d": vec2(3, 4)
+                };
+                
+                let key = "";
+                let keys = ["w", "a", "s", "d"];
+                
+                for (let i = 0; i < keys.length; i++){
+                    if (isKeyPressed(keys[i])){
+                        key = keys[i];
+                        break;
+                    }//if
+                }//for
+                
+                if (bomb_count > 0) {
+                    bomb_count -= 1;
                     
                     let bomb = add([
                         sprite("bomb"),
                         pos(player.pos),
                         area(),
+                        move(directions[key], 50),
                         z(0),
                         "blast_bomb",
-                    ]);
-                    bomb.move(vec2(-3, -4).scale(1000));
+                    ]);//adding bomb
 
-                    // destroying fish inside the radius of 84
-                    every("fish", (fish)=>{
-                        if (getDistance(bomb.pos, fish.pos) < 84){
-                            wait(3, ()=> destroy(fish),);
-                        }//if
-                    });
-                    
                     wait(3, () => {
-                        let player_bomb_distance = getDistance(player.pos, bomb.pos)
-                        if (player_bomb_distance < 100){
-                            let hurt_amount = 100 - (player.hp() * player_bomb_distance/100);
+                        // destroying fish inside the radius of 84
+                        every("fish", (fish) => {
+                            if (getDistance(bomb.pos, fish.pos) < 84) {
+                                destroy(fish);
+                            }//if
+                        });//every
+
+                        let player_bomb_distance = getDistance(player.pos, bomb.pos);
+                        
+                        if (player_bomb_distance < 100) {
+                            let hurt_amount = player.hp() - (player.hp() * player_bomb_distance / 100);
                             player.hurt(hurt_amount);
                         }//if
+                        
                         destroy(bomb);
-
                         // add shaky effect after the bomb blasts
                         shake(120);
-                    });
+                    });//wait
+                    
                 }//if
 
 
