@@ -1,5 +1,6 @@
 (() => {
   var __defProp = Object.defineProperty;
+  var __pow = Math.pow;
   var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
 
   // node_modules/kaboom/dist/kaboom.mjs
@@ -121,11 +122,11 @@
   }
   __name(Xt, "Xt");
   a(Xt, "rad2deg");
-  function z(i, t, l) {
-    return t > l ? z(i, l, t) : Math.min(Math.max(i, t), l);
+  function z2(i, t, l) {
+    return t > l ? z2(i, l, t) : Math.min(Math.max(i, t), l);
   }
-  __name(z, "z");
-  a(z, "clamp");
+  __name(z2, "z");
+  a(z2, "clamp");
   function Ve(i, t, l) {
     return i + (t - i) * l;
   }
@@ -137,7 +138,7 @@
   __name(dt, "dt");
   a(dt, "map");
   function dr(i, t, l, w, U) {
-    return z(dt(i, t, l, w, U), w, U);
+    return z2(dt(i, t, l, w, U), w, U);
   }
   __name(dr, "dr");
   a(dr, "mapc");
@@ -233,7 +234,7 @@
       b(this, "r", 255);
       b(this, "g", 255);
       b(this, "b", 255);
-      this.r = z(t, 0, 255), this.g = z(l, 0, 255), this.b = z(w, 0, 255);
+      this.r = z2(t, 0, 255), this.g = z2(l, 0, 255), this.b = z2(w, 0, 255);
     }
     static fromArray(t) {
       return new ue(t[0], t[1], t[2]);
@@ -1072,7 +1073,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     __name(_r, "_r");
     a(_r, "loadBean");
     function Br(e) {
-      return e !== void 0 && (w.masterNode.gain.value = z(e, Or, Ir)), w.masterNode.gain.value;
+      return e !== void 0 && (w.masterNode.gain.value = z2(e, Or, Ir)), w.masterNode.gain.value;
     }
     __name(Br, "Br");
     a(Br, "volume");
@@ -1115,11 +1116,11 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       }, stopped() {
         return B("stopped()", "isStopped()"), this.isStopped();
       }, speed(y) {
-        return y !== void 0 && (c.playbackRate.value = z(y, ds, fs)), c.playbackRate.value;
+        return y !== void 0 && (c.playbackRate.value = z2(y, ds, fs)), c.playbackRate.value;
       }, detune(y) {
-        return c.detune ? (y !== void 0 && (c.detune.value = z(y, ps, ms)), c.detune.value) : 0;
+        return c.detune ? (y !== void 0 && (c.detune.value = z2(y, ps, ms)), c.detune.value) : 0;
       }, volume(y) {
-        return y !== void 0 && (s.gain.value = z(y, Or, Ir)), s.gain.value;
+        return y !== void 0 && (s.gain.value = z2(y, Or, Ir)), s.gain.value;
       }, loop() {
         c.loop = true;
       }, unloop() {
@@ -2024,9 +2025,9 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       }), H("f8", () => {
         C.paused = !C.paused;
       }), H("f7", () => {
-        C.timeScale = ge(z(C.timeScale - 0.2, 0, 2), 1);
+        C.timeScale = ge(z2(C.timeScale - 0.2, 0, 2), 1);
       }), H("f9", () => {
-        C.timeScale = ge(z(C.timeScale + 0.2, 0, 2), 1);
+        C.timeScale = ge(z2(C.timeScale + 0.2, 0, 2), 1);
       }), H("f10", () => {
         C.stepFrame();
       }), H("f5", () => {
@@ -2957,6 +2958,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           body(),
           solid(),
           area(),
+          z(5),
           health(100)
         ]);
         const player_health_box = add([
@@ -2978,7 +2980,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         ]);
         onKeyDown("up", () => {
           if (player.pos.y > 100) {
-            player.pos = vec2(player.pos.x, player.pos.y - 2);
+            player.pos = vec2(player.pos.x - 0.4, player.pos.y - 2);
           }
         });
         onKeyDown("left", () => {
@@ -2991,6 +2993,33 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
             player.pos = vec2(player.pos.x + 2, player.pos.y);
           }
         });
+        onKeyPress("b", () => {
+          if (bomb_count > 0) {
+            bomb_count -= 1;
+            let bomb = add([
+              sprite("bomb"),
+              pos(player.pos),
+              area(),
+              z(0),
+              "blast_bomb"
+            ]);
+            bomb.move(vec2(-3, -4).scale(1e3));
+            every("fish", (fish) => {
+              if (getDistance(bomb.pos, fish.pos) < 84) {
+                wait(3, () => destroy(fish));
+              }
+            });
+            wait(3, () => {
+              let player_bomb_distance = getDistance(player.pos, bomb.pos);
+              if (player_bomb_distance < 100) {
+                let hurt_amount = 100 - player.hp() * player_bomb_distance / 100;
+                player.hurt(hurt_amount);
+              }
+              destroy(bomb);
+              shake(120);
+            });
+          }
+        });
         player.onCollide("bomb", (bomb) => {
           if (bomb_count < 5) {
             bomb_count++;
@@ -2999,19 +3028,25 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         });
         player.onCollide(
           "fish",
-          (fish) => {
+          () => {
             player.hurt(0.5);
           }
         );
         player.onCollide(
           "passage",
-          (passage) => {
+          () => {
             go("next_level_info");
           }
         );
       }
     );
   }, "createGameScene");
+  var getDistance = /* @__PURE__ */ __name((object_1_pos, object_2_pos) => {
+    let distance_x = __pow(object_1_pos.x - object_2_pos.x, 2);
+    let distance_y = __pow(object_1_pos.y - object_2_pos.y, 2);
+    let distance = Math.sqrt(distance_x + distance_y);
+    return distance;
+  }, "getDistance");
 
   // code/level.js
   var createLevelOne = /* @__PURE__ */ __name((box_size2) => {
@@ -3058,7 +3093,8 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       pos: vec2(0, height() - LEVEL_1.length * 20),
       "*": () => [
         sprite("plant"),
-        area()
+        area(),
+        z(randi(1, 10))
       ],
       "^": () => [
         sprite("plant_top"),

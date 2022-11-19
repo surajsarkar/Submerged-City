@@ -24,10 +24,10 @@ All our working code and the place you will make contribution is in ⬇️⬇️
 ## Level Stories
 
  ```Level One```
-* Player can collect upto 5 💣
-* If the player gets closer to fishes health points will decrease by **0.5**(can be changed).
+* Player can collect upto 5 💣 ✅
+* If the player gets closer to fishes health points will decrease by **0.5**(can be changed).✅
 * If the player crosses certain point, even without killing fishes, they will start following the player.
-* Player can throw bomb 💣 and each fish inside 5px(we can change) will die.
+* Player can throw bomb 💣 and each fish inside 5px(we can change) will die.✅
 * After killing of **5** fish every fish will follow player to kill him.
  
 

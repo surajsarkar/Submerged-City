@@ -1,7 +1,7 @@
 import kaboom from "kaboom";
 
 import { createGameScene } from "./helpers";
-import {createLevelOne} from "./level";
+import { createLevelOne } from "./level";
 
 // initialize context
 kaboom({ background: [0, 105, 148] });
@@ -15,48 +15,48 @@ loadSprite("bomb", "../sprites/bomb.png");
 loadSprite("user", "../sprites/user.png");
 
 
-let LEVEL_1 = createLevelOne(box_size={width: 20, height: 20})
+let LEVEL_1 = createLevelOne(box_size = { width: 20, height: 20 })
 
-createGameScene(scene_id = "level_one", 
-                level = LEVEL_1, 
-                level_options = {
-    width: 20,
-    height: 20,
-    pos: vec2(0, height() - LEVEL_1.length * 20),
-    "*": () => [
-        sprite("plant"),
-        area(),
-
-    ],//plant
-    "^": () => [
-        sprite("plant_top"),
-        area(),
-    ],//plant_top
-    "-": () => [
-        sprite("fish"),
-        area(),
-        scale(rand(0.3, 1)),
-        "fish", //tag
-    ],//fish
-    "g": () => [
-        sprite("grass"),
-        area(),
-        scale(2),
-        solid(),
-    ],//grass
-    "p": () => [
-        sprite("passage"),
-        solid(),
-        area(),
-        "passage", //tag
-    ],//passage
-    "b": () => [
-        sprite("bomb"),
-        area(),
-        scale(0.8),
-        "bomb", //tag
-    ],//bomb
-},
+createGameScene(scene_id = "level_one",
+    level = LEVEL_1,
+    level_options = {
+        width: 20,
+        height: 20,
+        pos: vec2(0, height() - LEVEL_1.length * 20),
+        "*": () => [
+            sprite("plant"),
+            area(),
+            z(randi(1, 10)),
+        ],//plant
+        "^": () => [
+            sprite("plant_top"),
+            area(),
+        ],//plant_top
+        "-": () => [
+            sprite("fish"),
+            area(),
+            scale(rand(0.3, 1)),
+            "fish", //tag
+        ],//fish
+        "g": () => [
+            sprite("grass"),
+            area(),
+            scale(2),
+            solid(),
+        ],//grass
+        "p": () => [
+            sprite("passage"),
+            solid(),
+            area(),
+            "passage", //tag
+        ],//passage
+        "b": () => [
+            sprite("bomb"),
+            area(),
+            scale(0.8),
+            "bomb", //tag
+        ],//bomb
+    },
 );
 
 

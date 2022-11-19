@@ -1,18 +1,18 @@
 import kaboom from "kaboom";
 // kaboom();
-export const createGameScene = (scene_id, 
-                                level, 
-                                level_options, 
-                                time_left = "00:00", 
-                                bomb_count = 0
-                               ) => {
+export const createGameScene = (scene_id,
+    level,
+    level_options,
+    time_left = "00:00",
+    bomb_count = 0
+) => {
     /** 
     *@param {string} scene_id: name of the scene
     **/
     scene(
         scene_id,
         () => {
-            
+
             gravity(10);
             const score_board = add([
                 rect(250, 50),
@@ -43,7 +43,7 @@ export const createGameScene = (scene_id,
                 text("", { font: "sink", size: 30 }),
                 pos(bomb_sprite_label.pos.x + 50, 20),
                 {
-                    update(){
+                    update() {
                         this.text = bomb_count;
                     }//update
                 }
@@ -60,6 +60,7 @@ export const createGameScene = (scene_id,
                 body(),
                 solid(),
                 area(),
+                z(5),
                 health(100),
             ]);
 
@@ -85,7 +86,7 @@ export const createGameScene = (scene_id,
             onKeyDown("up", () => {
                 if (player.pos.y > 100) {
 
-                    player.pos = vec2(player.pos.x, player.pos.y - 2);
+                    player.pos = vec2(player.pos.x - 0.4, player.pos.y - 2);
                 }//if
             });
 
@@ -101,25 +102,62 @@ export const createGameScene = (scene_id,
                 }//if
             });
 
+            // adding bomb 
+            onKeyPress("b", () => {
+                if (bomb_count > 0){
+                    bomb_count -=1;
+                    
+                    let bomb = add([
+                        sprite("bomb"),
+                        pos(player.pos),
+                        area(),
+                        z(0),
+                        "blast_bomb",
+                    ]);
+                    bomb.move(vec2(-3, -4).scale(1000));
+
+                    // destroying fish inside the radius of 84
+                    every("fish", (fish)=>{
+                        if (getDistance(bomb.pos, fish.pos) < 84){
+                            wait(3, ()=> destroy(fish),);
+                        }//if
+                    });
+                    
+                    wait(3, () => {
+                        let player_bomb_distance = getDistance(player.pos, bomb.pos)
+                        if (player_bomb_distance < 100){
+                            let hurt_amount = 100 - (player.hp() * player_bomb_distance/100);
+                            player.hurt(hurt_amount);
+                        }//if
+                        destroy(bomb);
+
+                        // add shaky effect after the bomb blasts
+                        shake(120);
+                    });
+                }//if
+
+
+            });
+
             // bomb collision 
-            player.onCollide("bomb", (bomb)=>{
-                if (bomb_count < 5){
-                    bomb_count ++;
+            player.onCollide("bomb", (bomb) => {
+                if (bomb_count < 5) {
+                    bomb_count++;
                     destroy(bomb);
                 }//if
-            },);//onCollide
+            });//onCollide
 
             // sm fish collision
-            player.onCollide("fish", (fish)=>{
+            player.onCollide("fish", () => {
                 player.hurt(0.5);
             },
-                            );//onCollide
+            );//onCollide
 
             // collision with passage
-            player.onCollide("passage", (passage)=>{
+            player.onCollide("passage", () => {
                 go("next_level_info");
             },
-                            );//onCollide
+            );//onCollide
 
 
             // Todo: add score board
@@ -131,6 +169,12 @@ export const createGameScene = (scene_id,
 
 
 let getDistance = (object_1_pos, object_2_pos) => {
-    
+
+    let distance_x = (object_1_pos.x - object_2_pos.x) ** 2;
+    let distance_y = (object_1_pos.y - object_2_pos.y) ** 2;
+    let distance = Math.sqrt(distance_x + distance_y);
+
+    return distance;
+
 }//getDistance
 
