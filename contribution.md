@@ -6,12 +6,12 @@ All our working code and the place you will make contribution is in ⬇️⬇️
 ```
 ## Stages of the game (scenes)
 
-* Welcome screen 
-* Show a little story (which will have **skip** button, if someone wants to skip the story).
-* Levels of the game(playable part of the game)
-* **Win** or **Loose** screen
+* **Welcome screen** : Name of the game and start button.
+* **Story Screen**: Show a little story (which will have **skip** button, if someone wants to skip the story).
+* **Game Screen**: Levels of the game(playable part of the game)
+* **End Screen**: **Win** or **Loose** screen
 
-## Characters
+## Characters 🧝🏽🧝🏽‍♂️🧝🏽‍♀️🧝🏼‍♂️🧝🏻‍♂️🧝‍♂️
 
 * Harry
 * Ron
@@ -23,5 +23,11 @@ All our working code and the place you will make contribution is in ⬇️⬇️
 
 ## Level Stories
 
-## Powers 
+ ```Level One```
+* Player can collect upto 5 💣
+* If the player gets closer to fishes health points will decrease by **0.5**(can be changed).
+* If the player crosses certain point, even without killing fishes, they will start following the player.
+* Player can throw bomb 💣 and each fish inside 5px(we can change) will die.
+* After killing of **5** fish every fish will follow player to kill him.
+ 
 

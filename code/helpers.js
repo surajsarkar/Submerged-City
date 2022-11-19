@@ -129,3 +129,8 @@ export const createGameScene = (scene_id,
     );//scene
 }//createGameScene
 
+
+let getDistance = (object_1_pos, object_2_pos) => {
+    
+}//getDistance
+
