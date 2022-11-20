@@ -25,7 +25,7 @@ git branch # active branch will be in different color
 git branch -D <branch_name>
 ```
 > 🙅🙅**Never delete master branch**🙅‍♀️🙅‍♀️
-> 
+
 * To merge different branch in your current branch
 ```bash
 git merge <branch_name>

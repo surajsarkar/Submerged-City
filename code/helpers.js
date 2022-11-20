@@ -60,6 +60,7 @@ export const createGameScene = (scene_id,
                 body(),
                 solid(),
                 area(),
+                rotate(0),
                 z(5),
                 health(100),
             ]);
@@ -85,7 +86,6 @@ export const createGameScene = (scene_id,
             // movement of the user
             onKeyDown("up", () => {
                 if (player.pos.y > 100) {
-
                     player.pos = vec2(player.pos.x - 0.4, player.pos.y - 2);
                 }//if
             });
@@ -105,25 +105,25 @@ export const createGameScene = (scene_id,
             // adding bomb 
             onKeyPress(["w", "a", "s", "d"], () => {
                 let directions = {
-                    "w": vec2(-3, -4), 
-                    "a": vec2(-3, 4), 
-                    "s": vec2(0, 4), 
+                    "w": vec2(-3, -4),
+                    "a": vec2(-3, 4),
+                    "s": vec2(0, 4),
                     "d": vec2(3, 4)
                 };
-                
+
                 let key = "";
                 let keys = ["w", "a", "s", "d"];
-                
-                for (let i = 0; i < keys.length; i++){
-                    if (isKeyPressed(keys[i])){
+
+                for (let i = 0; i < keys.length; i++) {
+                    if (isKeyPressed(keys[i])) {
                         key = keys[i];
                         break;
                     }//if
                 }//for
-                
+
                 if (bomb_count > 0) {
                     bomb_count -= 1;
-                    
+
                     let bomb = add([
                         sprite("bomb"),
                         pos(player.pos),
@@ -142,17 +142,17 @@ export const createGameScene = (scene_id,
                         });//every
 
                         let player_bomb_distance = getDistance(player.pos, bomb.pos);
-                        
+
                         if (player_bomb_distance < 100) {
                             let hurt_amount = player.hp() - (player.hp() * player_bomb_distance / 100);
                             player.hurt(hurt_amount);
                         }//if
-                        
+
                         destroy(bomb);
                         // add shaky effect after the bomb blasts
                         shake(120);
                     });//wait
-                    
+
                 }//if
 
 

@@ -2958,6 +2958,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           body(),
           solid(),
           area(),
+          rotate(0),
           z(5),
           health(100)
         ]);
