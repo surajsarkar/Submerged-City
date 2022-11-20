@@ -3008,7 +3008,6 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
               break;
             }
           }
-          debug.log(key);
           if (bomb_count > 0) {
             bomb_count -= 1;
             let bomb = add([
