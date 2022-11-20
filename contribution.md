@@ -4,7 +4,35 @@ All our working code and the place you will make contribution is in ⬇️⬇️
 ```bash
 ./code/
 ```
+If you want to add any new feature, fix existing bug or change anything please make a new branch, and then make the changes, after changes and testing done, if it works as **expected** then merge your branch to to master branch. (if you want to do this, please 👁️👁️ ⬇️⬇️)
+
+Few helpful **git** commands if you want to use it from command line.
+
+* To create branch
+```bash
+git checkout -b <branch_name>
+```
+* To switch branch
+```bash
+git checkout <branch_name> # branch name you want to switch
+```
+* To see all the branches
+```bash
+git branch # active branch will be in different color
+```
+* To delete any branch
+```bash
+git branch -D <branch_name>
+```
+> 🙅🙅**Never delete master branch**🙅‍♀️🙅‍♀️
+> 
+* To merge different branch in your current branch
+```bash
+git merge <branch_name>
+```
+
 ## Stages of the game (scenes)
+
 
 * **Welcome screen** : Name of the game and start button.
 * **Story Screen**: Show a little story (which will have **skip** button, if someone wants to skip the story).
