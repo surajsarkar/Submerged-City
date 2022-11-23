@@ -35,7 +35,8 @@ createGameScene(scene_id = "level_one",
         "-": () => [
             sprite("fish"),
             area(),
-            scale(rand(0.3, 1)),
+            scale(rand(0.5, 1)),
+            z(randi(1, 11)),
             "fish", //tag
         ],//fish
         "g": () => [

@@ -1,7 +1,7 @@
 (() => {
   var __defProp = Object.defineProperty;
   var __pow = Math.pow;
-  var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
+  var __name = (target2, value) => __defProp(target2, "name", { value, configurable: true });
 
   // node_modules/kaboom/dist/kaboom.mjs
   var ir = Object.defineProperty;
@@ -2958,7 +2958,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           body(),
           solid(),
           area(),
-          rotate(0),
+          rotate(-10),
           z(5),
           health(100)
         ]);
@@ -2981,12 +2981,28 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         ]);
         onKeyDown("up", () => {
           if (player.pos.y > 100) {
+            if (player.angle === 0) {
+              player.angle += 30;
+            }
             player.pos = vec2(player.pos.x - 0.4, player.pos.y - 2);
+          }
+        });
+        onKeyRelease("up", () => {
+          if (player.angle === 30) {
+            player.angle -= 30;
           }
         });
         onKeyDown("left", () => {
           if (player.pos.x > 5) {
+            if (player.angle === 0) {
+              playe.angle -= 30;
+            }
             player.pos = vec2(player.pos.x - 2, player.pos.y);
+          }
+        });
+        onKeyRelease("left", () => {
+          if (player.angle === -30) {
+            player.angle += 30;
           }
         });
         onKeyDown("right", () => {
@@ -3041,6 +3057,13 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
             destroy(bomb);
           }
         });
+        onUpdate(() => {
+          every("fish", (fish) => {
+            fish.move(
+              calculateVec(target = player, follower = fish, offset = 5, x_offset = 400)
+            );
+          });
+        });
         player.onCollide(
           "fish",
           () => {
@@ -3062,6 +3085,19 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     let distance = Math.sqrt(distance_x + distance_y);
     return distance;
   }, "getDistance");
+  var mod = /* @__PURE__ */ __name((num) => {
+    if (num < 0) {
+      return num * -1;
+    }
+    return num;
+  }, "mod");
+  var calculateVec = /* @__PURE__ */ __name((target2, follower2, offset2, x_offset2) => {
+    let dx = target2.pos.x - follower2.pos.x;
+    let dy = target2.pos.y - follower2.pos.y;
+    let x_offSet = Math.floor(mod(dx) * x_offset2);
+    let y_offSet = Math.floor(mod(dy) * offset2);
+    return vec2(randi(dx - x_offset2, dx + 300), randi(dy - y_offSet, dy + y_offSet));
+  }, "calculateVec");
 
   // code/level.js
   var createLevelOne = /* @__PURE__ */ __name((box_size2) => {
@@ -3118,7 +3154,8 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       "-": () => [
         sprite("fish"),
         area(),
-        scale(rand(0.3, 1)),
+        scale(rand(0.5, 1)),
+        z(randi(1, 11)),
         "fish"
       ],
       "g": () => [

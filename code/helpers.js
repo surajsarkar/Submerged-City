@@ -60,7 +60,7 @@ export const createGameScene = (scene_id,
                 body(),
                 solid(),
                 area(),
-                rotate(0),
+                rotate(-10),
                 z(5),
                 health(100),
             ]);
@@ -86,13 +86,31 @@ export const createGameScene = (scene_id,
             // movement of the user
             onKeyDown("up", () => {
                 if (player.pos.y > 100) {
+                    if (player.angle === 0) {
+                        player.angle += 30;
+                    }//if
                     player.pos = vec2(player.pos.x - 0.4, player.pos.y - 2);
                 }//if
             });
 
+            onKeyRelease("up", () => {
+                if (player.angle === 30) {
+                    player.angle -= 30;
+                }//if 
+            });
+
             onKeyDown("left", () => {
                 if (player.pos.x > 5) {
+                    if (player.angle === 0) {
+                        playe.angle -= 30;
+                    }//if
                     player.pos = vec2(player.pos.x - 2, player.pos.y);
+                }//if
+            });
+
+            onKeyRelease("left", () => {
+                if (player.angle === -30) {
+                    player.angle += 30;
                 }//if
             });
 
@@ -166,6 +184,15 @@ export const createGameScene = (scene_id,
                 }//if
             });//onCollide
 
+            onUpdate(() => {
+                every("fish", (fish) => {
+                    fish.move(
+                        calculateVec(target = player, follower = fish, offset = 5, x_offset = 400)
+                    );//move
+                });//every
+                // debug.log(`fish: ${get('fish')[0].pos}, player: ${player.pos}`);
+            });
+
             // sm fish collision
             player.onCollide("fish", () => {
                 player.hurt(0.5);
@@ -196,4 +223,28 @@ let getDistance = (object_1_pos, object_2_pos) => {
     return distance;
 
 }//getDistance
+
+
+export let changeSign = (num) => {
+    num = -1 * num;
+    return num;
+}//changeSign
+
+
+let mod = (num) => {
+    if (num < 0) {
+        return num * -1;
+    }//if
+    return num;
+}//mod
+
+let calculateVec = (target, follower, offset, x_offset) => {
+    let dx = target.pos.x - follower.pos.x;
+    let dy = target.pos.y - follower.pos.y;
+    // off set 
+    let x_offSet = Math.floor(mod(dx) * x_offset);
+    let y_offSet = Math.floor(mod(dy) * offset);
+    // reasigning values
+    return vec2(randi(dx - x_offset, dx + 300), randi(dy - y_offSet, dy + y_offSet));
+}//calculateVec
 
