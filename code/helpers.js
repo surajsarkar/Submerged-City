@@ -55,7 +55,7 @@ export const createGameScene = (scene_id,
             );//addLevel
 
             const player = add([
-                sprite("user"),
+                sprite("user", { flipX: false, },),
                 pos(width() - 40, 30),
                 body(),
                 solid(),
@@ -85,11 +85,11 @@ export const createGameScene = (scene_id,
 
             // movement of the user
             onKeyDown("up", () => {
-                if (player.pos.y > 100) {
+                if (player.pos.y > 0) {
                     if (player.angle === 0) {
                         player.angle += 30;
                     }//if
-                    player.pos = vec2(player.pos.x - 0.4, player.pos.y - 2);
+                    player.pos = vec2(player.pos.x - 3, player.pos.y - 3);
                 }//if
             });
 
@@ -104,7 +104,7 @@ export const createGameScene = (scene_id,
                     if (player.angle === 0) {
                         playe.angle -= 30;
                     }//if
-                    player.pos = vec2(player.pos.x - 2, player.pos.y);
+                    player.pos = vec2(player.pos.x - 4, player.pos.y);
                 }//if
             });
 
@@ -116,7 +116,7 @@ export const createGameScene = (scene_id,
 
             onKeyDown("right", () => {
                 if (player.pos.x < width() - 45) {
-                    player.pos = vec2(player.pos.x + 2, player.pos.y);
+                    player.pos = vec2(player.pos.x + 4, player.pos.y);
                 }//if
             });
 
@@ -165,7 +165,7 @@ export const createGameScene = (scene_id,
                             let hurt_amount = player.hp() - (player.hp() * player_bomb_distance / 100);
                             player.hurt(hurt_amount);
                         }//if
-
+                        addKaboom(bomb.pos);
                         destroy(bomb);
                         // add shaky effect after the bomb blasts
                         shake(120);
@@ -184,13 +184,21 @@ export const createGameScene = (scene_id,
                 }//if
             });//onCollide
 
+            let should_follow_user = false;
             onUpdate(() => {
-                every("fish", (fish) => {
-                    fish.move(
-                        calculateVec(target = player, follower = fish, offset = 5, x_offset = 400)
-                    );//move
-                });//every
-                // debug.log(`fish: ${get('fish')[0].pos}, player: ${player.pos}`);
+
+                if (!should_follow_user){
+                    should_follow_user = bomb_count > 1 ? true : false;
+                    wait(5, () => should_follow_user = true);//wait
+                }//if
+
+                if (should_follow_user) {
+                    every("fish", (fish) => {
+                        fish.move(
+                            calculateVec(target = player, follower = fish, offset = 5, x_offset = 400)
+                        );//move
+                    });//every
+                }//if
             });
 
             // sm fish collision
@@ -241,10 +249,10 @@ let mod = (num) => {
 let calculateVec = (target, follower, offset, x_offset) => {
     let dx = target.pos.x - follower.pos.x;
     let dy = target.pos.y - follower.pos.y;
-    // off set 
-    let x_offSet = Math.floor(mod(dx) * x_offset);
-    let y_offSet = Math.floor(mod(dy) * offset);
     // reasigning values
-    return vec2(randi(dx - x_offset, dx + 300), randi(dy - y_offSet, dy + y_offSet));
+    dx = dx < 0 ? -200 : 200;
+    return vec2(randi(dx - 150, dx + 90), randi(dy - 400, dy + 400));
 }//calculateVec
+
+let bounce = (bomb, victim) => { }//bounce
 
