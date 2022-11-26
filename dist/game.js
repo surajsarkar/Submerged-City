@@ -3067,8 +3067,8 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         let should_follow_user = false;
         onUpdate(() => {
           if (!should_follow_user) {
-            should_follow_user = bomb_count > 1 ? false : false;
-            wait(5, () => should_follow_user = false);
+            should_follow_user = bomb_count > 1 ? true : false;
+            wait(5, () => should_follow_user = true);
           }
           if (should_follow_user) {
             every("fish", (fish) => {

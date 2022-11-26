@@ -120,8 +120,8 @@ export const createGameScene = (scene_id,
                 }//if
             });
 
-            onKeyDown("down", ()=>{
-                if (player.pos.y < height() - 45){
+            onKeyDown("down", () => {
+                if (player.pos.y < height() - 45) {
                     player.pos = vec2(player.pos.x, player.pos.y + 4);
                 }//if
             });
@@ -168,14 +168,14 @@ export const createGameScene = (scene_id,
                         let player_bomb_distance = getDistance(player.pos, bomb.pos);
 
                         addKaboom(bomb.pos);
-                        
+
                         if (player_bomb_distance < 100) {
                             let hurt_amount = player.hp() - (player.hp() * player_bomb_distance / 100);
                             player.hurt(hurt_amount);
                         }//if
                         destroy(bomb);
                         // bounce 
-                        bounce(bomb = bomb, victim = player, radius=200);
+                        bounce(bomb = bomb, victim = player, radius = 200);
                         // add shaky effect after the bomb blasts
                         shake(120);
                     });//wait
@@ -197,8 +197,8 @@ export const createGameScene = (scene_id,
             onUpdate(() => {
 
                 if (!should_follow_user) {
-                    should_follow_user = bomb_count > 1 ? false : false;
-                    wait(5, () => should_follow_user = false);//wait
+                    should_follow_user = bomb_count > 1 ? true : false;
+                    wait(5, () => should_follow_user = true);//wait
                 }//if
 
                 if (should_follow_user) {
@@ -267,7 +267,7 @@ let bounce = (bomb, victim, radius) => {
     let dx = victim.pos.x - bomb.pos.x;
     let dy = victim.pos.y - bomb.pos.y;
     let distance = getDistance(bomb.pos, victim.pos);
-    if (distance <= radius){
+    if (distance <= radius) {
         victim.move(vec2(dx, dy).scale(mod(distance - radius)));
     }//if
 
