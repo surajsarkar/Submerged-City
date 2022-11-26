@@ -120,6 +120,12 @@ export const createGameScene = (scene_id,
                 }//if
             });
 
+            onKeyDown("down", ()=>{
+                if (player.pos.y < height() - 45){
+                    player.pos = vec2(player.pos.x, player.pos.y + 4);
+                }//if
+            });
+
             // adding bomb 
             onKeyPress(["w", "a", "s", "d"], () => {
                 let directions = {
@@ -161,12 +167,15 @@ export const createGameScene = (scene_id,
 
                         let player_bomb_distance = getDistance(player.pos, bomb.pos);
 
+                        addKaboom(bomb.pos);
+                        
                         if (player_bomb_distance < 100) {
                             let hurt_amount = player.hp() - (player.hp() * player_bomb_distance / 100);
                             player.hurt(hurt_amount);
                         }//if
-                        addKaboom(bomb.pos);
                         destroy(bomb);
+                        // bounce 
+                        bounce(bomb = bomb, victim = player, radius=200);
                         // add shaky effect after the bomb blasts
                         shake(120);
                     });//wait
@@ -187,9 +196,9 @@ export const createGameScene = (scene_id,
             let should_follow_user = false;
             onUpdate(() => {
 
-                if (!should_follow_user){
-                    should_follow_user = bomb_count > 1 ? true : false;
-                    wait(5, () => should_follow_user = true);//wait
+                if (!should_follow_user) {
+                    should_follow_user = bomb_count > 1 ? false : false;
+                    wait(5, () => should_follow_user = false);//wait
                 }//if
 
                 if (should_follow_user) {
@@ -254,5 +263,13 @@ let calculateVec = (target, follower, offset, x_offset) => {
     return vec2(randi(dx - 150, dx + 90), randi(dy - 400, dy + 400));
 }//calculateVec
 
-let bounce = (bomb, victim) => { }//bounce
+let bounce = (bomb, victim, radius) => {
+    let dx = victim.pos.x - bomb.pos.x;
+    let dy = victim.pos.y - bomb.pos.y;
+    let distance = getDistance(bomb.pos, victim.pos);
+    if (distance <= radius){
+        victim.move(vec2(dx, dy).scale(mod(distance - radius)));
+    }//if
+
+}//bounce
 

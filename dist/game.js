@@ -3010,6 +3010,11 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
             player.pos = vec2(player.pos.x + 4, player.pos.y);
           }
         });
+        onKeyDown("down", () => {
+          if (player.pos.y < height() - 45) {
+            player.pos = vec2(player.pos.x, player.pos.y + 4);
+          }
+        });
         onKeyPress(["w", "a", "s", "d"], () => {
           let directions = {
             "w": vec2(-3, -4),
@@ -3042,12 +3047,13 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
                 }
               });
               let player_bomb_distance = getDistance(player.pos, bomb.pos);
+              addKaboom(bomb.pos);
               if (player_bomb_distance < 100) {
                 let hurt_amount = player.hp() - player.hp() * player_bomb_distance / 100;
                 player.hurt(hurt_amount);
               }
-              addKaboom(bomb.pos);
               destroy(bomb);
+              bounce(bomb = bomb, victim = player, radius = 200);
               shake(120);
             });
           }
@@ -3061,8 +3067,8 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         let should_follow_user = false;
         onUpdate(() => {
           if (!should_follow_user) {
-            should_follow_user = bomb_count > 1 ? true : false;
-            wait(5, () => should_follow_user = true);
+            should_follow_user = bomb_count > 1 ? false : false;
+            wait(5, () => should_follow_user = false);
           }
           if (should_follow_user) {
             every("fish", (fish) => {
@@ -3093,12 +3099,26 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     let distance = Math.sqrt(distance_x + distance_y);
     return distance;
   }, "getDistance");
+  var mod = /* @__PURE__ */ __name((num) => {
+    if (num < 0) {
+      return num * -1;
+    }
+    return num;
+  }, "mod");
   var calculateVec = /* @__PURE__ */ __name((target2, follower2, offset2, x_offset2) => {
     let dx = target2.pos.x - follower2.pos.x;
     let dy = target2.pos.y - follower2.pos.y;
     dx = dx < 0 ? -200 : 200;
     return vec2(randi(dx - 150, dx + 90), randi(dy - 400, dy + 400));
   }, "calculateVec");
+  var bounce = /* @__PURE__ */ __name((bomb, victim2, radius2) => {
+    let dx = victim2.pos.x - bomb.pos.x;
+    let dy = victim2.pos.y - bomb.pos.y;
+    let distance = getDistance(bomb.pos, victim2.pos);
+    if (distance <= radius2) {
+      victim2.move(vec2(dx, dy).scale(mod(distance - radius2)));
+    }
+  }, "bounce");
 
   // code/level.js
   var createLevelOne = /* @__PURE__ */ __name((box_size2) => {
