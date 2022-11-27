@@ -195,7 +195,6 @@ export const createGameScene = (scene_id,
 
             let should_follow_user = false;
             onUpdate(() => {
-
                 if (!should_follow_user) {
                     should_follow_user = bomb_count > 1 ? true : false;
                     wait(5, () => should_follow_user = true);//wait
@@ -273,3 +272,39 @@ let bounce = (bomb, victim, radius) => {
 
 }//bounce
 
+let infoBoard = (
+    sprite_tag,
+    sprite_pad_x, 
+    sprite_pad_y,
+    initial_text,
+    width,
+    height,
+    x_cor,
+    y_cor,
+    text_pad_x,
+    text_pad_y,
+    font = "sink",
+    font_size = 18,
+    outline_width = 2,
+    box_color = [255, 0, 0],
+) => {
+    let board = add([
+        rect(w = width, h = height),
+        pos(x_cor, y_cor),
+        outline(outline_width),
+        color(box_color[0], box_color[1], box_color[2]),
+    ]);//board
+
+    let logo = add([
+        sprite(sprite_tag),
+        pos(board.pos.x + sprite_pad_x, board.pos.y + sprite_pad_y),
+    ])
+
+    let info = add([
+        text(initial_text, {font: font, size: font_size}),
+        pos(board.pos.x + text_pad_x, board.pos.y + text_pad_y),
+    ]);//info
+
+    return [board, sprite, info];
+
+}//infoBoard
