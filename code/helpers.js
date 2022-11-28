@@ -27,27 +27,23 @@ export const createGameScene = (scene_id,
                 // origin("center"),
             ]);
 
-            const bomb_counter = add([
-                rect(80, 50),
-                outline(2, color(255, 255, 0),),
-                pos(score_board.pos.x + 260, 10),
-                color(255, 125, 0),
-            ])
-
-            const bomb_sprite_label = add([
-                sprite("bomb"),
-                pos(bomb_counter.pos.x + 5, 15),
-            ])
-
-            const bomb_count_label = add([
-                text("", { font: "sink", size: 30 }),
-                pos(bomb_sprite_label.pos.x + 50, 20),
-                {
-                    update() {
-                        this.text = bomb_count;
-                    }//update
-                }
-            ])
+            let [bomb_counter, bomb_count_sprite, bomb_count_label] = infoBoard(
+                sprite_tag="bomb",
+                sprite_pad_x = 5,
+                sprite_pad_y = 5,
+                initial_text = bomb_count,
+                box_width = 80,
+                box_height = 50,
+                x_cor =score_board.pos.x + 260, 
+                y_cor = 10,
+                text_pad_x = 55,
+                text_pad_y = 10,
+                font="sink",
+                font_size = 30,
+                outline_width=2,
+                box_color = [255, 125, 0],
+                
+            );//player health board
 
             addLevel(
                 level,
@@ -70,8 +66,8 @@ export const createGameScene = (scene_id,
                 sprite_pad_x = 5,
                 sprite_pad_y = 5,
                 initial_text = player.hp(),
-                width = 110,
-                height = 50,
+                box_width = 110,
+                box_height = 50,
                 x_cor = bomb_counter.pos.x + 90, 
                 y_cor = 10,
                 text_pad_x = 55    ,
@@ -81,7 +77,7 @@ export const createGameScene = (scene_id,
                 outline_width=2,
                 box_color = [255, 125, 0],
                 
-            );
+            );//player health board
 
             // movement of the user
             onKeyDown("up", () => {
@@ -197,6 +193,9 @@ export const createGameScene = (scene_id,
             onUpdate(() => {
                 // update user health point 
                 p_hel_label.text = player.hp();
+
+                //update bomb count 
+                bomb_count_label.text = bomb_count;
                 
                 if (!should_follow_user) {
                     should_follow_user = bomb_count > 1 ? true : false;
@@ -280,8 +279,8 @@ let infoBoard = (
     sprite_pad_x, 
     sprite_pad_y,
     initial_text,
-    width,
-    height,
+    box_width,
+    box_height,
     x_cor,
     y_cor,
     text_pad_x,
@@ -292,7 +291,7 @@ let infoBoard = (
     box_color = [255, 0, 0],
 ) => {
     let board = add([
-        rect(w = width, h = height),
+        rect(w = box_width, h = box_height),
         pos(x_cor, y_cor),
         outline(outline_width),
         color(box_color[0], box_color[1], box_color[2]),

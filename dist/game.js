@@ -2929,25 +2929,22 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           text(`Time Left: ${time_left}`, { size: 18, font: "sink" }),
           pos(score_board.pos.x + 10, 25)
         ]);
-        const bomb_counter = add([
-          rect(80, 50),
-          outline(2, color(255, 255, 0)),
-          pos(score_board.pos.x + 260, 10),
-          color(255, 125, 0)
-        ]);
-        const bomb_sprite_label = add([
-          sprite("bomb"),
-          pos(bomb_counter.pos.x + 5, 15)
-        ]);
-        const bomb_count_label = add([
-          text("", { font: "sink", size: 30 }),
-          pos(bomb_sprite_label.pos.x + 50, 20),
-          {
-            update() {
-              this.text = bomb_count;
-            }
-          }
-        ]);
+        let [bomb_counter, bomb_count_sprite, bomb_count_label] = infoBoard(
+          sprite_tag = "bomb",
+          sprite_pad_x = 5,
+          sprite_pad_y = 5,
+          initial_text = bomb_count,
+          box_width = 80,
+          box_height = 50,
+          x_cor = score_board.pos.x + 260,
+          y_cor = 10,
+          text_pad_x = 55,
+          text_pad_y = 10,
+          font = "sink",
+          font_size = 30,
+          outline_width = 2,
+          box_color = [255, 125, 0]
+        );
         addLevel(
           level2,
           level_options2
@@ -2967,8 +2964,8 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           sprite_pad_x = 5,
           sprite_pad_y = 5,
           initial_text = player.hp(),
-          width = 110,
-          height = 50,
+          box_width = 110,
+          box_height = 50,
           x_cor = bomb_counter.pos.x + 90,
           y_cor = 10,
           text_pad_x = 55,
@@ -3066,6 +3063,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         let should_follow_user = false;
         onUpdate(() => {
           p_hel_label.text = player.hp();
+          bomb_count_label.text = bomb_count;
           if (!should_follow_user) {
             should_follow_user = bomb_count > 1 ? true : false;
             wait(5, () => should_follow_user = true);
@@ -3119,9 +3117,9 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       victim2.move(vec2(dx, dy).scale(mod(distance - radius2)));
     }
   }, "bounce");
-  var infoBoard = /* @__PURE__ */ __name((sprite_tag2, sprite_pad_x2, sprite_pad_y2, initial_text2, width2, height2, x_cor2, y_cor2, text_pad_x2, text_pad_y2, font2 = "sink", font_size2 = 18, outline_width2 = 2, box_color2 = [255, 0, 0]) => {
+  var infoBoard = /* @__PURE__ */ __name((sprite_tag2, sprite_pad_x2, sprite_pad_y2, initial_text2, box_width2, box_height2, x_cor2, y_cor2, text_pad_x2, text_pad_y2, font2 = "sink", font_size2 = 18, outline_width2 = 2, box_color2 = [255, 0, 0]) => {
     let board = add([
-      rect(w = width2, h = height2),
+      rect(w = box_width2, h = box_height2),
       pos(x_cor2, y_cor2),
       outline(outline_width2),
       color(box_color2[0], box_color2[1], box_color2[2])
