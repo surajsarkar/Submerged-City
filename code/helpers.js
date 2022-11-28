@@ -65,23 +65,23 @@ export const createGameScene = (scene_id,
                 health(100),
             ]);
 
-            const player_health_box = add([
-                rect(100, 50),
-                outline(2, color(255, 255, 0),),
-                pos(bomb_counter.pos.x + 90, 10),
-                color(255, 125, 0),
-            ]);
-
-            const player_health_sprite = add([
-                sprite("grass"),
-                pos(player_health_box.pos.x + 5, 15),
-            ]);
-
-            const health_count_label = add([
-                text("", { size: 18, font: "sink" },),
-                pos(player_health_sprite.pos.x + 50, 25),
-                { update() { this.text = `${player.hp()}` } },
-            ]);
+            let [p_hel_box, p_hel_sprite, p_hel_label] = infoBoard(
+                sprite_tag="grass",
+                sprite_pad_x = 5,
+                sprite_pad_y = 5,
+                initial_text = player.hp(),
+                width = 110,
+                height = 50,
+                x_cor = bomb_counter.pos.x + 90, 
+                y_cor = 10,
+                text_pad_x = 55    ,
+                text_pad_y = 15,
+                font="sink",
+                font_size = 18,
+                outline_width=2,
+                box_color = [255, 125, 0],
+                
+            );
 
             // movement of the user
             onKeyDown("up", () => {
@@ -195,6 +195,9 @@ export const createGameScene = (scene_id,
 
             let should_follow_user = false;
             onUpdate(() => {
+                // update user health point 
+                p_hel_label.text = player.hp();
+                
                 if (!should_follow_user) {
                     should_follow_user = bomb_count > 1 ? true : false;
                     wait(5, () => should_follow_user = true);//wait

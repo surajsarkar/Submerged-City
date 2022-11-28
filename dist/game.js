@@ -2962,39 +2962,22 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           z(5),
           health(100)
         ]);
-        let [board, board_sprite, info] = infoBoard(
-          sprite_tag = "bomb",
-          sprite_pad_x = 50,
-          sprite_pad_y = 50,
-          initial_text = "suraj",
-          width = 100,
-          height = 100,
-          x_cor = 5,
-          y_cor = 400,
-          text_pad_x = 20,
-          text_pad_y = 20,
+        let [p_hel_box, p_hel_sprite, p_hel_label] = infoBoard(
+          sprite_tag = "grass",
+          sprite_pad_x = 5,
+          sprite_pad_y = 5,
+          initial_text = player.hp(),
+          width = 110,
+          height = 50,
+          x_cor = bomb_counter.pos.x + 90,
+          y_cor = 10,
+          text_pad_x = 55,
+          text_pad_y = 15,
           font = "sink",
-          font_size = 30,
-          outline_width = 3,
-          box_color = [0, 255, 0]
+          font_size = 18,
+          outline_width = 2,
+          box_color = [255, 125, 0]
         );
-        const player_health_box = add([
-          rect(100, 50),
-          outline(2, color(255, 255, 0)),
-          pos(bomb_counter.pos.x + 90, 10),
-          color(255, 125, 0)
-        ]);
-        const player_health_sprite = add([
-          sprite("grass"),
-          pos(player_health_box.pos.x + 5, 15)
-        ]);
-        const health_count_label = add([
-          text("", { size: 18, font: "sink" }),
-          pos(player_health_sprite.pos.x + 50, 25),
-          { update() {
-            this.text = `${player.hp()}`;
-          } }
-        ]);
         onKeyDown("up", () => {
           if (player.pos.y > 0) {
             if (player.angle === 0) {
@@ -3082,6 +3065,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         });
         let should_follow_user = false;
         onUpdate(() => {
+          p_hel_label.text = player.hp();
           if (!should_follow_user) {
             should_follow_user = bomb_count > 1 ? true : false;
             wait(5, () => should_follow_user = true);
