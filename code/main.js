@@ -14,6 +14,8 @@ loadSprite("passage", "../sprites/passage.png");
 loadSprite("bomb", "../sprites/bomb.png");
 loadSprite("user", "../sprites/user.png");
 
+loadSound("underocean", "../sprites/underocean.mp3");
+loadSound("blastsound", "../sprites/blastaudio.m4a");
 
 let LEVEL_1 = createLevelOne(box_size = { width: 20, height: 20 })
 

@@ -14,6 +14,8 @@ export const createGameScene = (scene_id,
         () => {
 
             gravity(10);
+            play("underocean", { loop: true, volume: 0.4 });
+            
             const score_board = add([
                 rect(250, 50),
                 outline(2, color(255, 255, 0),),
@@ -154,26 +156,31 @@ export const createGameScene = (scene_id,
                     ]);//adding bomb
 
                     wait(3, () => {
-                        // destroying fish inside the radius of 84
-                        every("fish", (fish) => {
-                            if (getDistance(bomb.pos, fish.pos) < 84) {
-                                destroy(fish);
+                        play("blastsound", {loop: false, volume: 0.5, speed: 2, seek: 0});
+
+                        wait(0.27, ()=>{
+                            
+                            addKaboom(bomb.pos);
+                            // destroying fish inside the radius of 84
+                            every("fish", (fish) => {
+                                if (getDistance(bomb.pos, fish.pos) < 84) {
+                                    destroy(fish);
+                                }//if
+                            });//every
+    
+                            let player_bomb_distance = getDistance(player.pos, bomb.pos);
+    
+    
+                            if (player_bomb_distance < 100) {
+                                let hurt_amount = player.hp() - (player.hp() * player_bomb_distance / 100);
+                                player.hurt(hurt_amount);
                             }//if
-                        });//every
-
-                        let player_bomb_distance = getDistance(player.pos, bomb.pos);
-
-                        addKaboom(bomb.pos);
-
-                        if (player_bomb_distance < 100) {
-                            let hurt_amount = player.hp() - (player.hp() * player_bomb_distance / 100);
-                            player.hurt(hurt_amount);
-                        }//if
-                        destroy(bomb);
-                        // bounce 
-                        bounce(bomb = bomb, victim = player, radius = 200);
-                        // add shaky effect after the bomb blasts
-                        shake(120);
+                            destroy(bomb);
+                            // bounce 
+                            bounce(bomb = bomb, victim = player, radius = 200);
+                            // add shaky effect after the bomb blasts
+                            shake(120);
+                        });//wait
                     });//wait
 
                 }//if

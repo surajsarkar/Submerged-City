@@ -2919,6 +2919,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       scene_id2,
       () => {
         gravity(10);
+        play("underocean", { loop: true, volume: 0.4 });
         const score_board = add([
           rect(250, 50),
           outline(2, color(255, 255, 0)),
@@ -3037,20 +3038,23 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
               "blast_bomb"
             ]);
             wait(3, () => {
-              every("fish", (fish) => {
-                if (getDistance(bomb.pos, fish.pos) < 84) {
-                  destroy(fish);
+              play("blastsound", { loop: false, volume: 0.5, speed: 2, seek: 0 });
+              wait(0.27, () => {
+                addKaboom(bomb.pos);
+                every("fish", (fish) => {
+                  if (getDistance(bomb.pos, fish.pos) < 84) {
+                    destroy(fish);
+                  }
+                });
+                let player_bomb_distance = getDistance(player.pos, bomb.pos);
+                if (player_bomb_distance < 100) {
+                  let hurt_amount = player.hp() - player.hp() * player_bomb_distance / 100;
+                  player.hurt(hurt_amount);
                 }
+                destroy(bomb);
+                bounce(bomb = bomb, victim = player, radius = 200);
+                shake(120);
               });
-              let player_bomb_distance = getDistance(player.pos, bomb.pos);
-              addKaboom(bomb.pos);
-              if (player_bomb_distance < 100) {
-                let hurt_amount = player.hp() - player.hp() * player_bomb_distance / 100;
-                player.hurt(hurt_amount);
-              }
-              destroy(bomb);
-              bounce(bomb = bomb, victim = player, radius = 200);
-              shake(120);
             });
           }
         });
@@ -3170,6 +3174,8 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   loadSprite("passage", "../sprites/passage.png");
   loadSprite("bomb", "../sprites/bomb.png");
   loadSprite("user", "../sprites/user.png");
+  loadSound("underocean", "../sprites/underocean.mp3");
+  loadSound("blastsound", "../sprites/blastaudio.m4a");
   var LEVEL_1 = createLevelOne(box_size = { width: 20, height: 20 });
   createGameScene(
     scene_id = "level_one",
