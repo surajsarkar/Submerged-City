@@ -15,36 +15,37 @@ export const createGameScene = (scene_id,
 
             gravity(10);
             play("underocean", { loop: true, volume: 0.4 });
-            
-            const score_board = add([
-                rect(250, 50),
-                outline(2, color(255, 255, 0),),
-                pos(10, 10),
-                color(255, 125, 0)
-            ]);
 
-            const score_label = add([
-                text(`Time Left: ${time_left}`, { size: 18, font: "sink", },),
-                pos(score_board.pos.x + 10, 25),
-                // origin("center"),
-            ]);
+            let [score_board, container_text] = textbox(
+                box_width = 250,
+                box_height = 50,
+                outline_width = 2,
+                box_color = color(255, 125, 0),
+                initial_text = `Time Left: ${time_left}`,
+                text_x_pad = 10,
+                text_y_pad = 15,
+                font = "sink",
+                font_size = 18,
+                x_cor = 10,
+                y_cor = 10,
+            );
 
             let [bomb_counter, bomb_count_sprite, bomb_count_label] = infoBoard(
-                sprite_tag="bomb",
+                sprite_tag = "bomb",
                 sprite_pad_x = 5,
                 sprite_pad_y = 5,
                 initial_text = bomb_count,
                 box_width = 80,
                 box_height = 50,
-                x_cor =score_board.pos.x + 260, 
+                x_cor = score_board.pos.x + 260,
                 y_cor = 10,
                 text_pad_x = 55,
                 text_pad_y = 10,
-                font="sink",
+                font = "sink",
                 font_size = 30,
-                outline_width=2,
+                outline_width = 2,
                 box_color = [255, 125, 0],
-                
+
             );//player health board
 
             addLevel(
@@ -64,21 +65,21 @@ export const createGameScene = (scene_id,
             ]);
 
             let [p_hel_box, p_hel_sprite, p_hel_label] = infoBoard(
-                sprite_tag="grass",
+                sprite_tag = "grass",
                 sprite_pad_x = 5,
                 sprite_pad_y = 5,
                 initial_text = player.hp(),
                 box_width = 110,
                 box_height = 50,
-                x_cor = bomb_counter.pos.x + 90, 
+                x_cor = bomb_counter.pos.x + 90,
                 y_cor = 10,
-                text_pad_x = 55    ,
+                text_pad_x = 55,
                 text_pad_y = 15,
-                font="sink",
+                font = "sink",
                 font_size = 18,
-                outline_width=2,
+                outline_width = 2,
                 box_color = [255, 125, 0],
-                
+
             );//player health board
 
             // movement of the user
@@ -156,10 +157,10 @@ export const createGameScene = (scene_id,
                     ]);//adding bomb
 
                     wait(3, () => {
-                        play("blastsound", {loop: false, volume: 0.5, speed: 2, seek: 0});
+                        play("blastsound", { loop: false, volume: 0.5, speed: 2, seek: 0 });
 
-                        wait(0.27, ()=>{
-                            
+                        wait(0.27, () => {
+
                             addKaboom(bomb.pos);
                             // destroying fish inside the radius of 84
                             every("fish", (fish) => {
@@ -167,10 +168,10 @@ export const createGameScene = (scene_id,
                                     destroy(fish);
                                 }//if
                             });//every
-    
+
                             let player_bomb_distance = getDistance(player.pos, bomb.pos);
-    
-    
+
+
                             if (player_bomb_distance < 100) {
                                 let hurt_amount = player.hp() - (player.hp() * player_bomb_distance / 100);
                                 player.hurt(hurt_amount);
@@ -203,7 +204,7 @@ export const createGameScene = (scene_id,
 
                 //update bomb count 
                 bomb_count_label.text = bomb_count;
-                
+
                 if (!should_follow_user) {
                     should_follow_user = bomb_count > 1 ? true : false;
                     wait(5, () => should_follow_user = true);//wait
@@ -283,7 +284,7 @@ let bounce = (bomb, victim, radius) => {
 
 let infoBoard = (
     sprite_tag,
-    sprite_pad_x, 
+    sprite_pad_x,
     sprite_pad_y,
     initial_text,
     box_width,
@@ -310,10 +311,39 @@ let infoBoard = (
     ])
 
     let info = add([
-        text(initial_text, {font: font, size: font_size}),
+        text(initial_text, { font: font, size: font_size }),
         pos(board.pos.x + text_pad_x, board.pos.y + text_pad_y),
     ]);//info
 
     return [board, sprite, info];
 
 }//infoBoard
+
+
+let textbox = (
+    box_width,
+    box_height,
+    outline_width,
+    box_color,
+    initial_text,
+    text_x_pad,
+    text_y_pad,
+    font,
+    font_size,
+    x_cor,
+    y_cor,
+) => {
+    let text_box = add([
+        rect(box_width, box_height),
+        box_color,
+        pos(10, 10),
+        outline(outline_width),
+    ]);
+
+    let box_text =  add([
+        text(initial_text, {size: font_size, font: font}),
+        pos(text_box.pos.x + text_x_pad, text_box.pos.y + text_y_pad),
+    ]);
+
+    return [text_box, box_text];
+}//textbox

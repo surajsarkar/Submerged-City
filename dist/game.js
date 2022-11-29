@@ -2920,16 +2920,19 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       () => {
         gravity(10);
         play("underocean", { loop: true, volume: 0.4 });
-        const score_board = add([
-          rect(250, 50),
-          outline(2, color(255, 255, 0)),
-          pos(10, 10),
-          color(255, 125, 0)
-        ]);
-        const score_label = add([
-          text(`Time Left: ${time_left}`, { size: 18, font: "sink" }),
-          pos(score_board.pos.x + 10, 25)
-        ]);
+        let [score_board, container_text] = textbox(
+          box_width = 250,
+          box_height = 50,
+          outline_width = 2,
+          box_color = color(255, 125, 0),
+          initial_text = `Time Left: ${time_left}`,
+          text_x_pad = 10,
+          text_y_pad = 15,
+          font = "sink",
+          font_size = 18,
+          x_cor = 10,
+          y_cor = 10
+        );
         let [bomb_counter, bomb_count_sprite, bomb_count_label] = infoBoard(
           sprite_tag = "bomb",
           sprite_pad_x = 5,
@@ -3138,6 +3141,19 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     ]);
     return [board, sprite, info];
   }, "infoBoard");
+  var textbox = /* @__PURE__ */ __name((box_width2, box_height2, outline_width2, box_color2, initial_text2, text_x_pad2, text_y_pad2, font2, font_size2, x_cor2, y_cor2) => {
+    let text_box = add([
+      rect(box_width2, box_height2),
+      box_color2,
+      pos(10, 10),
+      outline(outline_width2)
+    ]);
+    let box_text = add([
+      text(initial_text2, { size: font_size2, font: font2 }),
+      pos(text_box.pos.x + text_x_pad2, text_box.pos.y + text_y_pad2)
+    ]);
+    return [text_box, box_text];
+  }, "textbox");
 
   // code/level.js
   var createLevelOne = /* @__PURE__ */ __name((box_size2) => {
