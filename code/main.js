@@ -1,6 +1,6 @@
 import kaboom from "kaboom";
 
-import { createGameScene } from "./helpers";
+import { createGameScene, winLooseScene } from "./helpers";
 import { createLevelOne } from "./level";
 
 // initialize context
@@ -61,7 +61,5 @@ createGameScene(scene_id = "level_one",
         ],//bomb
     },
 );
-
-
 
 go("level_one");

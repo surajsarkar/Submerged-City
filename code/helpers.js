@@ -22,8 +22,8 @@ export const createGameScene = (scene_id,
                 outline_width = 2,
                 box_color = color(255, 125, 0),
                 initial_text = `Time Left: ${time_left}`,
-                text_x_pad = 10,
-                text_y_pad = 15,
+                text_x_pad = 0,
+                text_y_pad = 0,
                 font = "sink",
                 font_size = 18,
                 x_cor = 10,
@@ -336,14 +336,102 @@ let textbox = (
     let text_box = add([
         rect(box_width, box_height),
         box_color,
-        pos(10, 10),
+        pos(x_cor, y_cor),
         outline(outline_width),
     ]);
 
-    let box_text =  add([
-        text(initial_text, {size: font_size, font: font}),
-        pos(text_box.pos.x + text_x_pad, text_box.pos.y + text_y_pad),
+    let box_text = add([
+        text(initial_text, { size: font_size, font: font }),
+        pos(text_box.pos.x+ text_x_pad, text_box.pos.y + text_y_pad),
     ]);
 
     return [text_box, box_text];
 }//textbox
+
+
+
+let addButton = (txt, font_size, position, func) => {
+    let btn = add([
+        text(txt, {size: font_size}),
+        position,
+        area({cursor: "pointer"}),
+        scale(1),
+    ])
+    btn.onClick(func);
+    return btn;
+}//addButton
+
+
+
+export const winLooseScene = (scene_id) => {
+    scene(
+        scene_id,
+        (msg, points, bonus, have_next_level, next_level, poster) => {
+            let [message_box, message] = textbox(box_width=500,
+                                                box_height=70,
+                                                outline_width=2,
+                                                box_color=color(65, 125, 225),
+                                                initial_text=msg,
+                                                text_pad_x=10,
+                                                text_pad_y=15,
+                                                font="sink",
+                                                font_size=40,
+                                                x_cor=center().x - 250,
+                                                y_cor=40,
+                                                );
+
+            let [points_box, points_collected] = textbox(box_width=450,
+                                                box_height=70,
+                                                outline_width=2,
+                                                box_color=color(65, 125, 225),
+                                                initial_text=`Earnings: ${points}`,
+                                                text_pad_x=10,
+                                                text_pad_y=15,
+                                                font="sink",
+                                                font_size=40,
+                                                x_cor=message_box.pos.x + 250,
+                                                y_cor=message_box.pos.y + 80
+                                                );
+
+            let [bonus_box, bonus_collected] = textbox(box_width=450,
+                                                box_height=70,
+                                                outline_width=2,
+                                                box_color=color(65, 125, 225),
+                                                initial_text=`Bonus: ${bonus}`,
+                                                text_pad_x=10,
+                                                text_pad_y=15,
+                                                font="sink",
+                                                font_size=40,
+                                                x_cor=message_box.pos.x + 250,
+                                                y_cor=points_box.pos.y + 80,
+                                                );
+
+            let [total_box, total_points] = textbox(box_width=450,
+                                                box_height=70,
+                                                outline_width=2,
+                                                box_color=color(65, 125, 225),
+                                                initial_text=`Total: ${bonus + points}`,
+                                                text_pad_x=10,
+                                                text_pad_y=15,
+                                                font="sink",
+                                                font_size=40,
+                                                x_cor=message_box.pos.x + 250,
+                                                y_cor=bonus_box.pos.y + 80,
+                                                );
+
+        add([
+            sprite(poster),
+            pos(message_box.pos.x -300, message_box.pos.y + 80),
+            scale(1),
+        ])
+
+            if (have_next_level){
+                let next_level_bth = addButton(
+                    "Next Level ->",
+                    35,
+                    pos(total_box.pos.x - 130, total_box.pos.y + 80), 
+                    ()=>go(next_level));
+            }//if
+        }
+    );//scene
+}//winLooseScene

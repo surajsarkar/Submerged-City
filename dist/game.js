@@ -2926,8 +2926,8 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           outline_width = 2,
           box_color = color(255, 125, 0),
           initial_text = `Time Left: ${time_left}`,
-          text_x_pad = 10,
-          text_y_pad = 15,
+          text_x_pad = 0,
+          text_y_pad = 0,
           font = "sink",
           font_size = 18,
           x_cor = 10,
@@ -3145,7 +3145,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     let text_box = add([
       rect(box_width2, box_height2),
       box_color2,
-      pos(10, 10),
+      pos(x_cor2, y_cor2),
       outline(outline_width2)
     ]);
     let box_text = add([
