@@ -212,7 +212,7 @@ export const createGameScene = (scene_id,
 
                             if (player_bomb_distance < 100) {
                                 let hurt_amount = player.hp() - (player.hp() * player_bomb_distance / 100);
-                                player.hurt(hurt_amount);
+                                player.hurt(Math.floor(hurt_amount > 0 ? hurt_amount : mod(hurt_amount)));
                             }//if
                             destroy(bomb);
                             // bounce 
