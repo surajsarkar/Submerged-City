@@ -2914,7 +2914,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   }, "default");
 
   // code/helpers.js
-  var createGameScene = /* @__PURE__ */ __name((scene_id2, level2, level_options2, time_left = "00:00", bomb_count = 0) => {
+  var createGameScene = /* @__PURE__ */ __name((scene_id2, level2, level_options2, time_left = "00:00", bomb_count = 0, points_collected = 0) => {
     scene(
       scene_id2,
       () => {
@@ -2979,6 +2979,35 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           outline_width = 2,
           box_color = [255, 125, 0]
         );
+        let [coins_counter, coins_logo_sprite, coins_count_label] = infoBoard(
+          sprite_tag = "bomb",
+          sprite_pad_x = 5,
+          sprite_pad_y = 5,
+          initial_text = points_collected,
+          box_width = 150,
+          box_height = 50,
+          x_cor = p_hel_box.pos.x + 120,
+          y_cor = 10,
+          text_pad_x = 55,
+          text_pad_y = 10,
+          font = "sink",
+          font_size = 30,
+          outline_width = 2,
+          box_color = [255, 125, 0]
+        );
+        loop(1, () => {
+          let point = add([
+            sprite("grass"),
+            pos(randi(10, width()), randi(10, height())),
+            area(),
+            "points"
+          ]);
+          wait(7, () => destroy(point));
+        });
+        player.onCollide("points", (collection) => {
+          destroy(collection);
+          points_collected += 10;
+        });
         onKeyDown("up", () => {
           if (player.pos.y > 0) {
             if (player.angle === 0) {
@@ -3069,6 +3098,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         });
         let should_follow_user = false;
         onUpdate(() => {
+          coins_count_label.text = points_collected;
           p_hel_label.text = player.hp();
           bomb_count_label.text = bomb_count;
           if (!should_follow_user) {

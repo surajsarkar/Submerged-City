@@ -4,7 +4,8 @@ export const createGameScene = (scene_id,
     level,
     level_options,
     time_left = "00:00",
-    bomb_count = 0
+    bomb_count = 0,
+    points_collected=0
 ) => {
     /** 
     *@param {string} scene_id: name of the scene
@@ -48,6 +49,7 @@ export const createGameScene = (scene_id,
 
             );//player health board
 
+
             addLevel(
                 level,
                 level_options,
@@ -82,6 +84,42 @@ export const createGameScene = (scene_id,
 
             );//player health board
 
+            let [coins_counter, coins_logo_sprite, coins_count_label] = infoBoard(
+                sprite_tag = "bomb",
+                sprite_pad_x = 5,
+                sprite_pad_y = 5,
+                initial_text = points_collected,
+                box_width = 150,
+                box_height = 50,
+                x_cor = p_hel_box.pos.x + 120,
+                y_cor = 10,
+                text_pad_x = 55,
+                text_pad_y = 10,
+                font = "sink",
+                font_size = 30,
+                outline_width = 2,
+                box_color = [255, 125, 0],
+
+            );//coins collected
+
+            // add coin every 2 sec in random place 
+            loop(1, ()=>{
+                let point = add([
+                    sprite("grass"),
+                    pos(randi(10, width()), randi(10, height())),
+                    area(),
+                    "points",
+                ]);//point
+                
+                wait(7, ()=>destroy(point));//wait
+            });//loop
+
+            // player collision with coin
+            player.onCollide("points", (collection)=>{
+                destroy(collection);
+                points_collected += 10;
+            });//collision with coin
+            
             // movement of the user
             onKeyDown("up", () => {
                 if (player.pos.y > 0) {
@@ -199,6 +237,10 @@ export const createGameScene = (scene_id,
 
             let should_follow_user = false;
             onUpdate(() => {
+
+                // update points 
+                coins_count_label.text = points_collected;
+                
                 // update user health point 
                 p_hel_label.text = player.hp();
 
