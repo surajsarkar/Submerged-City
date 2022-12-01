@@ -273,10 +273,19 @@ export const createGameScene = (scene_id,
             },
             );//onCollide
 
+            let health_button = add([
+                sprite('bomb'),
+                area({cursor: "pointer"}),
+                pos(width() - 80, height() - 80),
+            ]);//health_button
 
-            // Todo: add score board
-            // add powers count
-            // Todo add points
+            health_button.onClick(()=>{
+                health_point = player.hp();
+                if (health_point + 2 <= 100 && points_collected >= 10){
+                    player.hurt(-2);
+                    points_collected -= 10
+                }//if
+            });
         }//scene def
     );//scene
 }//createGameScene

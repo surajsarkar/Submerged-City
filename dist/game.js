@@ -3125,6 +3125,18 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
             go("next_level_info");
           }
         );
+        let health_button = add([
+          sprite("bomb"),
+          area({ cursor: "pointer" }),
+          pos(width() - 80, height() - 80)
+        ]);
+        health_button.onClick(() => {
+          health_point = player.hp();
+          if (health_point + 2 <= 100 && points_collected >= 10) {
+            player.hurt(-2);
+            points_collected -= 10;
+          }
+        });
       }
     );
   }, "createGameScene");
