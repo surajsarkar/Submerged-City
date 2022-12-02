@@ -3,9 +3,14 @@ import kaboom from "kaboom";
 export const createGameScene = (scene_id,
     level,
     level_options,
+    next_screen_tag,
+    has_tips,
+    tips_id,
+    tips_params_list,
 ) => {
     /** 
     *@param {string} scene_id: name of the scene
+    
     **/
     scene(
         scene_id,
@@ -267,7 +272,17 @@ export const createGameScene = (scene_id,
 
             // collision with passage
             player.onCollide("passage", () => {
-                go("next_level_info");
+                // msg, points, bonus, have_next_level, next_level, poster
+                let result = ["Hurrah...doing great so far", points_collected, 0, true, next_screen_tag, "plant"];
+                let next_level_data = [rons_health, bomb_count, player.hp(), points_collected];
+                goNext(
+                    next_screen_tag,
+                    next_level_data,
+                    has_tips,
+                    tips_id,
+                    tips_params_list,
+                    result,
+                );
             },
             );//onCollide
 
@@ -415,7 +430,7 @@ let addButton = (txt, font_size, position, func) => {
 export const winLooseScene = (scene_id) => {
     scene(
         scene_id,
-        (msg, points, bonus, have_next_level, next_level, poster) => {
+        (msg, points, bonus, have_next_level, next_level, poster, action) => {
             let [message_box, message] = textbox(box_width=500,
                                                 box_height=70,
                                                 outline_width=2,
@@ -479,14 +494,14 @@ export const winLooseScene = (scene_id) => {
                     "Next Level ->",
                     35,
                     pos(total_box.pos.x - 130, total_box.pos.y + 80), 
-                    ()=>go(next_level));
+                    action);
             }//if
         }
     );//scene
 }//winLooseScene
 
 
-export const planeScene = (sprite_tag, should_have_button, button_text, timed, waiting_time, action) => {
+export const planeScene = (scene_id, sprite_tag, should_have_button, button_text, timed, waiting_time, action) => {
     scene(scene_id, ()=>{
         
         add([

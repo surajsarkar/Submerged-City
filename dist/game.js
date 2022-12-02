@@ -2914,7 +2914,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   }, "default");
 
   // code/helpers.js
-  var createGameScene = /* @__PURE__ */ __name((scene_id2, level2, level_options2) => {
+  var createGameScene = /* @__PURE__ */ __name((scene_id2, level2, level_options2, next_screen_tag2, has_tips2, tips_id2, tips_params_list2) => {
     scene(
       scene_id2,
       (rons_health, bomb_count, harry_health, points_collected) => {
@@ -3123,7 +3123,16 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         player.onCollide(
           "passage",
           () => {
-            go("next_level_info");
+            let result = ["Hurrah...doing great so far", points_collected, 0, true, next_screen_tag2, "plant"];
+            let next_level_data = [rons_health, bomb_count, player.hp(), points_collected];
+            goNext(
+              next_screen_tag2,
+              next_level_data,
+              has_tips2,
+              tips_id2,
+              tips_params_list2,
+              result
+            );
           }
         );
         let health_button = add([
@@ -3197,6 +3206,118 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     ]);
     return [text_box, box_text];
   }, "textbox");
+  var addButton = /* @__PURE__ */ __name((txt, font_size2, position, func) => {
+    let btn = add([
+      text(txt, { size: font_size2 }),
+      position,
+      area({ cursor: "pointer" }),
+      scale(1)
+    ]);
+    btn.onClick(func);
+    return btn;
+  }, "addButton");
+  var winLooseScene = /* @__PURE__ */ __name((scene_id2) => {
+    scene(
+      scene_id2,
+      (msg, points, bonus, have_next_level, next_level, poster, action) => {
+        let [message_box, message] = textbox(
+          box_width = 500,
+          box_height = 70,
+          outline_width = 2,
+          box_color = color(65, 125, 225),
+          initial_text = msg,
+          text_pad_x = 10,
+          text_pad_y = 15,
+          font = "sink",
+          font_size = 40,
+          x_cor = center().x - 250,
+          y_cor = 40
+        );
+        let [points_box, points_collected] = textbox(
+          box_width = 450,
+          box_height = 70,
+          outline_width = 2,
+          box_color = color(65, 125, 225),
+          initial_text = `Earnings: ${points}`,
+          text_pad_x = 10,
+          text_pad_y = 15,
+          font = "sink",
+          font_size = 40,
+          x_cor = message_box.pos.x + 250,
+          y_cor = message_box.pos.y + 80
+        );
+        let [bonus_box, bonus_collected] = textbox(
+          box_width = 450,
+          box_height = 70,
+          outline_width = 2,
+          box_color = color(65, 125, 225),
+          initial_text = `Bonus: ${bonus}`,
+          text_pad_x = 10,
+          text_pad_y = 15,
+          font = "sink",
+          font_size = 40,
+          x_cor = message_box.pos.x + 250,
+          y_cor = points_box.pos.y + 80
+        );
+        let [total_box, total_points] = textbox(
+          box_width = 450,
+          box_height = 70,
+          outline_width = 2,
+          box_color = color(65, 125, 225),
+          initial_text = `Total: ${bonus + points}`,
+          text_pad_x = 10,
+          text_pad_y = 15,
+          font = "sink",
+          font_size = 40,
+          x_cor = message_box.pos.x + 250,
+          y_cor = bonus_box.pos.y + 80
+        );
+        add([
+          sprite(poster),
+          pos(message_box.pos.x - 300, message_box.pos.y + 80),
+          scale(1)
+        ]);
+        if (have_next_level) {
+          let next_level_bth = addButton(
+            "Next Level ->",
+            35,
+            pos(total_box.pos.x - 130, total_box.pos.y + 80),
+            action
+          );
+        }
+      }
+    );
+  }, "winLooseScene");
+  var planeScene = /* @__PURE__ */ __name((scene_id2, sprite_tag2, should_have_button, button_text, timed, waiting_time, action) => {
+    scene(scene_id2, () => {
+      add([
+        sprite(sprite_tag2),
+        pos(width() / 2, height() / 2),
+        origin("center")
+      ]);
+      if (should_have_button) {
+        addButton(button_text, font_size = 40, pos(width() / 2 - 50, height() - 100), action);
+      }
+      if (timed) {
+        wait(waiting_time, action);
+      }
+    });
+  }, "planeScene");
+  var goNext = /* @__PURE__ */ __name((next_screen_tag2, next_screen_params, has_tips2, tips_id2, tips_params_list2, result) => {
+    if (has_tips2) {
+      go(
+        "result",
+        ...result,
+        () => go(tips_id2, ...tips_params_list2, () => go(next_screen_tag2, ...next_screen_params))
+      );
+    } else if (!has_tips2) {
+      go(
+        "result",
+        ...result,
+        () => go(next_screen_tag2, ...next_screen_params)
+      );
+    }
+  }, "goNext");
 
   // code/level.js
   var createLevelOne = /* @__PURE__ */ __name((box_size2) => {
@@ -3277,8 +3398,14 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         scale(0.8),
         "bomb"
       ]
-    }
+    },
+    next_screen_tag = "start",
+    has_tips = false,
+    tips_id = "",
+    tips_params_list = []
   );
-  go("level_one", 100, 4, 100, 0);
+  planeScene("start", "plant", true, "start game", false, 0, () => go("level_one", 100, 4, 100, 0));
+  winLooseScene("result");
+  go("start");
 })();
 //# sourceMappingURL=game.js.map

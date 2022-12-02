@@ -60,6 +60,17 @@ createGameScene(scene_id = "level_one",
             "bomb", //tag
         ],//bomb
     },
+    next_screen_tag = "start",
+    has_tips = false,
+    tips_id = "",
+    tips_params_list = [],
 );
 
-go("level_one", 100, 4, 100, 0);
+
+// creating start screen
+planeScene("start", "plant", true, "start game", false, 0, ()=> go("level_one", 100, 4, 100, 0));
+
+// creating result screen 
+winLooseScene("result");
+
+go("start");
