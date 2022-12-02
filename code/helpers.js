@@ -504,3 +504,31 @@ export const planeScene = (sprite_tag, should_have_button, button_text, timed, w
         }//if
     });//scene
 }//planeScene
+
+
+let goNext = (
+    next_screen_tag,
+    next_screen_params,
+    has_tips,
+    tips_id,
+    tips_params_list,
+    result,
+    
+) => {
+
+    if (has_tips){
+        go(
+            "result",
+            ...result,
+            () => go(tips_id, ...tips_params_list, ()=>go(next_screen_tag, ...next_screen_params))
+        );
+    }//if
+    else if (!has_tips){
+        go(
+            "result",
+            ...result,
+            ()=>go(next_screen_tag, ...next_screen_params)
+        );
+    }//else if
+    
+}//goNext
