@@ -201,7 +201,7 @@ export const createGameScene = (scene_id,
                             every("fish", (fish) => {
                                 if (getDistance(bomb.pos, fish.pos) < 84) {
                                     destroy(fish);
-                                    points_collected += 10;
+                                    points_collected += 20;
                                 }//if
                             });//every
 
