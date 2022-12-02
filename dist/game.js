@@ -2914,10 +2914,10 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   }, "default");
 
   // code/helpers.js
-  var createGameScene = /* @__PURE__ */ __name((scene_id2, level2, level_options2, time_left = "00:00", bomb_count = 0, points_collected = 0) => {
+  var createGameScene = /* @__PURE__ */ __name((scene_id2, level2, level_options2) => {
     scene(
       scene_id2,
-      () => {
+      (rons_health, bomb_count, harry_health, points_collected) => {
         gravity(10);
         play("underocean", { loop: true, volume: 0.4 });
         let [score_board, container_text] = textbox(
@@ -2925,7 +2925,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           box_height = 50,
           outline_width = 2,
           box_color = color(255, 125, 0),
-          initial_text = `Time Left: ${time_left}`,
+          initial_text = `Time Left: ${rons_health}`,
           text_x_pad = 0,
           text_y_pad = 0,
           font = "sink",
@@ -2961,7 +2961,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           area(),
           rotate(-10),
           z(5),
-          health(100)
+          health(harry_health)
         ]);
         let [p_hel_box, p_hel_sprite, p_hel_label] = infoBoard(
           sprite_tag = "grass",
@@ -3278,6 +3278,6 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       ]
     }
   );
-  go("level_one");
+  go("level_one", 100, 4, 100, 0);
 })();
 //# sourceMappingURL=game.js.map

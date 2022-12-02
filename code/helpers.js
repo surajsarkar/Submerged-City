@@ -3,16 +3,13 @@ import kaboom from "kaboom";
 export const createGameScene = (scene_id,
     level,
     level_options,
-    time_left = "00:00",
-    bomb_count = 0,
-    points_collected=0
 ) => {
     /** 
     *@param {string} scene_id: name of the scene
     **/
     scene(
         scene_id,
-        () => {
+        (rons_health, bomb_count, harry_health, points_collected) => {
 
             gravity(10);
             play("underocean", { loop: true, volume: 0.4 });
@@ -22,7 +19,7 @@ export const createGameScene = (scene_id,
                 box_height = 50,
                 outline_width = 2,
                 box_color = color(255, 125, 0),
-                initial_text = `Time Left: ${time_left}`,
+                initial_text = `Time Left: ${rons_health}`,
                 text_x_pad = 0,
                 text_y_pad = 0,
                 font = "sink",
@@ -63,7 +60,7 @@ export const createGameScene = (scene_id,
                 area(),
                 rotate(-10),
                 z(5),
-                health(100),
+                health(harry_health),
             ]);
 
             let [p_hel_box, p_hel_sprite, p_hel_label] = infoBoard(
