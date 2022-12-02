@@ -486,3 +486,20 @@ export const winLooseScene = (scene_id) => {
         }
     );//scene
 }//winLooseScene
+
+
+export const planeScene = (sprite_tag, should_have_button, button_text, timed, waiting_time, action) => {
+    add([
+        sprite(sprite_tag),
+        pos(width()/2, height()/2),
+        origin("center"),
+    ])
+
+    if (should_have_button){
+        addButton(button_text, font_size=40, pos(width()/2 - 50, height()-100), action);
+    }//if
+
+    if (timed){
+        wait(waiting_time, action);
+    }//if
+}//planeScene

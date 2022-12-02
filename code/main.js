@@ -1,6 +1,6 @@
 import kaboom from "kaboom";
 
-import { createGameScene, winLooseScene } from "./helpers";
+import { createGameScene, winLooseScene, planeScene } from "./helpers";
 import { createLevelOne } from "./level";
 
 // initialize context
