@@ -3076,6 +3076,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
                 every("fish", (fish) => {
                   if (getDistance(bomb.pos, fish.pos) < 84) {
                     destroy(fish);
+                    points_collected += 10;
                   }
                 });
                 let player_bomb_distance = getDistance(player.pos, bomb.pos);
