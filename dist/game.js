@@ -3099,6 +3099,17 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         });
         let should_follow_user = false;
         onUpdate(() => {
+          if (player.hp() <= 0) {
+            let result = ["!Ouch", points_collected, 0, true, "plant"];
+            goNext(
+              next_screen_tag2 = "start",
+              next_screen_params = [],
+              has_tips2 = false,
+              tips_id2 = "",
+              tips_params_list2 = [],
+              result = result
+            );
+          }
           coins_count_label.text = points_collected;
           p_hel_label.text = player.hp();
           bomb_count_label.text = bomb_count;
@@ -3219,7 +3230,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   var winLooseScene = /* @__PURE__ */ __name((scene_id2) => {
     scene(
       scene_id2,
-      (msg, points, bonus, have_next_level, next_level, poster, action) => {
+      (msg, points, bonus, have_next_level, poster, action) => {
         let [message_box, message] = textbox(
           box_width = 500,
           box_height = 70,
@@ -3303,18 +3314,18 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       }
     });
   }, "planeScene");
-  var goNext = /* @__PURE__ */ __name((next_screen_tag2, next_screen_params, has_tips2, tips_id2, tips_params_list2, result) => {
+  var goNext = /* @__PURE__ */ __name((next_screen_tag2, next_screen_params2, has_tips2, tips_id2, tips_params_list2, result) => {
     if (has_tips2) {
       go(
         "result",
         ...result,
-        () => go(tips_id2, ...tips_params_list2, () => go(next_screen_tag2, ...next_screen_params))
+        () => go(tips_id2, ...tips_params_list2, () => go(next_screen_tag2, ...next_screen_params2))
       );
     } else if (!has_tips2) {
       go(
         "result",
         ...result,
-        () => go(next_screen_tag2, ...next_screen_params)
+        () => go(next_screen_tag2, ...next_screen_params2)
       );
     }
   }, "goNext");

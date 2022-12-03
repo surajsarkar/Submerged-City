@@ -241,6 +241,20 @@ export const createGameScene = (scene_id,
             let should_follow_user = false;
             onUpdate(() => {
 
+                // detecting if user life is ended
+                if (player.hp() <= 0){
+                    // msg, points, bonus, have_next_level, next_level, poster
+                    let result = ["!Ouch", points_collected, 0, true, "plant"];
+                    goNext(
+                        next_screen_tag="start",
+                        next_screen_params=[],
+                        has_tips=false,
+                        tips_id="",
+                        tips_params_list=[],
+                        result=result,
+                    );
+                }//if
+
                 // update points 
                 coins_count_label.text = points_collected;
                 
@@ -430,7 +444,7 @@ let addButton = (txt, font_size, position, func) => {
 export const winLooseScene = (scene_id) => {
     scene(
         scene_id,
-        (msg, points, bonus, have_next_level, next_level, poster, action) => {
+        (msg, points, bonus, have_next_level, poster, action) => {
             let [message_box, message] = textbox(box_width=500,
                                                 box_height=70,
                                                 outline_width=2,
