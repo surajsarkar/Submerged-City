@@ -10,7 +10,6 @@ export const createGameScene = (scene_id,
 ) => {
     /** 
     *@param {string} scene_id: name of the scene
-    
     **/
     scene(
         scene_id,
