@@ -26,6 +26,15 @@ export const createGameScene = (scene_id,
             gravity(10);
             play("underocean", { loop: true, volume: 0.4 });
 
+            let all_fish_pos = [];
+
+            let all_fish = get("fish");
+
+            for (let i = 0; i < all_fish.length: i++){
+                all_fish_pos.push(all_fish[i])
+            }//for
+            
+
             let [score_board, container_text] = textbox(
                 box_width = 250,
                 box_height = 50,
@@ -245,6 +254,18 @@ export const createGameScene = (scene_id,
                                 let hurt_amount = player.hp() - (player.hp() * player_bomb_distance / 100);
                                 player.hurt(Math.floor(hurt_amount > 0 ? hurt_amount : mod(hurt_amount)));
                             }//if
+
+                            every("safe_space", (brick)=>{
+                                if (getDistance(brick.pos, bomb.pos) <= 60){
+                                    destroy(brick);
+                                }//if
+                            })
+                            every("dist_brick", (brick)=>{
+                                if (getDistance(brick.pos, bomb.pos) <= 60){
+                                    destroy(brick);
+                                }//if
+                            })
+                            
                             destroy(bomb);
                             // bounce 
                             bounce(bomb = bomb, victim = player, radius = 200);
@@ -306,14 +327,18 @@ export const createGameScene = (scene_id,
                     debug.log(`brics : ${no_of_bricks_around_user}`);
                 })
 
-                if (should_follow_user) {
+                if (should_follow_user && no_of_bricks_around_user < 2) {
                     every("fish", (fish) => {
                         
                         let dir_and_speed = calculateVec(target = player, follower = fish, offset = 5, x_offset = 400);
                         fish.move(dir_and_speed);
                     });//every
                 }//if
-            });
+
+                else if (should_follow_user && no_of_bricks_around_user > 1){
+                    // fish should go near to gate
+                }//else if 
+            });//onUpdate
 
             // sm fish collision
             player.onCollide("fish", () => {

@@ -3109,6 +3109,16 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
                   let hurt_amount = player.hp() - player.hp() * player_bomb_distance / 100;
                   player.hurt(Math.floor(hurt_amount > 0 ? hurt_amount : mod(hurt_amount)));
                 }
+                every("safe_space", (brick) => {
+                  if (getDistance(brick.pos, bomb.pos) <= 60) {
+                    destroy(brick);
+                  }
+                });
+                every("dist_brick", (brick) => {
+                  if (getDistance(brick.pos, bomb.pos) <= 60) {
+                    destroy(brick);
+                  }
+                });
                 destroy(bomb);
                 bounce(bomb = bomb, victim = player, radius = 200);
                 shake(120);
@@ -3149,11 +3159,12 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
             }
             debug.log(`brics : ${no_of_bricks_around_user}`);
           });
-          if (should_follow_user) {
+          if (should_follow_user && no_of_bricks_around_user < 2) {
             every("fish", (fish) => {
               let dir_and_speed = calculateVec(target = player, follower = fish, offset = 5, x_offset = 400);
               fish.move(dir_and_speed);
             });
+          } else if (should_follow_user && no_of_bricks_around_user > 1) {
           }
         });
         player.onCollide(
@@ -3523,7 +3534,8 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         sprite("sageBrick"),
         solid(),
         area(),
-        scale(0.25)
+        scale(0.25),
+        "dist_brick"
       ]
     },
     next_screen_tag = "start",

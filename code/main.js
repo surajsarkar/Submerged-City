@@ -114,6 +114,7 @@ createGameScene(scene_id = "level_one",
             solid(),
             area(),
             scale(0.25),
+            "dist_brick"
         ]
     },
     next_screen_tag = "start",
