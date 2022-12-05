@@ -3456,7 +3456,12 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   );
   var firstLevel = /* @__PURE__ */ __name(() => go("level_one", 100, 0, 100, 0), "firstLevel");
   planeScene("start", "startBg", true, "start game", false, 0, () => go("story_1"));
-  planeScene("story_1", "chat_1", true, "skip >", true, 1, firstLevel);
+  planeScene("story_1", "chat_1", true, "skip >", true, 2, () => go("story_2"));
+  planeScene("story_2", "chat_2", true, "skip >", true, 2, () => go("story_3"));
+  planeScene("story_3", "chat_3", true, "skip >", true, 2, () => go("story_4"));
+  planeScene("story_4", "chat_4", true, "skip >", true, 2, () => go("story_5"));
+  planeScene("story_5", "chat_5", true, "skip >", true, 2, () => go("story_6"));
+  planeScene("story_6", "chat_6", true, "skip >", true, 2, firstLevel);
   winLooseScene("result");
   go("start");
 })();
