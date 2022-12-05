@@ -17,6 +17,8 @@ loadSprite("gate_1_tr", "../sprites/gate_1_tr.png");
 loadSprite("bomb", "../sprites/bomb.png");
 loadSprite("user", "../sprites/user.png");
 loadSprite("gcoin", "../sprites/gcoin.png");
+loadSprite("wallbrick", "../sprites/wallbrick.png");
+loadSprite("sageBrick", "../sprites/sageBrick.png");
 loadSprite("healthLbl", "../sprites/health.png");
 loadSprite("startBg", "../sprites/startBg.png");
 loadSprite("scoreBg", "../sprites/scoreBg.png");
@@ -93,6 +95,26 @@ createGameScene(scene_id = "level_one",
             scale(0.8),
             "bomb", //tag
         ],//bomb
+        "i": ()=>[
+            sprite("wallbrick"),
+            solid(),
+            area(),
+            "wall",
+            scale(0.5),
+        ],
+        "s": ()=>[
+            sprite("sageBrick"),
+            solid(),
+            area(),
+            "safe_space",
+            scale(0.25),
+        ],
+        "a": ()=>[
+            sprite("sageBrick"),
+            solid(),
+            area(),
+            scale(0.25),
+        ]
     },
     next_screen_tag = "start",
     has_tips = false,
@@ -117,4 +139,5 @@ planeScene("story_6", "chat_6", true, "skip >", true, 2, firstLevel);
 // creating result screen 
 winLooseScene("result");
 
-go("start");
+// go("start");
+go("level_one", 100, 0, 100, 0)

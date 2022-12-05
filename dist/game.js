@@ -3142,11 +3142,17 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
             should_follow_user = bomb_count > 1 ? false : false;
             wait(5, () => should_follow_user = false);
           }
+          let no_of_bricks_around_user = 0;
+          every("safe_space", (safeSpace) => {
+            if (getDistance(safeSpace.pos, player.pos) < 50) {
+              no_of_bricks_around_user++;
+            }
+            debug.log(`brics : ${no_of_bricks_around_user}`);
+          });
           if (should_follow_user) {
             every("fish", (fish) => {
-              fish.move(
-                calculateVec(target = player, follower = fish, offset = 5, x_offset = 400)
-              );
+              let dir_and_speed = calculateVec(target = player, follower = fish, offset = 5, x_offset = 400);
+              fish.move(dir_and_speed);
             });
           }
         });
@@ -3365,17 +3371,39 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   var createLevelOne = /* @__PURE__ */ __name((box_size2) => {
     let no_of_box = Math.floor(width() / box_size2.width);
     let LEVEL_12 = [
-      " ^ ^        ^                                                          ",
-      " **        ** ^  -  -  -  -  -  -  -                                   ",
-      " **  ^   **** **    b    -    --   -                                   ",
-      "^   **  **  ** ** b - - - -                                            ",
-      "**  **** ^ **  **   -   -   - b   -   - b                              ",
-      " **  ** **  **  **  -  -  -  -  -  -                                   ",
-      "**  ** **  ** {}** - -  - - -  b - -                                   ",
-      " **  ** ** ** ()  ** - b  -  - -                                       ",
-      "**  **   ** **() **   -  -  -   -  -                                   ",
-      " **  ** **  * () *  - -  -  -                                          ",
-      "**  **  ** **  **                                                      ",
+      "                                        aaaaaaaaaaaaaaaaa              ",
+      "                                        asssssssssssssssa              ",
+      "                                        as             sa              ",
+      "                                        as             sa              ",
+      "                                              sss      sa              ",
+      "                                              s s      sa              ",
+      "                                              s s      sa              ",
+      "                                              s s      sa              ",
+      "                                          ssssssssssssssa              ",
+      "                aaaaaaaaaaaaaaa           aaaaaaaaaaaaaaa              ",
+      "i               asssssssssssssa                                        ",
+      "i               assss        sa                                        ",
+      "i               assss        sa                                        ",
+      "i               assss                                                  ",
+      "i               assss                                                  ",
+      "i               assss                                                  ",
+      "i               asssssssssssss                                         ",
+      "i               aaaaaaaaaaaaaaa                                        ",
+      "ii                                                                     ",
+      "iiiiii**                                                               ",
+      "iii***ii*****                                                          ",
+      "iiiii**ii****                                                          ",
+      "i^i^iiiiiii^^                                                          ",
+      "i**iiiiiiii** ^  -  -  -  -  -  -  -                                   ",
+      "i**ii^iii**** **    b    -    --   -                                   ",
+      "^iii**ii**ii** ** b - - - -                                            ",
+      "**ii****i^i**ii**   -   -   - b   -   - b                              ",
+      "i**ii**i**ii**ii**  -  -  -  -  -  -                                   ",
+      "**ii**i**ii**i{}** - -  - - -  b - -                                   ",
+      "i**ii**ii*ii**()  ** - b  -  - -                                       ",
+      "**ii**iii**i**() **   -  -  -   -  -                                   ",
+      "i**ii**i**ii*i() *  - -  -  -                                          ",
+      "**ii**ii**i**i()**                                                     ",
       `${buildSeq(no_of_box, "g")}`
     ];
     return LEVEL_12;
@@ -3401,6 +3429,8 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   loadSprite("bomb", "../sprites/bomb.png");
   loadSprite("user", "../sprites/user.png");
   loadSprite("gcoin", "../sprites/gcoin.png");
+  loadSprite("wallbrick", "../sprites/wallbrick.png");
+  loadSprite("sageBrick", "../sprites/sageBrick.png");
   loadSprite("healthLbl", "../sprites/health.png");
   loadSprite("startBg", "../sprites/startBg.png");
   loadSprite("scoreBg", "../sprites/scoreBg.png");
@@ -3474,6 +3504,26 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         area(),
         scale(0.8),
         "bomb"
+      ],
+      "i": () => [
+        sprite("wallbrick"),
+        solid(),
+        area(),
+        "wall",
+        scale(0.5)
+      ],
+      "s": () => [
+        sprite("sageBrick"),
+        solid(),
+        area(),
+        "safe_space",
+        scale(0.25)
+      ],
+      "a": () => [
+        sprite("sageBrick"),
+        solid(),
+        area(),
+        scale(0.25)
       ]
     },
     next_screen_tag = "start",
@@ -3490,6 +3540,6 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   planeScene("story_5", "chat_5", true, "skip >", true, 2, () => go("story_6"));
   planeScene("story_6", "chat_6", true, "skip >", true, 2, firstLevel);
   winLooseScene("result");
-  go("start");
+  go("level_one", 100, 0, 100, 0);
 })();
 //# sourceMappingURL=game.js.map

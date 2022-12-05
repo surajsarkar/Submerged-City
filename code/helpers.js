@@ -75,13 +75,6 @@ export const createGameScene = (scene_id,
                 health(harry_health),
             ]);
 
-            // player.onUpdate(()=>{
-            //     let currentCam = camPos();
-            //     if (currentCam.x < player.pos.x){
-            //         camPos(player.pos.x, player.pos.y);
-            //     }//if
-            // });//player.onUpdate
-
             let [p_hel_box, p_hel_sprite, p_hel_label] = infoBoard(
                 sprite_tag = "grass",
                 sprite_pad_x = 5,
@@ -304,11 +297,20 @@ export const createGameScene = (scene_id,
                     wait(5, () => should_follow_user = false);//wait
                 }//if
 
+                let no_of_bricks_around_user = 0;
+
+                every("safe_space", (safeSpace)=>{
+                    if (getDistance(safeSpace.pos, player.pos) < 50){
+                        no_of_bricks_around_user ++;
+                    }
+                    debug.log(`brics : ${no_of_bricks_around_user}`);
+                })
+
                 if (should_follow_user) {
                     every("fish", (fish) => {
-                        fish.move(
-                            calculateVec(target = player, follower = fish, offset = 5, x_offset = 400)
-                        );//move
+                        
+                        let dir_and_speed = calculateVec(target = player, follower = fish, offset = 5, x_offset = 400);
+                        fish.move(dir_and_speed);
                     });//every
                 }//if
             });
