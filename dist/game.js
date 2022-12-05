@@ -2986,7 +2986,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           box_color = [255, 125, 0]
         );
         let [coins_counter, coins_logo_sprite, coins_count_label] = infoBoard(
-          sprite_tag = "bomb",
+          sprite_tag = "gcoin",
           sprite_pad_x = 5,
           sprite_pad_y = 5,
           initial_text = points_collected,
@@ -3003,9 +3003,10 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         );
         loop(1, () => {
           let point = add([
-            sprite("grass"),
+            sprite("gcoin"),
             pos(randi(10, width()), randi(10, height())),
             area(),
+            scale(0.5),
             "points"
           ]);
           wait(7, () => destroy(point));
@@ -3171,7 +3172,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           }
         );
         let health_button = add([
-          sprite("bomb"),
+          sprite("healthLbl"),
           area({ cursor: "pointer" }),
           pos(width() - 80, height() - 80)
         ]);
@@ -3399,6 +3400,8 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   loadSprite("gate_1_tr", "../sprites/gate_1_tr.png");
   loadSprite("bomb", "../sprites/bomb.png");
   loadSprite("user", "../sprites/user.png");
+  loadSprite("gcoin", "../sprites/gcoin.png");
+  loadSprite("healthLbl", "../sprites/health.png");
   loadSprite("startBg", "../sprites/startBg.png");
   loadSprite("scoreBg", "../sprites/scoreBg.png");
   loadSprite("gameBg", "../sprites/gameBg.png");

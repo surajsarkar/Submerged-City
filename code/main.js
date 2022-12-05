@@ -16,6 +16,8 @@ loadSprite("gate_1_tl", "../sprites/gate_1_tl.png");
 loadSprite("gate_1_tr", "../sprites/gate_1_tr.png");
 loadSprite("bomb", "../sprites/bomb.png");
 loadSprite("user", "../sprites/user.png");
+loadSprite("gcoin", "../sprites/gcoin.png");
+loadSprite("healthLbl", "../sprites/health.png");
 loadSprite("startBg", "../sprites/startBg.png");
 loadSprite("scoreBg", "../sprites/scoreBg.png");
 loadSprite("gameBg", "../sprites/gameBg.png");

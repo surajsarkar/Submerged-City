@@ -101,7 +101,7 @@ export const createGameScene = (scene_id,
             );//player health board
 
             let [coins_counter, coins_logo_sprite, coins_count_label] = infoBoard(
-                sprite_tag = "bomb",
+                sprite_tag = "gcoin",
                 sprite_pad_x = 5,
                 sprite_pad_y = 5,
                 initial_text = points_collected,
@@ -121,9 +121,10 @@ export const createGameScene = (scene_id,
             // add coin every 2 sec in random place 
             loop(1, () => {
                 let point = add([
-                    sprite("grass"),
+                    sprite("gcoin"),
                     pos(randi(10, width()), randi(10, height())),
                     area(),
+                    scale(0.5),
                     "points",
                 ]);//point
 
@@ -335,7 +336,7 @@ export const createGameScene = (scene_id,
             );//onCollide
 
             let health_button = add([
-                sprite('bomb'),
+                sprite('healthLbl'),
                 area({ cursor: "pointer" }),
                 pos(width() - 80, height() - 80),
             ]);//health_button
