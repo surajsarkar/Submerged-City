@@ -3138,8 +3138,8 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           p_hel_label.text = player.hp();
           bomb_count_label.text = bomb_count;
           if (!should_follow_user) {
-            should_follow_user = bomb_count > 1 ? true : false;
-            wait(5, () => should_follow_user = true);
+            should_follow_user = bomb_count > 1 ? false : false;
+            wait(5, () => should_follow_user = false);
           }
           if (should_follow_user) {
             every("fish", (fish) => {
@@ -3364,24 +3364,25 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   var createLevelOne = /* @__PURE__ */ __name((box_size2) => {
     let no_of_box = Math.floor(width() / box_size2.width);
     let LEVEL_12 = [
-      "           ** ^  -  -  -  -  -  -  -                                   ",
-      "     ^     ** **    b    -    --   -                                   ",
-      `^   **      ** ** b - - - - b${buildSeq(quantity = no_of_box - no_of_box * 0.5, symbol = " ")}b${buildSeq(quantity = no_of_box * 0.5, symbol = " ")}`,
-      "**  **   ^ **  **   -   -   - b   -   - b                              ",
+      " ^ ^        ^                                                          ",
+      " **        ** ^  -  -  -  -  -  -  -                                   ",
+      " **  ^   **** **    b    -    --   -                                   ",
+      "^   **  **  ** ** b - - - -                                            ",
+      "**  **** ^ **  **   -   -   - b   -   - b                              ",
       " **  ** **  **  **  -  -  -  -  -  -                                   ",
-      "**  ** **  **  **  - -  - - -  b - -                                   ",
-      " **  ** ** **   ** - b  -  - -                                         ",
-      "**  **   ** ** **   -  -  -   -  -                                     ",
-      " **  ** **  * p *  - -  -  -                                           ",
+      "**  ** **  ** {}** - -  - - -  b - -                                   ",
+      " **  ** ** ** ()  ** - b  -  - -                                       ",
+      "**  **   ** **() **   -  -  -   -  -                                   ",
+      " **  ** **  * () *  - -  -  -                                          ",
       "**  **  ** **  **                                                      ",
       `${buildSeq(no_of_box, "g")}`
     ];
     return LEVEL_12;
   }, "createLevelOne");
-  var buildSeq = /* @__PURE__ */ __name((quantity2, symbol2 = " ") => {
+  var buildSeq = /* @__PURE__ */ __name((quantity, symbol = " ") => {
     let base = "";
-    for (let i = 0; i < quantity2; i++) {
-      base += symbol2;
+    for (let i = 0; i < quantity; i++) {
+      base += symbol;
     }
     return base;
   }, "buildSeq");
@@ -3389,10 +3390,13 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   // code/main.js
   no({ background: [0, 105, 148] });
   loadSprite("fish", "../sprites/fish.png");
-  loadSprite("grass", "../sprites/sea_grass_two.png");
+  loadSprite("grass", "../sprites/grass.png");
   loadSprite("plant", "../sprites/sea_plant.png");
   loadSprite("plant_top", "../sprites/sea_plant_top.png");
-  loadSprite("passage", "../sprites/passage.png");
+  loadSprite("gate_1_bl", "../sprites/gate_1_bl.png");
+  loadSprite("gate_1_br", "../sprites/gate_1_br.png");
+  loadSprite("gate_1_tl", "../sprites/gate_1_tl.png");
+  loadSprite("gate_1_tr", "../sprites/gate_1_tr.png");
   loadSprite("bomb", "../sprites/bomb.png");
   loadSprite("user", "../sprites/user.png");
   loadSprite("startBg", "../sprites/startBg.png");
@@ -3417,11 +3421,13 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       "*": () => [
         sprite("plant"),
         area(),
-        z(randi(1, 10))
+        z(randi(1, 10)),
+        scale(0.5)
       ],
       "^": () => [
         sprite("plant_top"),
-        area()
+        area(),
+        scale(0.5)
       ],
       "-": () => [
         sprite("fish"),
@@ -3436,8 +3442,26 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         scale(2),
         solid()
       ],
-      "p": () => [
-        sprite("passage"),
+      "(": () => [
+        sprite("gate_1_bl"),
+        solid(),
+        area(),
+        "passage"
+      ],
+      ")": () => [
+        sprite("gate_1_br"),
+        solid(),
+        area(),
+        "passage"
+      ],
+      "{": () => [
+        sprite("gate_1_tl"),
+        solid(),
+        area(),
+        "passage"
+      ],
+      "}": () => [
+        sprite("gate_1_tr"),
         solid(),
         area(),
         "passage"
@@ -3455,7 +3479,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     tips_params_list = []
   );
   var firstLevel = /* @__PURE__ */ __name(() => go("level_one", 100, 0, 100, 0), "firstLevel");
-  planeScene("start", "startBg", true, "start game", false, 0, () => go("story_1"));
+  planeScene("start", "startBg", true, "start game", false, 0, firstLevel);
   planeScene("story_1", "chat_1", true, "skip >", true, 2, () => go("story_2"));
   planeScene("story_2", "chat_2", true, "skip >", true, 2, () => go("story_3"));
   planeScene("story_3", "chat_3", true, "skip >", true, 2, () => go("story_4"));

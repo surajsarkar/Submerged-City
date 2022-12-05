@@ -21,15 +21,16 @@ export let LEVEL_1 = [
 export const createLevelOne = (box_size) => {
     let no_of_box = Math.floor(width() / box_size.width);
     let LEVEL_1 = [
-        "           ** ^  -  -  -  -  -  -  -                                   ",
-        "     ^     ** **    b    -    --   -                                   ",
-        `^   **      ** ** b - - - - b${buildSeq(quantity = no_of_box - no_of_box * 0.5, symbol = ' ')}b${buildSeq(quantity = no_of_box * 0.5, symbol = ' ')}`,
-        "**  **   ^ **  **   -   -   - b   -   - b                              ",
+        " ^ ^        ^                                                          ",
+        " **        ** ^  -  -  -  -  -  -  -                                   ",
+        " **  ^   **** **    b    -    --   -                                   ",
+        "^   **  **  ** ** b - - - -                                            ",
+        "**  **** ^ **  **   -   -   - b   -   - b                              ",
         " **  ** **  **  **  -  -  -  -  -  -                                   ",
-        "**  ** **  **  **  - -  - - -  b - -                                   ",
-        " **  ** ** **   ** - b  -  - -                                         ",
-        "**  **   ** ** **   -  -  -   -  -                                     ",
-        " **  ** **  * p *  - -  -  -                                           ",
+        "**  ** **  ** {}** - -  - - -  b - -                                   ",
+        " **  ** ** ** ()  ** - b  -  - -                                       ",
+        "**  **   ** **() **   -  -  -   -  -                                   ",
+        " **  ** **  * () *  - -  -  -                                          ",
         "**  **  ** **  **                                                      ",
         `${buildSeq(no_of_box, "g")}`,
     ]

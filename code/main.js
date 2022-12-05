@@ -7,10 +7,13 @@ import { createLevelOne } from "./level";
 kaboom({ background: [0, 105, 148] });
 
 loadSprite("fish", "../sprites/fish.png");
-loadSprite("grass", "../sprites/sea_grass_two.png");
+loadSprite("grass", "../sprites/grass.png");
 loadSprite("plant", "../sprites/sea_plant.png");
 loadSprite("plant_top", "../sprites/sea_plant_top.png");
-loadSprite("passage", "../sprites/passage.png");
+loadSprite("gate_1_bl", "../sprites/gate_1_bl.png");
+loadSprite("gate_1_br", "../sprites/gate_1_br.png");
+loadSprite("gate_1_tl", "../sprites/gate_1_tl.png");
+loadSprite("gate_1_tr", "../sprites/gate_1_tr.png");
 loadSprite("bomb", "../sprites/bomb.png");
 loadSprite("user", "../sprites/user.png");
 loadSprite("startBg", "../sprites/startBg.png");
@@ -38,10 +41,12 @@ createGameScene(scene_id = "level_one",
             sprite("plant"),
             area(),
             z(randi(1, 10)),
+            scale(0.5)
         ],//plant
         "^": () => [
             sprite("plant_top"),
             area(),
+            scale(0.5)
         ],//plant_top
         "-": () => [
             sprite("fish"),
@@ -56,12 +61,30 @@ createGameScene(scene_id = "level_one",
             scale(2),
             solid(),
         ],//grass
-        "p": () => [
-            sprite("passage"),
+        "(": () => [
+            sprite("gate_1_bl"),
             solid(),
             area(),
             "passage", //tag
-        ],//passage
+        ],//gate_1
+        ")": () => [
+            sprite("gate_1_br"),
+            solid(),
+            area(),
+            "passage", //tag
+        ],//gate_1
+        "{": () => [
+            sprite("gate_1_tl"),
+            solid(),
+            area(),
+            "passage", //tag
+        ],//gate_1
+        "}": () => [
+            sprite("gate_1_tr"),
+            solid(),
+            area(),
+            "passage", //tag
+        ],//gate_1
         "b": () => [
             sprite("bomb"),
             area(),
@@ -78,7 +101,7 @@ createGameScene(scene_id = "level_one",
 
 // creating start screen
 let firstLevel = () => go("level_one", 100, 0, 100, 0);
-planeScene("start", "startBg", true, "start game", false, 0, () => go("story_1"));
+planeScene("start", "startBg", true, "start game", false, 0, firstLevel);
 // scene_id, sprite_tag, should_have_button, button_text, timed, waiting_time, action
 
 // stories

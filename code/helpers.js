@@ -75,6 +75,13 @@ export const createGameScene = (scene_id,
                 health(harry_health),
             ]);
 
+            // player.onUpdate(()=>{
+            //     let currentCam = camPos();
+            //     if (currentCam.x < player.pos.x){
+            //         camPos(player.pos.x, player.pos.y);
+            //     }//if
+            // });//player.onUpdate
+
             let [p_hel_box, p_hel_sprite, p_hel_label] = infoBoard(
                 sprite_tag = "grass",
                 sprite_pad_x = 5,
@@ -292,8 +299,8 @@ export const createGameScene = (scene_id,
                 bomb_count_label.text = bomb_count;
 
                 if (!should_follow_user) {
-                    should_follow_user = bomb_count > 1 ? true : false;
-                    wait(5, () => should_follow_user = true);//wait
+                    should_follow_user = bomb_count > 1 ?  false : false;
+                    wait(5, () => should_follow_user = false);//wait
                 }//if
 
                 if (should_follow_user) {
