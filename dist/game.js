@@ -3454,7 +3454,9 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     tips_id = "",
     tips_params_list = []
   );
-  planeScene("start", "startBg", true, "start game", false, 0, () => go("level_one", 100, 0, 100, 0));
+  var firstLevel = /* @__PURE__ */ __name(() => go("level_one", 100, 0, 100, 0), "firstLevel");
+  planeScene("start", "startBg", true, "start game", false, 0, () => go("story_1"));
+  planeScene("story_1", "chat_1", true, "skip >", true, 1, firstLevel);
   winLooseScene("result");
   go("start");
 })();

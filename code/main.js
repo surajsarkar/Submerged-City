@@ -77,7 +77,10 @@ createGameScene(scene_id = "level_one",
 
 
 // creating start screen
-planeScene("start", "startBg", true, "start game", false, 0, () => go("level_one", 100, 0, 100, 0));
+let firstLevel = () => go("level_one", 100, 0, 100, 0); 
+// scene_id, sprite_tag, should_have_button, button_text, timed, waiting_time, action
+planeScene("start", "startBg", true, "start game", false, 0, () => go("story_1"));
+planeScene("story_1", "chat_1", true, "skip >", true, 1, firstLevel);
 
 // creating result screen 
 winLooseScene("result");
