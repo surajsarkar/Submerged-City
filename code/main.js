@@ -13,6 +13,15 @@ loadSprite("plant_top", "../sprites/sea_plant_top.png");
 loadSprite("passage", "../sprites/passage.png");
 loadSprite("bomb", "../sprites/bomb.png");
 loadSprite("user", "../sprites/user.png");
+loadSprite("startBg", "../sprites/startBg.png");
+loadSprite("scoreBg", "../sprites/scoreBg.png");
+loadSprite("gameBg", "../sprites/gameBg.png");
+loadSprite("chat_1", "../sprites/chat_1.png");
+loadSprite("chat_2", "../sprites/chat_2.png");
+loadSprite("chat_3", "../sprites/chat_3.png");
+loadSprite("chat_4", "../sprites/chat_4.png");
+loadSprite("chat_5", "../sprites/chat_5.png");
+loadSprite("chat_6", "../sprites/chat_6.png");
 
 loadSound("underocean", "../sprites/underocean.mp3");
 loadSound("blastsound", "../sprites/blastaudio.m4a");
@@ -68,7 +77,7 @@ createGameScene(scene_id = "level_one",
 
 
 // creating start screen
-planeScene("start", "plant", true, "start game", false, 0, ()=> go("level_one", 100, 4, 100, 0));
+planeScene("start", "startBg", true, "start game", false, 0, () => go("level_one", 100, 0, 100, 0));
 
 // creating result screen 
 winLooseScene("result");

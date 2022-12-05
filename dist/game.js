@@ -2918,6 +2918,12 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     scene(
       scene_id2,
       (rons_health, bomb_count, harry_health, points_collected) => {
+        add([
+          sprite("gameBg", { width: width() }),
+          pos(width() / 2, height() / 2),
+          origin("center"),
+          z(-1)
+        ]);
         gravity(10);
         play("underocean", { loop: true, volume: 0.4 });
         let [score_board, container_text] = textbox(
@@ -3010,38 +3016,56 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         });
         onKeyDown("up", () => {
           if (player.pos.y > 0) {
-            if (player.angle === 0) {
-              player.angle += 30;
+            if (player.angle === -10) {
+              player.angle += 40;
             }
             player.pos = vec2(player.pos.x - 3, player.pos.y - 3);
           }
         });
         onKeyRelease("up", () => {
           if (player.angle === 30) {
-            player.angle -= 30;
+            player.angle -= 40;
           }
         });
         onKeyDown("left", () => {
+          player.flipX(false);
           if (player.pos.x > 5) {
-            if (player.angle === 0) {
-              playe.angle -= 30;
+            if (player.angle === -10) {
+              player.angle += 10;
             }
             player.pos = vec2(player.pos.x - 4, player.pos.y);
           }
         });
         onKeyRelease("left", () => {
-          if (player.angle === -30) {
-            player.angle += 30;
+          if (player.angle === 0) {
+            player.angle -= 10;
+          }
+        });
+        onKeyRelease("right", () => {
+          if (player.angle === 10) {
+            player.angle -= 20;
           }
         });
         onKeyDown("right", () => {
+          if (player.angle === -10) {
+            player.angle += 20;
+          }
           if (player.pos.x < width() - 45) {
+            player.flipX(true);
             player.pos = vec2(player.pos.x + 4, player.pos.y);
           }
         });
         onKeyDown("down", () => {
+          if (player.angle === -10) {
+            player.angle -= 30;
+          }
           if (player.pos.y < height() - 45) {
             player.pos = vec2(player.pos.x, player.pos.y + 4);
+          }
+        });
+        onKeyRelease("down", () => {
+          if (player.angle === -40) {
+            player.angle += 30;
           }
         });
         onKeyPress(["w", "a", "s", "d"], () => {
@@ -3134,7 +3158,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         player.onCollide(
           "passage",
           () => {
-            let result = ["Hurrah...doing great so far", points_collected, 0, true, next_screen_tag2, "plant"];
+            let result = ["Hurrah...doing great so far", points_collected, 0, true, "plant"];
             let next_level_data = [rons_health, bomb_count, player.hp(), points_collected];
             goNext(
               next_screen_tag2,
@@ -3231,6 +3255,12 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     scene(
       scene_id2,
       (msg, points, bonus, have_next_level, poster, action) => {
+        add([
+          sprite("scoreBg", { width: width() }),
+          pos(width() / 2, height() / 2),
+          origin("center"),
+          z(-1)
+        ]);
         let [message_box, message] = textbox(
           box_width = 500,
           box_height = 70,
@@ -3302,7 +3332,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   var planeScene = /* @__PURE__ */ __name((scene_id2, sprite_tag2, should_have_button, button_text, timed, waiting_time, action) => {
     scene(scene_id2, () => {
       add([
-        sprite(sprite_tag2),
+        sprite(sprite_tag2, { width: width() }),
         pos(width() / 2, height() / 2),
         origin("center")
       ]);
@@ -3365,6 +3395,15 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   loadSprite("passage", "../sprites/passage.png");
   loadSprite("bomb", "../sprites/bomb.png");
   loadSprite("user", "../sprites/user.png");
+  loadSprite("startBg", "../sprites/startBg.png");
+  loadSprite("scoreBg", "../sprites/scoreBg.png");
+  loadSprite("gameBg", "../sprites/gameBg.png");
+  loadSprite("chat_1", "../sprites/chat_1.png");
+  loadSprite("chat_2", "../sprites/chat_2.png");
+  loadSprite("chat_3", "../sprites/chat_3.png");
+  loadSprite("chat_4", "../sprites/chat_4.png");
+  loadSprite("chat_5", "../sprites/chat_5.png");
+  loadSprite("chat_6", "../sprites/chat_6.png");
   loadSound("underocean", "../sprites/underocean.mp3");
   loadSound("blastsound", "../sprites/blastaudio.m4a");
   var LEVEL_1 = createLevelOne(box_size = { width: 20, height: 20 });
@@ -3415,7 +3454,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     tips_id = "",
     tips_params_list = []
   );
-  planeScene("start", "plant", true, "start game", false, 0, () => go("level_one", 100, 4, 100, 0));
+  planeScene("start", "startBg", true, "start game", false, 0, () => go("level_one", 100, 0, 100, 0));
   winLooseScene("result");
   go("start");
 })();

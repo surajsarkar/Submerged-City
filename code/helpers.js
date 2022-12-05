@@ -16,6 +16,14 @@ export const createGameScene = (scene_id,
         scene_id,
         (rons_health, bomb_count, harry_health, points_collected) => {
 
+            //background
+            add([
+                sprite("gameBg", {width: width()}),
+                pos(width()/2, height()/2),
+                origin("center"),
+                z(-1),                
+            ]);
+
             gravity(10);
             play("underocean", { loop: true, volume: 0.4 });
 
@@ -105,28 +113,28 @@ export const createGameScene = (scene_id,
             );//coins collected
 
             // add coin every 2 sec in random place 
-            loop(1, ()=>{
+            loop(1, () => {
                 let point = add([
                     sprite("grass"),
                     pos(randi(10, width()), randi(10, height())),
                     area(),
                     "points",
                 ]);//point
-                
-                wait(7, ()=>destroy(point));//wait
+
+                wait(7, () => destroy(point));//wait
             });//loop
 
             // player collision with coin
-            player.onCollide("points", (collection)=>{
+            player.onCollide("points", (collection) => {
                 destroy(collection);
                 points_collected += 10;
             });//collision with coin
-            
+
             // movement of the user
             onKeyDown("up", () => {
                 if (player.pos.y > 0) {
-                    if (player.angle === 0) {
-                        player.angle += 30;
+                    if (player.angle === -10) {
+                        player.angle += 40;
                     }//if
                     player.pos = vec2(player.pos.x - 3, player.pos.y - 3);
                 }//if
@@ -134,34 +142,54 @@ export const createGameScene = (scene_id,
 
             onKeyRelease("up", () => {
                 if (player.angle === 30) {
-                    player.angle -= 30;
+                    player.angle -= 40;
                 }//if 
             });
 
             onKeyDown("left", () => {
+                player.flipX(false);
                 if (player.pos.x > 5) {
-                    if (player.angle === 0) {
-                        playe.angle -= 30;
+                    if (player.angle === -10) {
+                        player.angle += 10;
                     }//if
                     player.pos = vec2(player.pos.x - 4, player.pos.y);
                 }//if
             });
 
             onKeyRelease("left", () => {
-                if (player.angle === -30) {
-                    player.angle += 30;
+                if (player.angle === 0) {
+                    player.angle -= 10;
+                }//if
+            });
+
+            onKeyRelease("right", () => {
+                if (player.angle === 10) {
+                    player.angle -= 20;
                 }//if
             });
 
             onKeyDown("right", () => {
+                if (player.angle === -10) {
+                    player.angle += 20
+                }//if
                 if (player.pos.x < width() - 45) {
+                    player.flipX(true);
                     player.pos = vec2(player.pos.x + 4, player.pos.y);
                 }//if
             });
 
             onKeyDown("down", () => {
+                if (player.angle === -10) {
+                    player.angle -= 30;
+                }//if
                 if (player.pos.y < height() - 45) {
                     player.pos = vec2(player.pos.x, player.pos.y + 4);
+                }//if
+            });
+
+            onKeyRelease("down", () => {
+                if (player.angle === -40) {
+                    player.angle += 30;
                 }//if
             });
 
@@ -242,22 +270,22 @@ export const createGameScene = (scene_id,
             onUpdate(() => {
 
                 // detecting if user life is ended
-                if (player.hp() <= 0){
-                    // msg, points, bonus, have_next_level, next_level, poster
+                if (player.hp() <= 0) {
+                    // msg, points, bonus, have_next_level, poster
                     let result = ["!Ouch", points_collected, 0, true, "plant"];
                     goNext(
-                        next_screen_tag="start",
-                        next_screen_params=[],
-                        has_tips=false,
-                        tips_id="",
-                        tips_params_list=[],
-                        result=result,
+                        next_screen_tag = "start",
+                        next_screen_params = [],
+                        has_tips = false,
+                        tips_id = "",
+                        tips_params_list = [],
+                        result = result,
                     );
                 }//if
 
                 // update points 
                 coins_count_label.text = points_collected;
-                
+
                 // update user health point 
                 p_hel_label.text = player.hp();
 
@@ -287,7 +315,7 @@ export const createGameScene = (scene_id,
             // collision with passage
             player.onCollide("passage", () => {
                 // msg, points, bonus, have_next_level, next_level, poster
-                let result = ["Hurrah...doing great so far", points_collected, 0, true, next_screen_tag, "plant"];
+                let result = ["Hurrah...doing great so far", points_collected, 0, true, "plant"];
                 let next_level_data = [rons_health, bomb_count, player.hp(), points_collected];
                 goNext(
                     next_screen_tag,
@@ -302,13 +330,13 @@ export const createGameScene = (scene_id,
 
             let health_button = add([
                 sprite('bomb'),
-                area({cursor: "pointer"}),
+                area({ cursor: "pointer" }),
                 pos(width() - 80, height() - 80),
             ]);//health_button
 
-            health_button.onClick(()=>{
+            health_button.onClick(() => {
                 health_point = player.hp();
-                if (health_point + 2 <= 100 && points_collected >= 10){
+                if (health_point + 2 <= 100 && points_collected >= 10) {
                     player.hurt(-2);
                     points_collected -= 10
                 }//if
@@ -420,7 +448,7 @@ let textbox = (
 
     let box_text = add([
         text(initial_text, { size: font_size, font: font }),
-        pos(text_box.pos.x+ text_x_pad, text_box.pos.y + text_y_pad),
+        pos(text_box.pos.x + text_x_pad, text_box.pos.y + text_y_pad),
     ]);
 
     return [text_box, box_text];
@@ -430,9 +458,9 @@ let textbox = (
 
 let addButton = (txt, font_size, position, func) => {
     let btn = add([
-        text(txt, {size: font_size}),
+        text(txt, { size: font_size }),
         position,
-        area({cursor: "pointer"}),
+        area({ cursor: "pointer" }),
         scale(1),
     ])
     btn.onClick(func);
@@ -445,69 +473,78 @@ export const winLooseScene = (scene_id) => {
     scene(
         scene_id,
         (msg, points, bonus, have_next_level, poster, action) => {
-            let [message_box, message] = textbox(box_width=500,
-                                                box_height=70,
-                                                outline_width=2,
-                                                box_color=color(65, 125, 225),
-                                                initial_text=msg,
-                                                text_pad_x=10,
-                                                text_pad_y=15,
-                                                font="sink",
-                                                font_size=40,
-                                                x_cor=center().x - 250,
-                                                y_cor=40,
-                                                );
 
-            let [points_box, points_collected] = textbox(box_width=450,
-                                                box_height=70,
-                                                outline_width=2,
-                                                box_color=color(65, 125, 225),
-                                                initial_text=`Earnings: ${points}`,
-                                                text_pad_x=10,
-                                                text_pad_y=15,
-                                                font="sink",
-                                                font_size=40,
-                                                x_cor=message_box.pos.x + 250,
-                                                y_cor=message_box.pos.y + 80
-                                                );
+            //background
+            add([
+                sprite("scoreBg", {width: width()}),
+                pos(width()/2, height()/2),
+                origin("center"),
+                z(-1),                
+            ]);
+            
+            let [message_box, message] = textbox(box_width = 500,
+                box_height = 70,
+                outline_width = 2,
+                box_color = color(65, 125, 225),
+                initial_text = msg,
+                text_pad_x = 10,
+                text_pad_y = 15,
+                font = "sink",
+                font_size = 40,
+                x_cor = center().x - 250,
+                y_cor = 40,
+            );
 
-            let [bonus_box, bonus_collected] = textbox(box_width=450,
-                                                box_height=70,
-                                                outline_width=2,
-                                                box_color=color(65, 125, 225),
-                                                initial_text=`Bonus: ${bonus}`,
-                                                text_pad_x=10,
-                                                text_pad_y=15,
-                                                font="sink",
-                                                font_size=40,
-                                                x_cor=message_box.pos.x + 250,
-                                                y_cor=points_box.pos.y + 80,
-                                                );
+            let [points_box, points_collected] = textbox(box_width = 450,
+                box_height = 70,
+                outline_width = 2,
+                box_color = color(65, 125, 225),
+                initial_text = `Earnings: ${points}`,
+                text_pad_x = 10,
+                text_pad_y = 15,
+                font = "sink",
+                font_size = 40,
+                x_cor = message_box.pos.x + 250,
+                y_cor = message_box.pos.y + 80
+            );
 
-            let [total_box, total_points] = textbox(box_width=450,
-                                                box_height=70,
-                                                outline_width=2,
-                                                box_color=color(65, 125, 225),
-                                                initial_text=`Total: ${bonus + points}`,
-                                                text_pad_x=10,
-                                                text_pad_y=15,
-                                                font="sink",
-                                                font_size=40,
-                                                x_cor=message_box.pos.x + 250,
-                                                y_cor=bonus_box.pos.y + 80,
-                                                );
+            let [bonus_box, bonus_collected] = textbox(box_width = 450,
+                box_height = 70,
+                outline_width = 2,
+                box_color = color(65, 125, 225),
+                initial_text = `Bonus: ${bonus}`,
+                text_pad_x = 10,
+                text_pad_y = 15,
+                font = "sink",
+                font_size = 40,
+                x_cor = message_box.pos.x + 250,
+                y_cor = points_box.pos.y + 80,
+            );
 
-        add([
-            sprite(poster),
-            pos(message_box.pos.x -300, message_box.pos.y + 80),
-            scale(1),
-        ])
+            let [total_box, total_points] = textbox(box_width = 450,
+                box_height = 70,
+                outline_width = 2,
+                box_color = color(65, 125, 225),
+                initial_text = `Total: ${bonus + points}`,
+                text_pad_x = 10,
+                text_pad_y = 15,
+                font = "sink",
+                font_size = 40,
+                x_cor = message_box.pos.x + 250,
+                y_cor = bonus_box.pos.y + 80,
+            );
 
-            if (have_next_level){
+            add([
+                sprite(poster),
+                pos(message_box.pos.x - 300, message_box.pos.y + 80),
+                scale(1),
+            ])
+
+            if (have_next_level) {
                 let next_level_bth = addButton(
                     "Next Level ->",
                     35,
-                    pos(total_box.pos.x - 130, total_box.pos.y + 80), 
+                    pos(total_box.pos.x - 130, total_box.pos.y + 80),
                     action);
             }//if
         }
@@ -516,19 +553,19 @@ export const winLooseScene = (scene_id) => {
 
 
 export const planeScene = (scene_id, sprite_tag, should_have_button, button_text, timed, waiting_time, action) => {
-    scene(scene_id, ()=>{
-        
+    scene(scene_id, () => {
+
         add([
-            sprite(sprite_tag),
-            pos(width()/2, height()/2),
+            sprite(sprite_tag, { width: width() }),
+            pos(width() / 2, height() / 2),
             origin("center"),
         ])
-    
-        if (should_have_button){
-            addButton(button_text, font_size=40, pos(width()/2 - 50, height()-100), action);
+
+        if (should_have_button) {
+            addButton(button_text, font_size = 40, pos(width() / 2 - 50, height() - 100), action);
         }//if
-    
-        if (timed){
+
+        if (timed) {
             wait(waiting_time, action);
         }//if
     });//scene
@@ -542,22 +579,22 @@ let goNext = (
     tips_id,
     tips_params_list,
     result,
-    
+
 ) => {
 
-    if (has_tips){
+    if (has_tips) {
         go(
             "result",
             ...result,
-            () => go(tips_id, ...tips_params_list, ()=>go(next_screen_tag, ...next_screen_params))
+            () => go(tips_id, ...tips_params_list, () => go(next_screen_tag, ...next_screen_params))
         );
     }//if
-    else if (!has_tips){
+    else if (!has_tips) {
         go(
             "result",
             ...result,
-            ()=>go(next_screen_tag, ...next_screen_params)
+            () => go(next_screen_tag, ...next_screen_params)
         );
     }//else if
-    
+
 }//goNext
