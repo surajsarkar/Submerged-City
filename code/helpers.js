@@ -86,7 +86,7 @@ export const createGameScene = (scene_id,
             ]);
 
             let [p_hel_box, p_hel_sprite, p_hel_label] = infoBoard(
-                sprite_tag = "grass",
+                sprite_tag = "harry_health",
                 sprite_pad_x = 5,
                 sprite_pad_y = 5,
                 initial_text = player.hp(),
