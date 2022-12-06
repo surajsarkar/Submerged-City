@@ -25,15 +25,7 @@ export const createGameScene = (scene_id,
 
             gravity(10);
             play("underocean", { loop: true, volume: 0.4 });
-
-            let all_fish_pos = [];
-
-            let all_fish = get("fish");
-
-            for (let i = 0; i < all_fish.length: i++){
-                all_fish_pos.push(all_fish[i])
-            }//for
-            
+           
 
             let [score_board, container_text] = textbox(
                 box_width = 250,
@@ -72,6 +64,15 @@ export const createGameScene = (scene_id,
                 level,
                 level_options,
             );//addLevel
+
+            let all_fish_pos = [];
+
+            let all_fish = get("fish");
+
+            for (let i = 0; i < all_fish.length; i++){
+                all_fish_pos.push(all_fish[i].pos)
+            }//for
+            // debug.log(all_fish_pos);
 
             const player = add([
                 sprite("user", { flipX: false, },),
@@ -314,20 +315,21 @@ export const createGameScene = (scene_id,
                 bomb_count_label.text = bomb_count;
 
                 if (!should_follow_user) {
-                    should_follow_user = bomb_count > 1 ?  false : false;
-                    wait(5, () => should_follow_user = false);//wait
+                    should_follow_user = bomb_count > 1 ?  true : false;
+                    wait(5, () => should_follow_user = true);//wait
                 }//if
 
                 let no_of_bricks_around_user = 0;
 
-                every("safe_space", (safeSpace)=>{
+                every("iwall", (safeSpace)=>{
                     if (getDistance(safeSpace.pos, player.pos) < 50){
                         no_of_bricks_around_user ++;
                     }
                     debug.log(`brics : ${no_of_bricks_around_user}`);
                 })
 
-                if (should_follow_user && no_of_bricks_around_user < 2) {
+
+                if (should_follow_user && no_of_bricks_around_user < 5) {
                     every("fish", (fish) => {
                         
                         let dir_and_speed = calculateVec(target = player, follower = fish, offset = 5, x_offset = 400);
@@ -335,8 +337,14 @@ export const createGameScene = (scene_id,
                     });//every
                 }//if
 
-                else if (should_follow_user && no_of_bricks_around_user > 1){
+                else if (should_follow_user && no_of_bricks_around_user > 5){
                     // fish should go near to gate
+                    every("fish", (fish)=>{
+                        let gate = choose(get("passage"));
+                        if (!(getDistance(fish.pos, gate.pos) < 300)){
+                            fish.move(calculateVec(gate, fish, 0, 0));
+                        }//if
+                    });//every
                 }//else if 
             });//onUpdate
 

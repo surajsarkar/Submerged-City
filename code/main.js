@@ -20,6 +20,8 @@ loadSprite("gcoin", "../sprites/gcoin.png");
 loadSprite("wallbrick", "../sprites/wallbrick.png");
 loadSprite("sageBrick", "../sprites/sageBrick.png");
 loadSprite("healthLbl", "../sprites/health.png");
+loadSprite("invisible_wall", "../sprites/invisible_wall.png");
+loadSprite("harry_health", "../sprites/harry_health.png");
 loadSprite("startBg", "../sprites/startBg.png");
 loadSprite("scoreBg", "../sprites/scoreBg.png");
 loadSprite("gameBg", "../sprites/gameBg.png");
@@ -115,6 +117,12 @@ createGameScene(scene_id = "level_one",
             area(),
             scale(0.25),
             "dist_brick"
+        ],
+        "n": ()=>[
+            sprite("invisible_wall"),
+            area(),
+            scale(0.25),
+            "iwall"
         ]
     },
     next_screen_tag = "start",

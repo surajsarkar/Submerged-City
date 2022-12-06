@@ -2959,6 +2959,11 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           level2,
           level_options2
         );
+        let all_fish_pos = [];
+        let all_fish = get("fish");
+        for (let i = 0; i < all_fish.length; i++) {
+          all_fish_pos.push(all_fish[i].pos);
+        }
         const player = add([
           sprite("user", { flipX: false }),
           pos(width() - 40, 30),
@@ -3149,22 +3154,28 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           p_hel_label.text = player.hp();
           bomb_count_label.text = bomb_count;
           if (!should_follow_user) {
-            should_follow_user = bomb_count > 1 ? false : false;
-            wait(5, () => should_follow_user = false);
+            should_follow_user = bomb_count > 1 ? true : false;
+            wait(5, () => should_follow_user = true);
           }
           let no_of_bricks_around_user = 0;
-          every("safe_space", (safeSpace) => {
+          every("iwall", (safeSpace) => {
             if (getDistance(safeSpace.pos, player.pos) < 50) {
               no_of_bricks_around_user++;
             }
             debug.log(`brics : ${no_of_bricks_around_user}`);
           });
-          if (should_follow_user && no_of_bricks_around_user < 2) {
+          if (should_follow_user && no_of_bricks_around_user < 5) {
             every("fish", (fish) => {
               let dir_and_speed = calculateVec(target = player, follower = fish, offset = 5, x_offset = 400);
               fish.move(dir_and_speed);
             });
-          } else if (should_follow_user && no_of_bricks_around_user > 1) {
+          } else if (should_follow_user && no_of_bricks_around_user > 5) {
+            every("fish", (fish) => {
+              let gate = choose(get("passage"));
+              if (!(getDistance(fish.pos, gate.pos) < 300)) {
+                fish.move(calculateVec(gate, fish, 0, 0));
+              }
+            });
           }
         });
         player.onCollide(
@@ -3382,23 +3393,24 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   var createLevelOne = /* @__PURE__ */ __name((box_size2) => {
     let no_of_box = Math.floor(width() / box_size2.width);
     let LEVEL_12 = [
+      "                                                                       ",
       "                                        aaaaaaaaaaaaaaaaa              ",
       "                                        asssssssssssssssa              ",
-      "                                        as             sa              ",
-      "                                        as             sa              ",
-      "                                              sss      sa              ",
-      "                                              s s      sa              ",
-      "                                              s s      sa              ",
-      "                                              s s      sa              ",
-      "                                          ssssssssssssssa              ",
-      "                aaaaaaaaaaaaaaa           aaaaaaaaaaaaaaa              ",
+      "                                        asnnnnnnnnnnnnnsa              ",
+      "                                        asnnnnnnnnnnnnnsa              ",
+      "                                          nnnnsssnnnnnnsa              ",
+      "                                          nnnnsssnnnnnnsa              ",
+      "                                          nnnnsssnnnnnnsa              ",
+      "                                          nnnnsssnnnnnnsa              ",
+      "                                        ssssssssssssssssa              ",
+      "                                                                       ",
       "i               asssssssssssssa                                        ",
-      "i               assss        sa                                        ",
-      "i               assss        sa                                        ",
-      "i               assss                                                  ",
-      "i               assss                                                  ",
-      "i               assss                                                  ",
-      "i               asssssssssssss                                         ",
+      "i               asssnnnnnnnnnsa                                        ",
+      "i               asssnnnnnnnnnsa                                        ",
+      "i               asssnnnnnnnnnnn                                        ",
+      "i               asssnnnnnnnnnnn                                        ",
+      "i               asssnnnnnnnnnnn                                        ",
+      "i               asssssssssssssn                                        ",
       "i               aaaaaaaaaaaaaaa                                        ",
       "ii                                                                     ",
       "iiiiii**                                                               ",
@@ -3443,6 +3455,8 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   loadSprite("wallbrick", "../sprites/wallbrick.png");
   loadSprite("sageBrick", "../sprites/sageBrick.png");
   loadSprite("healthLbl", "../sprites/health.png");
+  loadSprite("invisible_wall", "../sprites/invisible_wall.png");
+  loadSprite("harry_health", "../sprites/harry_health.png");
   loadSprite("startBg", "../sprites/startBg.png");
   loadSprite("scoreBg", "../sprites/scoreBg.png");
   loadSprite("gameBg", "../sprites/gameBg.png");
@@ -3536,6 +3550,12 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         area(),
         scale(0.25),
         "dist_brick"
+      ],
+      "n": () => [
+        sprite("invisible_wall"),
+        area(),
+        scale(0.25),
+        "iwall"
       ]
     },
     next_screen_tag = "start",
