@@ -3161,8 +3161,8 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           p_hel_label.text = player.hp();
           bomb_count_label.text = bomb_count;
           if (!should_follow_user) {
-            should_follow_user = bomb_count > 1 ? false : false;
-            wait(5, () => should_follow_user = false);
+            should_follow_user = bomb_count > 1 ? true : false;
+            wait(5, () => should_follow_user = true);
           }
           let no_of_bricks_around_user = 0;
           every("iwall", (safeSpace) => {
@@ -3173,6 +3173,8 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           if (should_follow_user && no_of_bricks_around_user < 5) {
             every("fish", (fish) => {
               let dir_and_speed = calculateVec(target = player, follower = fish, offset = 5, x_offset = 400);
+              specifyDirection(fish, dir_and_speed.x, dir_and_speed.y);
+              debug.log(fish.angle);
               fish.move(dir_and_speed);
             });
           } else if (should_follow_user && no_of_bricks_around_user > 5) {
@@ -3226,6 +3228,10 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     let distance = Math.sqrt(distance_x + distance_y);
     return distance;
   }, "getDistance");
+  var changeSign = /* @__PURE__ */ __name((num) => {
+    num = -1 * num;
+    return num;
+  }, "changeSign");
   var mod = /* @__PURE__ */ __name((num) => {
     if (num < 0) {
       return num * -1;
@@ -3394,6 +3400,34 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       );
     }
   }, "goNext");
+  var specifyDirection = /* @__PURE__ */ __name((game_object, move_x, move_y) => {
+    let object_angle = game_object.angle;
+    if (move_x > 0 && move_y === 0) {
+      game_object.flipX(false);
+      game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - 40;
+    } else if (move_x > 0 && move_y > 0) {
+      game_object.flipX(false);
+      game_object.angle += object_angle === 20 ? 0 : changeSign(object_angle) + 40;
+    } else if (move_x === 0 && move_y > 0) {
+      game_object.flipX(false);
+      game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) + 40;
+    } else if (move_x > 0 && move_y < 0) {
+      game_object.flipX(false);
+      game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - 40;
+    } else if (move_x === 0 && move_y < 0) {
+      game_object.flipX(false);
+      game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - 90;
+    } else if (move_x < 0 && move_y < 0) {
+      game_object.flipX(true);
+      game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) + 40;
+    } else if (move_x < 0 && move_y === 0) {
+      game_object.flipX(true);
+      game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle);
+    } else if (move_x < 0 && move_y > 0) {
+      game_object.flipX(true);
+      game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - 40;
+    }
+  }, "specifyDirection");
 
   // code/level.js
   var createLevelOne = /* @__PURE__ */ __name((box_size2) => {
@@ -3498,6 +3532,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         area(),
         scale(rand(0.5, 1)),
         z(randi(1, 11)),
+        rotate(0),
         "fish"
       ],
       "g": () => [

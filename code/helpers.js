@@ -245,10 +245,6 @@ export const createGameScene = (scene_id,
                         }//if
                     });
 
-                    // let is_player_inside = no_of_invi_bricks > 5 ? true : false;
-                    // let is_sign_chnaged = false;
-                    // let direction = directions[key]
-
                     wait(3, () => {
                         play("blastsound", { loop: false, volume: 0.5, speed: 2, seek: 0 });
 
@@ -330,8 +326,8 @@ export const createGameScene = (scene_id,
                 bomb_count_label.text = bomb_count;
 
                 if (!should_follow_user) {
-                    should_follow_user = bomb_count > 1 ?  false : false;
-                    wait(5, () => should_follow_user = false);//wait
+                    should_follow_user = bomb_count > 1 ?  true : false;
+                    wait(5, () => should_follow_user = true);//wait
                 }//if
 
                 let no_of_bricks_around_user = 0;
@@ -348,6 +344,7 @@ export const createGameScene = (scene_id,
                     every("fish", (fish) => {
                         
                         let dir_and_speed = calculateVec(target = player, follower = fish, offset = 5, x_offset = 400);
+                        specifyDirection(fish, dir_and_speed.x, dir_and_speed.y);
                         fish.move(dir_and_speed);
                     });//every
                 }//if
@@ -655,3 +652,33 @@ let goNext = (
     }//else if
 
 }//goNext
+
+let specifyDirection = (game_object, move_x, move_y, ) =>{
+    let object_angle = game_object.angle;
+    if (move_x > 0 && move_y === 0){ // (+, 0)
+        game_object.flipX(false);
+        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - 40;   
+    }else if (move_x > 0 && move_y > 0){// (+, +)
+        game_object.flipX(false);
+        game_object.angle += object_angle === 20 ? 0 : changeSign(object_angle) + 40;
+    }else if (move_x ===0 && move_y > 0){// (0, +)
+        game_object.flipX(false);
+        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) + 40;
+    }else if (move_x > 0 && move_y < 0){// (+, -)
+        game_object.flipX(false);
+        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - 40;
+    }else if (move_x === 0 && move_y < 0){// (0, -)
+        game_object.flipX(false);
+        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - 90;
+    }else if (move_x < 0 && move_y < 0){// (-, -)
+        game_object.flipX(true);
+        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) + 40;
+    }else if (move_x <  0 && move_y === 0){// (-, 0)
+        game_object.flipX(true);
+        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle);
+    }else if (move_x < 0 && move_y > 0){// (-, +)
+        game_object.flipX(true);
+        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - 40;
+    }
+    
+}//specifyDirection

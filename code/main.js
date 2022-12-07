@@ -59,6 +59,7 @@ createGameScene(scene_id = "level_one",
             area(),
             scale(rand(0.5, 1)),
             z(randi(1, 11)),
+            rotate(0),
             "fish", //tag
         ],//fish
         "g": () => [
