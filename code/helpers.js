@@ -24,7 +24,7 @@ export const createGameScene = (scene_id,
             ]);
 
             gravity(10);
-            play("underocean", { loop: true, volume: 0.4 });
+            // play("underocean", { loop: true, volume: 0.4 });
            
 
             let [score_board, container_text] = textbox(
@@ -225,14 +225,29 @@ export const createGameScene = (scene_id,
                 if (bomb_count > 0) {
                     bomb_count -= 1;
 
+                    let BSPEED = 50;
                     let bomb = add([
                         sprite("bomb"),
                         pos(player.pos),
                         area(),
-                        move(directions[key], 50),
+                        // solid(),
+                        move(directions[key], BSPEED),
+                        scale(0.5),
                         z(0),
                         "blast_bomb",
                     ]);//adding bomb
+
+                    let no_of_invi_bricks = 0;
+
+                    every("iwall", (iwall)=>{
+                        if (getDistance(iwall.pos, player.pos) < 35){
+                            no_of_invi_bricks ++;
+                        }//if
+                    });
+
+                    // let is_player_inside = no_of_invi_bricks > 5 ? true : false;
+                    // let is_sign_chnaged = false;
+                    // let direction = directions[key]
 
                     wait(3, () => {
                         play("blastsound", { loop: false, volume: 0.5, speed: 2, seek: 0 });
@@ -266,7 +281,7 @@ export const createGameScene = (scene_id,
                                     destroy(brick);
                                 }//if
                             })
-                            
+                            // debug.log(`${bomb.pos}, ${bomb.pos.x}, ${bomb.pos.y}`);
                             destroy(bomb);
                             // bounce 
                             bounce(bomb = bomb, victim = player, radius = 200);
@@ -315,8 +330,8 @@ export const createGameScene = (scene_id,
                 bomb_count_label.text = bomb_count;
 
                 if (!should_follow_user) {
-                    should_follow_user = bomb_count > 1 ?  true : false;
-                    wait(5, () => should_follow_user = true);//wait
+                    should_follow_user = bomb_count > 1 ?  false : false;
+                    wait(5, () => should_follow_user = false);//wait
                 }//if
 
                 let no_of_bricks_around_user = 0;
@@ -325,7 +340,7 @@ export const createGameScene = (scene_id,
                     if (getDistance(safeSpace.pos, player.pos) < 50){
                         no_of_bricks_around_user ++;
                     }
-                    debug.log(`brics : ${no_of_bricks_around_user}`);
+                    // debug.log(`brics : ${no_of_bricks_around_user}`);
                 })
 
 

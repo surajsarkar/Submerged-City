@@ -2925,7 +2925,6 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           z(-1)
         ]);
         gravity(10);
-        play("underocean", { loop: true, volume: 0.4 });
         let [score_board, container_text] = textbox(
           box_width = 250,
           box_height = 50,
@@ -3091,14 +3090,22 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           }
           if (bomb_count > 0) {
             bomb_count -= 1;
+            let BSPEED = 50;
             let bomb = add([
               sprite("bomb"),
               pos(player.pos),
               area(),
-              move(directions[key], 50),
+              move(directions[key], BSPEED),
+              scale(0.5),
               z(0),
               "blast_bomb"
             ]);
+            let no_of_invi_bricks = 0;
+            every("iwall", (iwall) => {
+              if (getDistance(iwall.pos, player.pos) < 35) {
+                no_of_invi_bricks++;
+              }
+            });
             wait(3, () => {
               play("blastsound", { loop: false, volume: 0.5, speed: 2, seek: 0 });
               wait(0.27, () => {
@@ -3154,15 +3161,14 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           p_hel_label.text = player.hp();
           bomb_count_label.text = bomb_count;
           if (!should_follow_user) {
-            should_follow_user = bomb_count > 1 ? true : false;
-            wait(5, () => should_follow_user = true);
+            should_follow_user = bomb_count > 1 ? false : false;
+            wait(5, () => should_follow_user = false);
           }
           let no_of_bricks_around_user = 0;
           every("iwall", (safeSpace) => {
             if (getDistance(safeSpace.pos, player.pos) < 50) {
               no_of_bricks_around_user++;
             }
-            debug.log(`brics : ${no_of_bricks_around_user}`);
           });
           if (should_follow_user && no_of_bricks_around_user < 5) {
             every("fish", (fish) => {
@@ -3572,6 +3578,6 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   planeScene("story_5", "chat_5", true, "skip >", true, 2, () => go("story_6"));
   planeScene("story_6", "chat_6", true, "skip >", true, 2, firstLevel);
   winLooseScene("result");
-  go("level_one", 100, 0, 100, 0);
+  go("level_one", 100, 20, 100, 0);
 })();
 //# sourceMappingURL=game.js.map
