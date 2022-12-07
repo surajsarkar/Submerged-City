@@ -657,28 +657,28 @@ let specifyDirection = (game_object, move_x, move_y, ) =>{
     let object_angle = game_object.angle;
     if (move_x > 0 && move_y === 0){ // (+, 0)
         game_object.flipX(false);
-        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - 40;   
+        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - 600 * dt();   
     }else if (move_x > 0 && move_y > 0){// (+, +)
         game_object.flipX(false);
-        game_object.angle += object_angle === 20 ? 0 : changeSign(object_angle) + 40;
+        game_object.angle += object_angle === 20 ? 0 : changeSign(object_angle) + 600 * dt();
     }else if (move_x ===0 && move_y > 0){// (0, +)
         game_object.flipX(false);
-        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) + 40;
+        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) + 600 * dt();
     }else if (move_x > 0 && move_y < 0){// (+, -)
         game_object.flipX(false);
-        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - 40;
+        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - 600 * dt();
     }else if (move_x === 0 && move_y < 0){// (0, -)
         game_object.flipX(false);
-        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - 90;
+        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - 2700 * dt();
     }else if (move_x < 0 && move_y < 0){// (-, -)
         game_object.flipX(true);
-        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) + 40;
+        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) + 600 * dt();
     }else if (move_x <  0 && move_y === 0){// (-, 0)
         game_object.flipX(true);
         game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle);
     }else if (move_x < 0 && move_y > 0){// (-, +)
         game_object.flipX(true);
-        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - 40;
+        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - 600 * dt();
     }
     
 }//specifyDirection
