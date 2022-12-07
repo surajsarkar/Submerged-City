@@ -31,7 +31,7 @@ export const createGameScene = (scene_id,
                 sprite_pad_x = 5,
                 sprite_pad_y = 5,
                 initial_text = bomb_count,
-                box_width = 80,
+                box_width = 100,
                 box_height = 50,
                 x_cor = 10,
                 y_cor = 10,
@@ -77,7 +77,7 @@ export const createGameScene = (scene_id,
                 initial_text = player.hp(),
                 box_width = 110,
                 box_height = 50,
-                x_cor = bomb_counter.pos.x + 90,
+                x_cor = bomb_counter.pos.x + 110,
                 y_cor = 10,
                 text_pad_x = 55,
                 text_pad_y = 15,
@@ -355,7 +355,7 @@ export const createGameScene = (scene_id,
             player.onCollide("passage", () => {
                 // msg, points, bonus, have_next_level, next_level, poster
                 let result = ["Hurrah...doing great so far", points_collected, 0, true, "plant"];
-                let next_level_data = [rons_health, bomb_count, player.hp(), points_collected];
+                let next_level_data = [bomb_count, player.hp(), points_collected];
                 goNext(
                     next_screen_tag,
                     next_level_data,
@@ -452,6 +452,7 @@ let infoBoard = (
 
     let logo = add([
         sprite(sprite_tag),
+        scale(0.5),
         pos(board.pos.x + sprite_pad_x, board.pos.y + sprite_pad_y),
     ])
 

@@ -2930,7 +2930,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           sprite_pad_x = 5,
           sprite_pad_y = 5,
           initial_text = bomb_count,
-          box_width = 80,
+          box_width = 100,
           box_height = 50,
           x_cor = 10,
           y_cor = 10,
@@ -2967,7 +2967,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           initial_text = player.hp(),
           box_width = 110,
           box_height = 50,
-          x_cor = bomb_counter.pos.x + 90,
+          x_cor = bomb_counter.pos.x + 110,
           y_cor = 10,
           text_pad_x = 55,
           text_pad_y = 15,
@@ -3182,7 +3182,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           "passage",
           () => {
             let result = ["Hurrah...doing great so far", points_collected, 0, true, "plant"];
-            let next_level_data = [rons_health, bomb_count, player.hp(), points_collected];
+            let next_level_data = [bomb_count, player.hp(), points_collected];
             goNext(
               next_screen_tag2,
               next_level_data,
@@ -3247,6 +3247,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     ]);
     let logo = add([
       sprite(sprite_tag2),
+      scale(0.5),
       pos(board.pos.x + sprite_pad_x2, board.pos.y + sprite_pad_y2)
     ]);
     let info = add([
