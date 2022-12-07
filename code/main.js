@@ -1,10 +1,11 @@
 import kaboom from "kaboom";
 
-import { createGameScene, winLooseScene, planeScene } from "./helpers";
+import { createGameScene, winLooseScene, planeScene, } from "./helpers";
 import { createLevelOne } from "./level";
 
 // initialize context
 kaboom({ background: [0, 105, 148] });
+
 
 loadSprite("fish", "../sprites/fish.png");
 loadSprite("grass", "../sprites/grass.png");
@@ -34,6 +35,8 @@ loadSprite("chat_6", "../sprites/chat_6.png");
 
 loadSound("underocean", "../sprites/underocean.mp3");
 loadSound("blastsound", "../sprites/blastaudio.m4a");
+
+
 
 let LEVEL_1 = createLevelOne(box_size = { width: 20, height: 20 })
 

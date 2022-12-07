@@ -1,5 +1,7 @@
 import kaboom from "kaboom";
 // kaboom();
+
+// export let background_ocean_music =  play("underocean", { loop: true, volume: 0.8 });
 export const createGameScene = (scene_id,
     level,
     level_options,
@@ -23,8 +25,10 @@ export const createGameScene = (scene_id,
                 z(-1),                
             ]);
 
+            let background_ocean_music =  play("underocean", { loop: true, volume: 0.8 });
+            background_ocean_music.play();
+
             gravity(10);
-            // play("underocean", { loop: true, volume: 0.4 });
            
             let [bomb_counter, bomb_count_sprite, bomb_count_label] = infoBoard(
                 sprite_tag = "bomb",
@@ -514,6 +518,8 @@ export const winLooseScene = (scene_id) => {
         scene_id,
         (msg, points, bonus, have_next_level, poster, action) => {
 
+            // background_ocean_music.pause();
+
             //background
             add([
                 sprite("scoreBg", {width: width()}),
@@ -594,6 +600,8 @@ export const winLooseScene = (scene_id) => {
 
 export const planeScene = (scene_id, sprite_tag, should_have_button, button_text, timed, waiting_time, action) => {
     scene(scene_id, () => {
+
+        // background_ocean_music.pause();
 
         add([
             sprite(sprite_tag, { width: width() }),

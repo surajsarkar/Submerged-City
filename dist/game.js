@@ -2924,6 +2924,8 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           origin("center"),
           z(-1)
         ]);
+        let background_ocean_music = play("underocean", { loop: true, volume: 0.8 });
+        background_ocean_music.play();
         gravity(10);
         let [bomb_counter, bomb_count_sprite, bomb_count_label] = infoBoard(
           sprite_tag = "bomb",
