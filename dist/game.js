@@ -2917,7 +2917,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   var createGameScene = /* @__PURE__ */ __name((scene_id2, level2, level_options2, next_screen_tag2, has_tips2, tips_id2, tips_params_list2) => {
     scene(
       scene_id2,
-      (rons_health, bomb_count, harry_health, points_collected) => {
+      (bomb_count, harry_health, points_collected) => {
         add([
           sprite("gameBg", { width: width() }),
           pos(width() / 2, height() / 2),
@@ -2925,19 +2925,6 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           z(-1)
         ]);
         gravity(10);
-        let [score_board, container_text] = textbox(
-          box_width = 250,
-          box_height = 50,
-          outline_width = 2,
-          box_color = color(255, 125, 0),
-          initial_text = `Time Left: ${rons_health}`,
-          text_x_pad = 0,
-          text_y_pad = 0,
-          font = "sink",
-          font_size = 18,
-          x_cor = 10,
-          y_cor = 10
-        );
         let [bomb_counter, bomb_count_sprite, bomb_count_label] = infoBoard(
           sprite_tag = "bomb",
           sprite_pad_x = 5,
@@ -2945,7 +2932,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           initial_text = bomb_count,
           box_width = 80,
           box_height = 50,
-          x_cor = score_board.pos.x + 260,
+          x_cor = 10,
           y_cor = 10,
           text_pad_x = 55,
           text_pad_y = 10,
@@ -3268,7 +3255,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     ]);
     return [board, sprite, info];
   }, "infoBoard");
-  var textbox = /* @__PURE__ */ __name((box_width2, box_height2, outline_width2, box_color2, initial_text2, text_x_pad2, text_y_pad2, font2, font_size2, x_cor2, y_cor2) => {
+  var textbox = /* @__PURE__ */ __name((box_width2, box_height2, outline_width2, box_color2, initial_text2, text_x_pad, text_y_pad, font2, font_size2, x_cor2, y_cor2) => {
     let text_box = add([
       rect(box_width2, box_height2),
       box_color2,
@@ -3277,7 +3264,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     ]);
     let box_text = add([
       text(initial_text2, { size: font_size2, font: font2 }),
-      pos(text_box.pos.x + text_x_pad2, text_box.pos.y + text_y_pad2)
+      pos(text_box.pos.x + text_x_pad, text_box.pos.y + text_y_pad)
     ]);
     return [text_box, box_text];
   }, "textbox");
@@ -3612,6 +3599,6 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   planeScene("story_5", "chat_5", true, "skip >", true, 2, () => go("story_6"));
   planeScene("story_6", "chat_6", true, "skip >", true, 2, firstLevel);
   winLooseScene("result");
-  go("level_one", 100, 20, 100, 0);
+  go("level_one", 0, 100, 0);
 })();
 //# sourceMappingURL=game.js.map

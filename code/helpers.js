@@ -13,7 +13,7 @@ export const createGameScene = (scene_id,
     **/
     scene(
         scene_id,
-        (rons_health, bomb_count, harry_health, points_collected) => {
+        (bomb_count, harry_health, points_collected) => {
 
             //background
             add([
@@ -26,21 +26,6 @@ export const createGameScene = (scene_id,
             gravity(10);
             // play("underocean", { loop: true, volume: 0.4 });
            
-
-            let [score_board, container_text] = textbox(
-                box_width = 250,
-                box_height = 50,
-                outline_width = 2,
-                box_color = color(255, 125, 0),
-                initial_text = `Time Left: ${rons_health}`,
-                text_x_pad = 0,
-                text_y_pad = 0,
-                font = "sink",
-                font_size = 18,
-                x_cor = 10,
-                y_cor = 10,
-            );
-
             let [bomb_counter, bomb_count_sprite, bomb_count_label] = infoBoard(
                 sprite_tag = "bomb",
                 sprite_pad_x = 5,
@@ -48,7 +33,7 @@ export const createGameScene = (scene_id,
                 initial_text = bomb_count,
                 box_width = 80,
                 box_height = 50,
-                x_cor = score_board.pos.x + 260,
+                x_cor = 10,
                 y_cor = 10,
                 text_pad_x = 55,
                 text_pad_y = 10,
