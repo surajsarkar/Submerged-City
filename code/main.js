@@ -1,7 +1,7 @@
 import kaboom from "kaboom";
 
 import { createGameScene, winLooseScene, planeScene, } from "./helpers";
-import { createLevel, LEVEL_ONE } from "./level";
+import { createLevel, LEVEL_ONE, level_two_cofing, LEVEL_TWO } from "./level";
 
 // initialize context
 kaboom({ background: [0, 105, 148],});
@@ -40,6 +40,8 @@ loadSound("blastsound", "../sprites/blastaudio.m4a");
 
 
 let LEVEL_1 = createLevel(box_size = { width: 20, height: 20 }, level=LEVEL_ONE);
+let LEVEL_2 = createLevel(box_size = { width: 20, height: 20 }, level=LEVEL_TWO);
+level_two_cofing.pos = vec2(0, height() - LEVEL_1.length * 20);
 
 createGameScene(scene_id = "level_one",
     level = LEVEL_1,
@@ -130,11 +132,15 @@ createGameScene(scene_id = "level_one",
             "iwall"
         ]
     },
-    next_screen_tag = "start",
+    next_screen_tag = "level_two",
     has_tips = false,
     tips_id = "",
     tips_params_list = [],
 );
+
+
+
+createGameScene("level_two", LEVEL_2, level_two_cofing, "start", false, "", [],);
 
 
 // creating start screen

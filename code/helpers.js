@@ -307,7 +307,7 @@ export const createGameScene = (scene_id,
             //⬆️⬆️☝️☝️📈📈
             onUpdate(() => {
                 //camera experimentaion
-                debug.log(player.pos);
+                // debug.log(player.pos);
                 camPos(width()/2, height()/2);
 
                 // detecting if user life is ended

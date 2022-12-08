@@ -3137,7 +3137,6 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         });
         let should_follow_user = false;
         onUpdate(() => {
-          debug.log(player.pos);
           camPos(width() / 2, height() / 2);
           if (player.hp() <= 0) {
             let result = ["!Ouch", points_collected, 0, true, "plant"];
@@ -3468,6 +3467,42 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     "i**ii**i**ii*i() *  - -  -  -                                                          ",
     "**ii**ii**i**i()**                                                                     "
   ];
+  var LEVEL_TWO = [
+    "                                                                                       ",
+    "                                                                                       ",
+    "                                                                                       ",
+    "                                                                                       ",
+    "                                                                                       ",
+    "                                                                                       ",
+    "                                                                                       ",
+    "       ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss                    ",
+    "      snnnnnnnnnnnnnnnnnnnnnninbbnnnnnnnnnninnnnnnnnnnnnnnnnnnnnnns                    ",
+    "     snnnnnsssssnnnnnnnnnnnnniiiiinnnnnnnnninnnnnnnnnnnnnnnnnnnnnns                    ",
+    "    snnnnnnnnnnnnnnnnniiiinnnnnnnnnnnnnnnnnnnnnnninnnnnnnnnnnnnnnns                    ",
+    "   snnnnnnnnnnnnnnnnnnntninnnnnnnnnnnnnnnnnnnnnnninnnnnnnnnnnnnnnns                    ",
+    "iiiisnnnnnnnnnnnnnnssssssssssssssssssssssssssssssssssssssssssssssss                    ",
+    "iiiis|             |siiiiiiiiiiiiisd     s                                             ",
+    "iiiiis|             |siiiiiiiiiiisd     s                                              ",
+    "iiiiiis|             |siiiiiiiiis     ts                                               ",
+    "iiiiiiis|             |siiiiiiis     ds                                                ",
+    "iiiiiiiis|            |siiiiiis      s                                                 ",
+    "iiiiiiiiis|           |siiiiist     s                                                  ",
+    "iiiiiiiiiis|           |siiisd    tsi                                                  ",
+    "iiiiiiiiiis|          |siisd    dsiii                                                  ",
+    "iiiiiiiiiis|           |ssd    dsiiiii                                                 ",
+    "iiiiiiiiiis|             s    dsiiiiiii                                                ",
+    "iiiiiiiiiis|              s  dsiiiiiiiii                                               ",
+    "iiiiiiiiiis|               s siiiiiiiiiii                                              ",
+    "iiiiiiiiiis|               ssiiiiiiiiiiiii                                             ",
+    "iiiiiiiiiis|              siiiiiiiiiiiiiiii                                            ",
+    "iiiiiiiiiis|           |siiiiiiiiiiiiiiiiii                                            ",
+    "iiiiiiiiiis|           |siiiiiiiiiiiiiiiiiiii                                          ",
+    "iiiiiiiiis|            |siiiiiiiiiiiiiiiiiiiiii                                        ",
+    "iiiiiiiiis     {}        siiiiiiiiiiiiiiiiiiiiii                                       ",
+    "iiiiiiiis      ()         siiiiiiiiiiiiiiiiiiiiii                                      ",
+    "iiiiiis        ()         siiiiiiiiiiiiiiiiiiiiiii                                     ",
+    "iiiiis                    siiiiiiiiiiiiiiiiiiiiiiii                                    "
+  ];
   var createLevel = /* @__PURE__ */ __name((box_size2, level2) => {
     let no_of_box = Math.floor(width() / box_size2.width);
     level2.push(buildSeq(no_of_box, "g"));
@@ -3480,6 +3515,91 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     }
     return base;
   }, "buildSeq");
+  var level_two_cofing = {
+    width: 20,
+    height: 20,
+    "*": () => [
+      sprite("plant"),
+      area(),
+      z(randi(1, 10)),
+      scale(0.5)
+    ],
+    "^": () => [
+      sprite("plant_top"),
+      area(),
+      scale(0.5)
+    ],
+    "|": () => [
+      sprite("grass"),
+      area(),
+      scale(0.3),
+      z(randi(1, 11)),
+      rotate(0),
+      "fish"
+    ],
+    "g": () => [
+      sprite("grass"),
+      area(),
+      scale(0.25),
+      solid()
+    ],
+    "(": () => [
+      sprite("gate_1_bl"),
+      solid(),
+      area(),
+      "passage"
+    ],
+    ")": () => [
+      sprite("gate_1_br"),
+      solid(),
+      area(),
+      "passage"
+    ],
+    "{": () => [
+      sprite("gate_1_tl"),
+      solid(),
+      area(),
+      "passage"
+    ],
+    "}": () => [
+      sprite("gate_1_tr"),
+      solid(),
+      area(),
+      "passage"
+    ],
+    "b": () => [
+      sprite("bomb"),
+      area(),
+      scale(0.8),
+      "bomb"
+    ],
+    "i": () => [
+      sprite("wallbrick"),
+      solid(),
+      area(),
+      "wall",
+      scale(0.25)
+    ],
+    "s": () => [
+      sprite("sageBrick"),
+      solid(),
+      area(),
+      "safe_space",
+      scale(0.25)
+    ],
+    "n": () => [
+      sprite("invisible_wall"),
+      area(),
+      scale(0.25),
+      "iwall"
+    ],
+    "n": () => [
+      sprite("invisible_wall"),
+      area(),
+      scale(0.25),
+      "iwall"
+    ]
+  };
 
   // code/main.js
   no({ background: [0, 105, 148] });
@@ -3512,6 +3632,8 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   loadSound("underocean", "../sprites/underocean.mp3");
   loadSound("blastsound", "../sprites/blastaudio.m4a");
   var LEVEL_1 = createLevel(box_size = { width: 20, height: 20 }, level = LEVEL_ONE);
+  var LEVEL_2 = createLevel(box_size = { width: 20, height: 20 }, level = LEVEL_TWO);
+  level_two_cofing.pos = vec2(0, height() - LEVEL_1.length * 20);
   createGameScene(
     scene_id = "level_one",
     level = LEVEL_1,
@@ -3602,11 +3724,12 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         "iwall"
       ]
     },
-    next_screen_tag = "start",
+    next_screen_tag = "level_two",
     has_tips = false,
     tips_id = "",
     tips_params_list = []
   );
+  createGameScene("level_two", LEVEL_2, level_two_cofing, "start", false, "", []);
   var firstLevel = /* @__PURE__ */ __name(() => go("level_one", 100, 0, 100, 0), "firstLevel");
   planeScene("start", "startBg", true, "start game", false, 0, firstLevel);
   planeScene("story_1", "chat_1", true, "skip >", true, 2, () => go("story_2"));

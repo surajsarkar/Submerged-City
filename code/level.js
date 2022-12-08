@@ -64,9 +64,9 @@ export let LEVEL_TWO = [
         "                                                                                       ",
         "       ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss                    ",
         "      snnnnnnnnnnnnnnnnnnnnnninbbnnnnnnnnnninnnnnnnnnnnnnnnnnnnnnns                    ",
-        "     snnnnnsssssinnnnnnnnnnnniiiiinnnnnnnninnnnnnnnnnnnnnnnnnnnnnns                    ",
-        "    snnnnnnnnnnnninnnniiiinnnnnnnnnnnnnnnnnnnnnnninnnnnnnnnnnnnnnns                    ",
-        "   snnnnnnnnnnnnnninnnntninnnnnnnnnnnnnnnnnnnnnnninnnnnnnnnnnnnnnns                    ",
+        "     snnnnnsssssnnnnnnnnnnnnniiiiinnnnnnnnninnnnnnnnnnnnnnnnnnnnnns                    ",
+        "    snnnnnnnnnnnnnnnnniiiinnnnnnnnnnnnnnnnnnnnnnninnnnnnnnnnnnnnnns                    ",
+        "   snnnnnnnnnnnnnnnnnnntninnnnnnnnnnnnnnnnnnnnnnninnnnnnnnnnnnnnnns                    ",
         "iiiisnnnnnnnnnnnnnnssssssssssssssssssssssssssssssssssssssssssssssss                    ",
         "iiiis|             |siiiiiiiiiiiiisd     s                                             ",
         "iiiiis|             |siiiiiiiiiiisd     s                                              ",
@@ -109,3 +109,90 @@ const buildSeq = (quantity, symbol = " ") => {
 
     return base;
 }//buildSeq
+
+
+export let level_two_cofing = {
+    width: 20,
+    height: 20,
+    "*": () => [
+            sprite("plant"),
+            area(),
+            z(randi(1, 10)),
+            scale(0.5)
+        ],//plant
+    "^": () => [
+        sprite("plant_top"),
+        area(),
+        scale(0.5)
+    ],//plant_top
+    "|": () => [
+        sprite("grass"),
+        area(),
+        scale(0.30),
+        z(randi(1, 11)),
+        rotate(0),
+        "fish", //tag
+    ],//fish
+    "g": () => [
+        sprite("grass"),
+        area(),
+        scale(0.25),
+        solid(),
+    ],//grass
+    "(": () => [
+        sprite("gate_1_bl"),
+        solid(),
+        area(),
+        "passage", //tag
+    ],//gate_1
+    ")": () => [
+        sprite("gate_1_br"),
+        solid(),
+        area(),
+        "passage", //tag
+    ],//gate_1
+    "{": () => [
+        sprite("gate_1_tl"),
+        solid(),
+        area(),
+        "passage", //tag
+    ],//gate_1
+    "}": () => [
+        sprite("gate_1_tr"),
+        solid(),
+        area(),
+        "passage", //tag
+    ],//gate_1
+    "b": () => [
+        sprite("bomb"),
+        area(),
+        scale(0.8),
+        "bomb", //tag
+    ],//bomb
+    "i": ()=>[
+        sprite("wallbrick"),
+        solid(),
+        area(),
+        "wall",
+        scale(0.25),
+    ],
+    "s": ()=>[
+        sprite("sageBrick"),
+        solid(),
+        area(),
+        "safe_space",
+        scale(0.25),
+    ],
+    "n": ()=>[
+        sprite("invisible_wall"),
+        area(),
+        scale(0.25),
+        "iwall"
+    ],
+    "n": ()=>[
+            sprite("invisible_wall"),
+            area(),
+            scale(0.25),
+            "iwall"
+    ]
+}
