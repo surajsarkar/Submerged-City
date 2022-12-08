@@ -3135,7 +3135,11 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
             destroy(bomb);
           }
         });
+        player.onCollide("dgrass", (dgrass) => {
+          player.hurt(0.1);
+        });
         let should_follow_user = false;
+        let should_blade_move = true;
         onUpdate(() => {
           camPos(width() / 2, height() / 2);
           if (player.hp() <= 0) {
@@ -3149,6 +3153,19 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
               result = result
             );
           }
+          every("passage", (passage) => {
+            if (getDistance(passage.pos, player.pos) < 400) {
+              let blades = get("nblade");
+              debug.log(`${getDistance(player.pos, passage.pos)}, ${blades.length}`);
+              if (blades.length !== 0) {
+                every("nblade", (blade) => {
+                  blade.move(calculateVec(player, blade, 0, 0).scale(rand(0.1, 0.3)));
+                  blade.angle += 200;
+                });
+                should_blade_move = false;
+              }
+            }
+          });
           coins_count_label.text = points_collected;
           p_hel_label.text = player.hp();
           bomb_count_label.text = bomb_count;
@@ -3476,10 +3493,10 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     "                                                                                       ",
     "                                                                                       ",
     "       ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss                    ",
-    "      snnnnnnnnnnnnnnnnnnnnnninnnnnnnnnnnnninnnnnnnnnnnnnnnnnnnnnns                    ",
-    "     snnnnnsssssnnnnnnnnnnnnniiiiinnnbnnnnninnnnnnnnnnnnnnnnnnnnnns                    ",
-    "    snnnnnnnnnnnnnnnnniiiinnnnnnnnnnnnnnnnnnnnnnninnnnnnnnnnnnnnnns                    ",
-    "   snnnnnnnnnnnnnnnnnnntninnnnnnnnnnnnnnnnnnnnnnninnnnnnnnnnnnnnnns                    ",
+    "      s                      i             i                      s                    ",
+    "     s     sssss             iiiii   b     i                      s                    ",
+    "    s                 iiii                       i                s                    ",
+    "   s             t       i                       i                s                    ",
     "iiiisnnnnnnnnnnnnnnssssssssssssssssssssssssssssssssssssssssssssssss                    ",
     "iiiis|             |siiiiiiiiiiiiisd     s                                             ",
     "iiiiis|             |siiiiiiiiiiisd     s                                              ",
@@ -3496,11 +3513,11 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     "iiiiiiiiiis|               ssiiiiiiiiiiiii**     **   **    **   **                    ",
     "iiiiiiiiiis|              siiiiiiiiiiiiiiii**  **    **    **  **                      ",
     "iiiiiiiiiis|           |siiiiiiiiiiiiiiiiii***  **     **   **  **                     ",
-    "iiiiiiiiiism           msiiiiiiiiiiiiiiiiiiii** ** b  **  **   **                      ",
-    "iiiiiiiiism            msiiiiiiiiiiiiiiiiiiiiii***     **   **  **                     ",
-    "iiiiiiiiis     {}        siiiiiiiiiiiiiiiiiiiiii**  b **   **  **                      ",
+    "iiiiiiiiiism          m siiiiiiiiiiiiiiiiiiii** ** b  **  **   **                      ",
+    "iiiiiiiiism             siiiiiiiiiiiiiiiiiiiiii***     **   **  **                     ",
+    "iiiiiiiiis     {}      m siiiiiiiiiiiiiiiiiiiiii**  b **   **  **                      ",
     "iiiiiiiis      ()         siiiiiiiiiiiiiiiiiiiiii**  b  **   **  **                    ",
-    "iiiiiim        ()         miiiiiiiiiiiiiiiiiiiiiii** **   **   **                      ",
+    "iiiiii   m     ()         miiiiiiiiiiiiiiiiiiiiiii** **   **   **                      ",
     "iiiiis                    siiiiiiiiiiiiiiiiiiiiiiii****                                "
   ];
   var createLevel = /* @__PURE__ */ __name((box_size2, level2) => {
@@ -3535,7 +3552,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       scale(0.3),
       z(randi(1, 11)),
       rotate(0),
-      "fish"
+      "dgrass"
     ],
     "g": () => [
       sprite("grass"),
@@ -3591,17 +3608,16 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       "safe_space",
       scale(0.25)
     ],
-    "n": () => [
-      sprite("invisible_wall"),
+    "m": () => [
+      sprite("blade"),
       area(),
       scale(0.25),
-      "iwall"
-    ],
-    "n": () => [
-      sprite("invisible_wall"),
-      area(),
-      scale(0.25),
-      "iwall"
+      rotate(0),
+      z(randi(2, 10)),
+      "nblade",
+      { update() {
+        this.angle += 10;
+      } }
     ]
   };
 
@@ -3621,6 +3637,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   loadSprite("gate_2_tl", "../sprites/gate_2_tl.png");
   loadSprite("gate_2_tr", "../sprites/gate_2_tr.png");
   loadSprite("bomb", "../sprites/bomb.png");
+  loadSprite("blade", "../sprites/blade.png");
   loadSprite("user", "../sprites/user.png");
   loadSprite("gcoin", "../sprites/gcoin.png");
   loadSprite("wallbrick", "../sprites/wallbrick.png");

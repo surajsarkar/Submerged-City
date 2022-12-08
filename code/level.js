@@ -63,10 +63,10 @@ export let LEVEL_TWO = [
         "                                                                                       ",
         "                                                                                       ",
         "       ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss                    ",
-        "      snnnnnnnnnnnnnnnnnnnnnninnnnnnnnnnnnninnnnnnnnnnnnnnnnnnnnnns                    ",
-        "     snnnnnsssssnnnnnnnnnnnnniiiiinnnbnnnnninnnnnnnnnnnnnnnnnnnnnns                    ",
-        "    snnnnnnnnnnnnnnnnniiiinnnnnnnnnnnnnnnnnnnnnnninnnnnnnnnnnnnnnns                    ",
-        "   snnnnnnnnnnnnnnnnnnntninnnnnnnnnnnnnnnnnnnnnnninnnnnnnnnnnnnnnns                    ",
+        "      s                      i             i                      s                    ",
+        "     s     sssss             iiiii   b     i                      s                    ",
+        "    s                 iiii                       i                s                    ",
+        "   s             t       i                       i                s                    ",
         "iiiisnnnnnnnnnnnnnnssssssssssssssssssssssssssssssssssssssssssssssss                    ",
         "iiiis|             |siiiiiiiiiiiiisd     s                                             ",
         "iiiiis|             |siiiiiiiiiiisd     s                                              ",
@@ -83,11 +83,11 @@ export let LEVEL_TWO = [
         "iiiiiiiiiis|               ssiiiiiiiiiiiii**     **   **    **   **                    ",
         "iiiiiiiiiis|              siiiiiiiiiiiiiiii**  **    **    **  **                      ",
         "iiiiiiiiiis|           |siiiiiiiiiiiiiiiiii***  **     **   **  **                     ",
-        "iiiiiiiiiism           msiiiiiiiiiiiiiiiiiiii** ** b  **  **   **                      ",
-        "iiiiiiiiism            msiiiiiiiiiiiiiiiiiiiiii***     **   **  **                     ",
-        "iiiiiiiiis     {}        siiiiiiiiiiiiiiiiiiiiii**  b **   **  **                      ",
+        "iiiiiiiiiism          m siiiiiiiiiiiiiiiiiiii** ** b  **  **   **                      ",
+        "iiiiiiiiism             siiiiiiiiiiiiiiiiiiiiii***     **   **  **                     ",
+        "iiiiiiiiis     {}      m siiiiiiiiiiiiiiiiiiiiii**  b **   **  **                      ",
         "iiiiiiiis      ()         siiiiiiiiiiiiiiiiiiiiii**  b  **   **  **                    ",
-        "iiiiiim        ()         miiiiiiiiiiiiiiiiiiiiiii** **   **   **                      ",
+        "iiiiii   m     ()         miiiiiiiiiiiiiiiiiiiiiii** **   **   **                      ",
         "iiiiis                    siiiiiiiiiiiiiiiiiiiiiiii****                                ",
     ]
 
@@ -131,7 +131,7 @@ export let level_two_cofing = {
         scale(0.30),
         z(randi(1, 11)),
         rotate(0),
-        "fish", //tag
+        "dgrass", //tag
     ],//fish
     "g": () => [
         sprite("grass"),
@@ -187,16 +187,13 @@ export let level_two_cofing = {
         "safe_space",
         scale(0.25),
     ],
-    "n": ()=>[
-        sprite("invisible_wall"),
-        area(),
-        scale(0.25),
-        "iwall"
-    ],
-    "n": ()=>[
-            sprite("invisible_wall"),
+    "m": ()=>[
+            sprite("blade"),
             area(),
             scale(0.25),
-            "iwall"
+            rotate(0),
+            z(randi(2, 10)),
+            "nblade",
+        {update(){this.angle += 10}}
     ]
 }

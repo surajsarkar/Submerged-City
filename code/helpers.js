@@ -20,29 +20,29 @@ export const createGameScene = (scene_id,
         (bomb_count, harry_health, points_collected) => {
 
 
-            
+
 
             //background
             add([
-                sprite("gameBg", {width: width()}),
-                pos(width()/2, height()/2),
+                sprite("gameBg", { width: width() }),
+                pos(width() / 2, height() / 2),
                 origin("center"),
                 z(-1),
                 layer("bg"),
             ]);
 
 
-            onKeyPress("f", ()=>{
+            onKeyPress("f", () => {
                 fullscreen(!isFullscreen());
             });//onKeyPress
 
-                      
+
 
             // let background_ocean_music =  play("underocean", { loop: true, volume: 0.8 });
             // background_ocean_music.play();
 
             gravity(10);
-           
+
             let [bomb_counter, bomb_count_sprite, bomb_count_label] = infoBoard(
                 sprite_tag = "bomb",
                 sprite_pad_x = 5,
@@ -71,7 +71,7 @@ export const createGameScene = (scene_id,
 
             let all_fish = get("fish");
 
-            for (let i = 0; i < all_fish.length; i++){
+            for (let i = 0; i < all_fish.length; i++) {
                 all_fish_pos.push(all_fish[i].pos)
             }//for
             // debug.log(all_fish_pos);
@@ -241,9 +241,9 @@ export const createGameScene = (scene_id,
 
                     let no_of_invi_bricks = 0;
 
-                    every("iwall", (iwall)=>{
-                        if (getDistance(iwall.pos, player.pos) < 35){
-                            no_of_invi_bricks ++;
+                    every("iwall", (iwall) => {
+                        if (getDistance(iwall.pos, player.pos) < 35) {
+                            no_of_invi_bricks++;
                         }//if
                     });
 
@@ -269,13 +269,13 @@ export const createGameScene = (scene_id,
                                 player.hurt(Math.floor(hurt_amount > 0 ? hurt_amount : mod(hurt_amount)));
                             }//if
 
-                            every("safe_space", (brick)=>{
-                                if (getDistance(brick.pos, bomb.pos) <= 60){
+                            every("safe_space", (brick) => {
+                                if (getDistance(brick.pos, bomb.pos) <= 60) {
                                     destroy(brick);
                                 }//if
                             })
-                            every("dist_brick", (brick)=>{
-                                if (getDistance(brick.pos, bomb.pos) <= 60){
+                            every("dist_brick", (brick) => {
+                                if (getDistance(brick.pos, bomb.pos) <= 60) {
                                     destroy(brick);
                                 }//if
                             })
@@ -302,13 +302,19 @@ export const createGameScene = (scene_id,
             });//onCollide
 
 
-            
+            player.onCollide("dgrass", (dgrass) => {
+                player.hurt(0.1);
+            })
+
+
+
             let should_follow_user = false;
+            let should_blade_move = true;
             //⬆️⬆️☝️☝️📈📈
             onUpdate(() => {
                 //camera experimentaion
                 // debug.log(player.pos);
-                camPos(width()/2, height()/2);
+                camPos(width() / 2, height() / 2);
 
                 // detecting if user life is ended
                 if (player.hp() <= 0) {
@@ -324,6 +330,19 @@ export const createGameScene = (scene_id,
                     );
                 }//if
 
+                every("passage", (passage)=>{
+                    if (getDistance(passage.pos, player.pos) < 400){
+                        let blades = get("nblade");
+                        debug.log(`${getDistance(player.pos, passage.pos)}, ${blades.length}`)
+                        if (blades.length !== 0){
+                            every("nblade", (blade)=>{
+                                blade.move(calculateVec(player, blade, 0, 0).scale(rand(0.1, 0.3)));
+                            });//every
+                            should_blade_move = false; 
+                        }//if
+                    }//if
+                })//every
+
                 // update points 
                 coins_count_label.text = points_collected;
 
@@ -334,15 +353,15 @@ export const createGameScene = (scene_id,
                 bomb_count_label.text = bomb_count;
 
                 if (!should_follow_user) {
-                    should_follow_user = bomb_count > 1 ?  false : false;
+                    should_follow_user = bomb_count > 1 ? false : false;
                     wait(5, () => should_follow_user = false);//wait
                 }//if
 
                 let no_of_bricks_around_user = 0;
 
-                every("iwall", (safeSpace)=>{
-                    if (getDistance(safeSpace.pos, player.pos) < 50){
-                        no_of_bricks_around_user ++;
+                every("iwall", (safeSpace) => {
+                    if (getDistance(safeSpace.pos, player.pos) < 50) {
+                        no_of_bricks_around_user++;
                     }
                     // debug.log(`brics : ${no_of_bricks_around_user}`);
                 })
@@ -350,18 +369,18 @@ export const createGameScene = (scene_id,
 
                 if (should_follow_user && no_of_bricks_around_user < 5) {
                     every("fish", (fish) => {
-                        
+
                         let dir_and_speed = calculateVec(target = player, follower = fish, offset = 5, x_offset = 400);
                         specifyDirection(fish, dir_and_speed.x, dir_and_speed.y);
                         fish.move(dir_and_speed);
                     });//every
                 }//if
 
-                else if (should_follow_user && no_of_bricks_around_user > 5){
+                else if (should_follow_user && no_of_bricks_around_user > 5) {
                     // fish should go near to gate
-                    every("fish", (fish)=>{
+                    every("fish", (fish) => {
                         let gate = choose(get("passage"));
-                        if (!(getDistance(fish.pos, gate.pos) < 300)){
+                        if (!(getDistance(fish.pos, gate.pos) < 300)) {
                             fish.move(calculateVec(gate, fish, 0, 0));
                         }//if
                     });//every
@@ -541,18 +560,18 @@ export const winLooseScene = (scene_id) => {
         (msg, points, bonus, have_next_level, poster, action) => {
 
             // background_ocean_music.pause();
-            onKeyPress("f", ()=>{
+            onKeyPress("f", () => {
                 fullscreen(!isFullscreen());
             });//onKeyPress
 
             //background
             add([
-                sprite("scoreBg", {width: width()}),
-                pos(width()/2, height()/2),
+                sprite("scoreBg", { width: width() }),
+                pos(width() / 2, height() / 2),
                 origin("center"),
-                z(-1),                
+                z(-1),
             ]);
-            
+
             let [message_box, message] = textbox(box_width = 500,
                 box_height = 70,
                 outline_width = 2,
@@ -627,9 +646,9 @@ export const planeScene = (scene_id, sprite_tag, should_have_button, button_text
     scene(scene_id, () => {
 
         // background_ocean_music.pause();
-        onKeyPress("f", ()=>{
-                fullscreen(!isFullscreen());
-            });//onKeyPress
+        onKeyPress("f", () => {
+            fullscreen(!isFullscreen());
+        });//onKeyPress
 
         add([
             sprite(sprite_tag, { width: width() }),
@@ -675,32 +694,32 @@ let goNext = (
 
 }//goNext
 
-let specifyDirection = (game_object, move_x, move_y, ) =>{
+let specifyDirection = (game_object, move_x, move_y,) => {
     let object_angle = game_object.angle;
-    if (move_x > 0 && move_y === 0){ // (+, 0)
-        game_object.flipX(false);
-        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - 600 * dt();   
-    }else if (move_x > 0 && move_y > 0){// (+, +)
-        game_object.flipX(false);
-        game_object.angle += object_angle === 20 ? 0 : changeSign(object_angle) + 600 * dt();
-    }else if (move_x ===0 && move_y > 0){// (0, +)
-        game_object.flipX(false);
-        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) + 600 * dt();
-    }else if (move_x > 0 && move_y < 0){// (+, -)
+    if (move_x > 0 && move_y === 0) { // (+, 0)
         game_object.flipX(false);
         game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - 600 * dt();
-    }else if (move_x === 0 && move_y < 0){// (0, -)
+    } else if (move_x > 0 && move_y > 0) {// (+, +)
+        game_object.flipX(false);
+        game_object.angle += object_angle === 20 ? 0 : changeSign(object_angle) + 600 * dt();
+    } else if (move_x === 0 && move_y > 0) {// (0, +)
+        game_object.flipX(false);
+        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) + 600 * dt();
+    } else if (move_x > 0 && move_y < 0) {// (+, -)
+        game_object.flipX(false);
+        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - 600 * dt();
+    } else if (move_x === 0 && move_y < 0) {// (0, -)
         game_object.flipX(false);
         game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - 2700 * dt();
-    }else if (move_x < 0 && move_y < 0){// (-, -)
+    } else if (move_x < 0 && move_y < 0) {// (-, -)
         game_object.flipX(true);
         game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) + 600 * dt();
-    }else if (move_x <  0 && move_y === 0){// (-, 0)
+    } else if (move_x < 0 && move_y === 0) {// (-, 0)
         game_object.flipX(true);
         game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle);
-    }else if (move_x < 0 && move_y > 0){// (-, +)
+    } else if (move_x < 0 && move_y > 0) {// (-, +)
         game_object.flipX(true);
         game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - 600 * dt();
     }
-    
+
 }//specifyDirection

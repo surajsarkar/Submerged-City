@@ -21,6 +21,7 @@ loadSprite("gate_2_br", "../sprites/gate_2_br.png");
 loadSprite("gate_2_tl", "../sprites/gate_2_tl.png");
 loadSprite("gate_2_tr", "../sprites/gate_2_tr.png");
 loadSprite("bomb", "../sprites/bomb.png");
+loadSprite("blade", "../sprites/blade.png");
 loadSprite("user", "../sprites/user.png");
 loadSprite("gcoin", "../sprites/gcoin.png");
 loadSprite("wallbrick", "../sprites/wallbrick.png");
