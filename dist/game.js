@@ -3160,7 +3160,6 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
               if (blades.length !== 0) {
                 every("nblade", (blade) => {
                   blade.move(calculateVec(player, blade, 0, 0).scale(rand(0.1, 0.3)));
-                  blade.angle += 200;
                 });
                 should_blade_move = false;
               }
@@ -3215,6 +3214,9 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
             );
           }
         );
+        player.onCollide("nblade", () => {
+          player.hurt(0.2);
+        });
         let health_button = add([
           sprite("healthLbl"),
           area({ cursor: "pointer" }),

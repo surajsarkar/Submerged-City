@@ -409,6 +409,10 @@ export const createGameScene = (scene_id,
             },
             );//onCollide
 
+            player.onCollide("nblade", ()=>{
+                player.hurt(0.2)
+            });//🥷🥷
+
             let health_button = add([
                 sprite('healthLbl'),
                 area({ cursor: "pointer" }),
