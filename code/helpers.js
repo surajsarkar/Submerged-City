@@ -308,6 +308,11 @@ export const createGameScene = (scene_id,
             });//onCollide
 
 
+            player.onCollide("dgrass", ()=>{
+                player.hurt(5);
+            });//onCollide
+
+
             player.onCollide("dgrass", (dgrass) => {
                 player.hurt(0.1);
             })

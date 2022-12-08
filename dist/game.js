@@ -3123,7 +3123,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
                   }
                 });
                 every("nblade", (blade) => {
-                  if (getDistance(bomb.pos, blade.pos) < 150) {
+                  if (getDistance(bomb.pos, blade.pos) < 200) {
                     destroy(blade);
                   }
                 });
@@ -3139,6 +3139,9 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
             bomb_count++;
             destroy(bomb);
           }
+        });
+        player.onCollide("dgrass", () => {
+          player.hurt(5);
         });
         player.onCollide("dgrass", (dgrass) => {
           player.hurt(0.1);
@@ -3495,26 +3498,26 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     "                                                                                       ",
     "                                                                                       ",
     "                                                                                       ",
+    "                                         b                                             ",
     "                                                                                       ",
+    "                 b                                                                     ",
     "                                                                                       ",
-    "                                                                                       ",
-    "                                                                                       ",
-    "       ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss                    ",
-    "      s                      i             i                      s                    ",
-    "     s     sssss             iiiii   b     i                      s                    ",
-    "    s                 iiii                       i                s                    ",
-    "   s             t       i                       i                s                    ",
-    "iiiisnnnnnnnnnnnnnnssssssssssssssssssssssssssssssssssssssssssssssss                    ",
-    "iiiis|             |siiiiiiiiiiiiisd     s                                             ",
-    "iiiiis|             |siiiiiiiiiiisd     s                                              ",
+    "       ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
+    "      s    |||||             i             i                      s                    ",
+    "     s     sssss             iiiii   b     i                      s    b               ",
+    "    s      |||||      iiii                       i                s            b       ",
+    "   s             t       i                       i                s     b    b         ",
+    "iiiis              ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
+    "iiiis|||||         |siiiiiiiiiiiiisd     s                                             ",
+    "iiiiis|         |||||siiiiiiiiiiisd     s                                              ",
     "iiiiiis|             |siiiiiiiiis     ts                  ^^                           ",
-    "iiiiiiis|             |siiiiiiis     ds                   **     ^^                    ",
+    "iiiiiiis|||||     m  ||siiiiiiis     ds                   **     ^^                    ",
     "iiiiiiiis|            |siiiiiis      s           ^         **    **                    ",
     "iiiiiiiiis|           |siiiiist     s           *   ^^      **   **                    ",
-    "iiiiiiiiiis|          |siiisd    tsi ^           *   **       **  **                   ",
-    "iiiiiiiiiis|          |siisd    dsiii*    b      *    **     **  **                    ",
-    "iiiiiiiiiis|           |ssd    dsiiiii**         *   **     **    **                   ",
-    "iiiiiiiiiis|             s    dsiiiiiii**       *   **     **   b  **                  ",
+    "iiiiiiiiiis||||       |siiisd    tsi ^           *   **       **  **                   ",
+    "iiiiiiiiiis|  m    ||||siisd    dsiii*    b      *    **     **  **                    ",
+    "iiiiiiiiiis|   m       |ssd    dsiiiii**         *   **     **    **                   ",
+    "iiiiiiiiiis||||||||      s    dsiiiiiii**       *   **     **   b  **                  ",
     "iiiiiiiiiis|              s  dsiiiiiiiii**  b      *    **   **       **               ",
     "iiiiiiiiiis|               s siiiiiiiiiii**     **   **    **  b   **                  ",
     "iiiiiiiiiis|               ssiiiiiiiiiiiii**     **   **    **   **                    ",
@@ -3598,7 +3601,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     "b": () => [
       sprite("bomb"),
       area(),
-      scale(0.8),
+      scale(0.5),
       "bomb"
     ],
     "i": () => [
