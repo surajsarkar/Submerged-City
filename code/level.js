@@ -63,32 +63,32 @@ export let LEVEL_TWO = [
         "                                                                                       ",
         "                                                                                       ",
         "       ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss                    ",
-        "      snnnnnnnnnnnnnnnnnnnnnninbbnnnnnnnnnninnnnnnnnnnnnnnnnnnnnnns                    ",
-        "     snnnnnsssssnnnnnnnnnnnnniiiiinnnnnnnnninnnnnnnnnnnnnnnnnnnnnns                    ",
+        "      snnnnnnnnnnnnnnnnnnnnnninnnnnnnnnnnnninnnnnnnnnnnnnnnnnnnnnns                    ",
+        "     snnnnnsssssnnnnnnnnnnnnniiiiinnnbnnnnninnnnnnnnnnnnnnnnnnnnnns                    ",
         "    snnnnnnnnnnnnnnnnniiiinnnnnnnnnnnnnnnnnnnnnnninnnnnnnnnnnnnnnns                    ",
         "   snnnnnnnnnnnnnnnnnnntninnnnnnnnnnnnnnnnnnnnnnninnnnnnnnnnnnnnnns                    ",
         "iiiisnnnnnnnnnnnnnnssssssssssssssssssssssssssssssssssssssssssssssss                    ",
         "iiiis|             |siiiiiiiiiiiiisd     s                                             ",
         "iiiiis|             |siiiiiiiiiiisd     s                                              ",
-        "iiiiiis|             |siiiiiiiiis     ts                                               ",
-        "iiiiiiis|             |siiiiiiis     ds                                                ",
-        "iiiiiiiis|            |siiiiiis      s                                                 ",
-        "iiiiiiiiis|           |siiiiist     s                                                  ",
-        "iiiiiiiiiis|           |siiisd    tsi                                                  ",
-        "iiiiiiiiiis|          |siisd    dsiii                                                  ",
-        "iiiiiiiiiis|           |ssd    dsiiiii                                                 ",
-        "iiiiiiiiiis|             s    dsiiiiiii                                                ",
-        "iiiiiiiiiis|              s  dsiiiiiiiii                                               ",
-        "iiiiiiiiiis|               s siiiiiiiiiii                                              ",
-        "iiiiiiiiiis|               ssiiiiiiiiiiiii                                             ",
-        "iiiiiiiiiis|              siiiiiiiiiiiiiiii                                            ",
-        "iiiiiiiiiis|           |siiiiiiiiiiiiiiiiii                                            ",
-        "iiiiiiiiiis|           |siiiiiiiiiiiiiiiiiiii                                          ",
-        "iiiiiiiiis|            |siiiiiiiiiiiiiiiiiiiiii                                        ",
-        "iiiiiiiiis     {}        siiiiiiiiiiiiiiiiiiiiii                                       ",
-        "iiiiiiiis      ()         siiiiiiiiiiiiiiiiiiiiii                                      ",
-        "iiiiiis        ()         siiiiiiiiiiiiiiiiiiiiiii                                     ",
-        "iiiiis                    siiiiiiiiiiiiiiiiiiiiiiii                                    ",
+        "iiiiiis|             |siiiiiiiiis     ts                  ^^                           ",
+        "iiiiiiis|             |siiiiiiis     ds                   **     ^^                    ",
+        "iiiiiiiis|            |siiiiiis      s           ^         **    **                    ",
+        "iiiiiiiiis|           |siiiiist     s           *   ^^      **   **                    ",
+        "iiiiiiiiiis|          |siiisd    tsi ^           *   **       **  **                   ",
+        "iiiiiiiiiis|          |siisd    dsiii*    b      *    **     **  **                    ",
+        "iiiiiiiiiis|           |ssd    dsiiiii**         *   **     **    **                   ",
+        "iiiiiiiiiis|             s    dsiiiiiii**       *   **     **   b  **                  ",
+        "iiiiiiiiiis|              s  dsiiiiiiiii**  b      *    **   **       **               ",
+        "iiiiiiiiiis|               s siiiiiiiiiii**     **   **    **  b   **                  ",
+        "iiiiiiiiiis|               ssiiiiiiiiiiiii**     **   **    **   **                    ",
+        "iiiiiiiiiis|              siiiiiiiiiiiiiiii**  **    **    **  **                      ",
+        "iiiiiiiiiis|           |siiiiiiiiiiiiiiiiii***  **     **   **  **                     ",
+        "iiiiiiiiiism           msiiiiiiiiiiiiiiiiiiii** ** b  **  **   **                      ",
+        "iiiiiiiiism            msiiiiiiiiiiiiiiiiiiiiii***     **   **  **                     ",
+        "iiiiiiiiis     {}        siiiiiiiiiiiiiiiiiiiiii**  b **   **  **                      ",
+        "iiiiiiiis      ()         siiiiiiiiiiiiiiiiiiiiii**  b  **   **  **                    ",
+        "iiiiiim        ()         miiiiiiiiiiiiiiiiiiiiiii** **   **   **                      ",
+        "iiiiis                    siiiiiiiiiiiiiiiiiiiiiiii****                                ",
     ]
 
 
@@ -140,29 +140,33 @@ export let level_two_cofing = {
         solid(),
     ],//grass
     "(": () => [
-        sprite("gate_1_bl"),
+        sprite("gate_2_bl"),
         solid(),
+        scale(0.5),
         area(),
         "passage", //tag
-    ],//gate_1
+    ],//gate_2
     ")": () => [
-        sprite("gate_1_br"),
+        sprite("gate_2_br"),
         solid(),
         area(),
+        scale(0.5),
         "passage", //tag
-    ],//gate_1
+    ],//gate_2
     "{": () => [
-        sprite("gate_1_tl"),
+        sprite("gate_2_tl"),
         solid(),
+        scale(0.5),
         area(),
         "passage", //tag
-    ],//gate_1
+    ],//gate_2
     "}": () => [
-        sprite("gate_1_tr"),
+        sprite("gate_2_tr"),
         solid(),
+        scale(0.5),
         area(),
         "passage", //tag
-    ],//gate_1
+    ],//gate_2
     "b": () => [
         sprite("bomb"),
         area(),

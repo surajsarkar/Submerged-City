@@ -16,6 +16,10 @@ loadSprite("gate_1_bl", "../sprites/gate_1_bl.png");
 loadSprite("gate_1_br", "../sprites/gate_1_br.png");
 loadSprite("gate_1_tl", "../sprites/gate_1_tl.png");
 loadSprite("gate_1_tr", "../sprites/gate_1_tr.png");
+loadSprite("gate_2_bl", "../sprites/gate_2_bl.png");
+loadSprite("gate_2_br", "../sprites/gate_2_br.png");
+loadSprite("gate_2_tl", "../sprites/gate_2_tl.png");
+loadSprite("gate_2_tr", "../sprites/gate_2_tr.png");
 loadSprite("bomb", "../sprites/bomb.png");
 loadSprite("user", "../sprites/user.png");
 loadSprite("gcoin", "../sprites/gcoin.png");
@@ -160,4 +164,4 @@ planeScene("story_6", "chat_6", true, "skip >", true, 2, firstLevel);
 winLooseScene("result");
 
 // go("start");
-go("level_one", 0, 100, 0)
+go("level_two", 0, 100, 0)

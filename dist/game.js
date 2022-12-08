@@ -3476,32 +3476,32 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     "                                                                                       ",
     "                                                                                       ",
     "       ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss                    ",
-    "      snnnnnnnnnnnnnnnnnnnnnninbbnnnnnnnnnninnnnnnnnnnnnnnnnnnnnnns                    ",
-    "     snnnnnsssssnnnnnnnnnnnnniiiiinnnnnnnnninnnnnnnnnnnnnnnnnnnnnns                    ",
+    "      snnnnnnnnnnnnnnnnnnnnnninnnnnnnnnnnnninnnnnnnnnnnnnnnnnnnnnns                    ",
+    "     snnnnnsssssnnnnnnnnnnnnniiiiinnnbnnnnninnnnnnnnnnnnnnnnnnnnnns                    ",
     "    snnnnnnnnnnnnnnnnniiiinnnnnnnnnnnnnnnnnnnnnnninnnnnnnnnnnnnnnns                    ",
     "   snnnnnnnnnnnnnnnnnnntninnnnnnnnnnnnnnnnnnnnnnninnnnnnnnnnnnnnnns                    ",
     "iiiisnnnnnnnnnnnnnnssssssssssssssssssssssssssssssssssssssssssssssss                    ",
     "iiiis|             |siiiiiiiiiiiiisd     s                                             ",
     "iiiiis|             |siiiiiiiiiiisd     s                                              ",
-    "iiiiiis|             |siiiiiiiiis     ts                                               ",
-    "iiiiiiis|             |siiiiiiis     ds                                                ",
-    "iiiiiiiis|            |siiiiiis      s                                                 ",
-    "iiiiiiiiis|           |siiiiist     s                                                  ",
-    "iiiiiiiiiis|           |siiisd    tsi                                                  ",
-    "iiiiiiiiiis|          |siisd    dsiii                                                  ",
-    "iiiiiiiiiis|           |ssd    dsiiiii                                                 ",
-    "iiiiiiiiiis|             s    dsiiiiiii                                                ",
-    "iiiiiiiiiis|              s  dsiiiiiiiii                                               ",
-    "iiiiiiiiiis|               s siiiiiiiiiii                                              ",
-    "iiiiiiiiiis|               ssiiiiiiiiiiiii                                             ",
-    "iiiiiiiiiis|              siiiiiiiiiiiiiiii                                            ",
-    "iiiiiiiiiis|           |siiiiiiiiiiiiiiiiii                                            ",
-    "iiiiiiiiiis|           |siiiiiiiiiiiiiiiiiiii                                          ",
-    "iiiiiiiiis|            |siiiiiiiiiiiiiiiiiiiiii                                        ",
-    "iiiiiiiiis     {}        siiiiiiiiiiiiiiiiiiiiii                                       ",
-    "iiiiiiiis      ()         siiiiiiiiiiiiiiiiiiiiii                                      ",
-    "iiiiiis        ()         siiiiiiiiiiiiiiiiiiiiiii                                     ",
-    "iiiiis                    siiiiiiiiiiiiiiiiiiiiiiii                                    "
+    "iiiiiis|             |siiiiiiiiis     ts                  ^^                           ",
+    "iiiiiiis|             |siiiiiiis     ds                   **     ^^                    ",
+    "iiiiiiiis|            |siiiiiis      s           ^         **    **                    ",
+    "iiiiiiiiis|           |siiiiist     s           *   ^^      **   **                    ",
+    "iiiiiiiiiis|          |siiisd    tsi ^           *   **       **  **                   ",
+    "iiiiiiiiiis|          |siisd    dsiii*    b      *    **     **  **                    ",
+    "iiiiiiiiiis|           |ssd    dsiiiii**         *   **     **    **                   ",
+    "iiiiiiiiiis|             s    dsiiiiiii**       *   **     **   b  **                  ",
+    "iiiiiiiiiis|              s  dsiiiiiiiii**  b      *    **   **       **               ",
+    "iiiiiiiiiis|               s siiiiiiiiiii**     **   **    **  b   **                  ",
+    "iiiiiiiiiis|               ssiiiiiiiiiiiii**     **   **    **   **                    ",
+    "iiiiiiiiiis|              siiiiiiiiiiiiiiii**  **    **    **  **                      ",
+    "iiiiiiiiiis|           |siiiiiiiiiiiiiiiiii***  **     **   **  **                     ",
+    "iiiiiiiiiism           msiiiiiiiiiiiiiiiiiiii** ** b  **  **   **                      ",
+    "iiiiiiiiism            msiiiiiiiiiiiiiiiiiiiiii***     **   **  **                     ",
+    "iiiiiiiiis     {}        siiiiiiiiiiiiiiiiiiiiii**  b **   **  **                      ",
+    "iiiiiiiis      ()         siiiiiiiiiiiiiiiiiiiiii**  b  **   **  **                    ",
+    "iiiiiim        ()         miiiiiiiiiiiiiiiiiiiiiii** **   **   **                      ",
+    "iiiiis                    siiiiiiiiiiiiiiiiiiiiiiii****                                "
   ];
   var createLevel = /* @__PURE__ */ __name((box_size2, level2) => {
     let no_of_box = Math.floor(width() / box_size2.width);
@@ -3544,26 +3544,30 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       solid()
     ],
     "(": () => [
-      sprite("gate_1_bl"),
+      sprite("gate_2_bl"),
       solid(),
+      scale(0.5),
       area(),
       "passage"
     ],
     ")": () => [
-      sprite("gate_1_br"),
+      sprite("gate_2_br"),
       solid(),
       area(),
+      scale(0.5),
       "passage"
     ],
     "{": () => [
-      sprite("gate_1_tl"),
+      sprite("gate_2_tl"),
       solid(),
+      scale(0.5),
       area(),
       "passage"
     ],
     "}": () => [
-      sprite("gate_1_tr"),
+      sprite("gate_2_tr"),
       solid(),
+      scale(0.5),
       area(),
       "passage"
     ],
@@ -3612,6 +3616,10 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   loadSprite("gate_1_br", "../sprites/gate_1_br.png");
   loadSprite("gate_1_tl", "../sprites/gate_1_tl.png");
   loadSprite("gate_1_tr", "../sprites/gate_1_tr.png");
+  loadSprite("gate_2_bl", "../sprites/gate_2_bl.png");
+  loadSprite("gate_2_br", "../sprites/gate_2_br.png");
+  loadSprite("gate_2_tl", "../sprites/gate_2_tl.png");
+  loadSprite("gate_2_tr", "../sprites/gate_2_tr.png");
   loadSprite("bomb", "../sprites/bomb.png");
   loadSprite("user", "../sprites/user.png");
   loadSprite("gcoin", "../sprites/gcoin.png");
@@ -3739,6 +3747,6 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   planeScene("story_5", "chat_5", true, "skip >", true, 2, () => go("story_6"));
   planeScene("story_6", "chat_6", true, "skip >", true, 2, firstLevel);
   winLooseScene("result");
-  go("level_one", 0, 100, 0);
+  go("level_two", 0, 100, 0);
 })();
 //# sourceMappingURL=game.js.map
