@@ -2922,10 +2922,12 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           sprite("gameBg", { width: width() }),
           pos(width() / 2, height() / 2),
           origin("center"),
-          z(-1)
+          z(-1),
+          layer("bg")
         ]);
-        let background_ocean_music = play("underocean", { loop: true, volume: 0.8 });
-        background_ocean_music.play();
+        onKeyPress("f", () => {
+          fullscreen(!isFullscreen());
+        });
         gravity(10);
         let [bomb_counter, bomb_count_sprite, bomb_count_label] = infoBoard(
           sprite_tag = "bomb",
@@ -3135,6 +3137,8 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         });
         let should_follow_user = false;
         onUpdate(() => {
+          debug.log(player.pos);
+          camPos(width() / 2, height() / 2);
           if (player.hp() <= 0) {
             let result = ["!Ouch", points_collected, 0, true, "plant"];
             goNext(
@@ -3150,8 +3154,8 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           p_hel_label.text = player.hp();
           bomb_count_label.text = bomb_count;
           if (!should_follow_user) {
-            should_follow_user = bomb_count > 1 ? true : false;
-            wait(5, () => should_follow_user = true);
+            should_follow_user = bomb_count > 1 ? false : false;
+            wait(5, () => should_follow_user = false);
           }
           let no_of_bricks_around_user = 0;
           every("iwall", (safeSpace) => {
@@ -3245,16 +3249,19 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       rect(w = box_width2, h = box_height2),
       pos(x_cor2, y_cor2),
       outline(outline_width2),
-      color(box_color2[0], box_color2[1], box_color2[2])
+      color(box_color2[0], box_color2[1], box_color2[2]),
+      layer("ui")
     ]);
     let logo = add([
       sprite(sprite_tag2),
       scale(0.5),
-      pos(board.pos.x + sprite_pad_x2, board.pos.y + sprite_pad_y2)
+      pos(board.pos.x + sprite_pad_x2, board.pos.y + sprite_pad_y2),
+      layer("ui")
     ]);
     let info = add([
       text(initial_text2, { font: font2, size: font_size2 }),
-      pos(board.pos.x + text_pad_x2, board.pos.y + text_pad_y2)
+      pos(board.pos.x + text_pad_x2, board.pos.y + text_pad_y2),
+      layer("ui")
     ]);
     return [board, sprite, info];
   }, "infoBoard");
@@ -3285,6 +3292,9 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     scene(
       scene_id2,
       (msg, points, bonus, have_next_level, poster, action) => {
+        onKeyPress("f", () => {
+          fullscreen(!isFullscreen());
+        });
         add([
           sprite("scoreBg", { width: width() }),
           pos(width() / 2, height() / 2),
@@ -3361,6 +3371,9 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   }, "winLooseScene");
   var planeScene = /* @__PURE__ */ __name((scene_id2, sprite_tag2, should_have_button, button_text, timed, waiting_time, action) => {
     scene(scene_id2, () => {
+      onKeyPress("f", () => {
+        fullscreen(!isFullscreen());
+      });
       add([
         sprite(sprite_tag2, { width: width() }),
         pos(width() / 2, height() / 2),
@@ -3422,40 +3435,40 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   var createLevelOne = /* @__PURE__ */ __name((box_size2) => {
     let no_of_box = Math.floor(width() / box_size2.width);
     let LEVEL_12 = [
-      "                                                                       ",
-      "                                        aaaaaaaaaaaaaaaaa              ",
-      "                                        asssssssssssssssa              ",
-      "                                        asnnnnnnnnnnnnnsa              ",
-      "                                        asnnnnnnnnnnnnnsa              ",
-      "                                          nnnnsssnnnnnnsa              ",
-      "                                          nnnnsssnnnnnnsa              ",
-      "                                          nnnnsssnnnnnnsa              ",
-      "                                          nnnnsssnnnnnnsa              ",
-      "                                        ssssssssssssssssa              ",
-      "                                                                       ",
-      "i               asssssssssssssa                                        ",
-      "i               asssnnnnnnnnnsa                                        ",
-      "i               asssnnnnnnnnnsa                                        ",
-      "i               asssnnnnnnnnnnn                                        ",
-      "i               asssnnnnnnnnnnn                                        ",
-      "i               asssnnnnnnnnnnn                                        ",
-      "i               asssssssssssssn                                        ",
-      "i               aaaaaaaaaaaaaaa                                        ",
-      "ii                                                                     ",
-      "iiiiii**                                                               ",
-      "iii***ii*****                                                          ",
-      "iiiii**ii****                                                          ",
-      "i^i^iiiiiii^^                                                          ",
-      "i**iiiiiiii** ^  -  -  -  -  -  -  -                                   ",
-      "i**ii^iii**** **    b    -    --   -                                   ",
-      "^iii**ii**ii** ** b - - - -                                            ",
-      "**ii****i^i**ii**   -   -   - b   -   - b                              ",
-      "i**ii**i**ii**ii**  -  -  -  -  -  -                                   ",
-      "**ii**i**ii**i{}** - -  - - -  b - -                                   ",
-      "i**ii**ii*ii**()  ** - b  -  - -                                       ",
-      "**ii**iii**i**() **   -  -  -   -  -                                   ",
-      "i**ii**i**ii*i() *  - -  -  -                                          ",
-      "**ii**ii**i**i()**                                                     ",
+      "                                                                                       ",
+      "                                        aaaaaaaaaaaaaaaaa                              ",
+      "                                        asssssssssssssssa                              ",
+      "                                        asnnnnnnnnnnnnnsa                              ",
+      "                                        asnnnnnnnnnnnnnsa                              ",
+      "                                          nnnnsssnnnnnnsa                              ",
+      "                                          nnnnsssnnnnnnsa                              ",
+      "                                          nnnnsssnnnnnnsa                              ",
+      "                                          nnnnsssnnnnnnsa                              ",
+      "                                        ssssssssssssssssa                              ",
+      "                                                                                       ",
+      "i               asssssssssssssa                                                        ",
+      "i               asssnnnnnnnnnsa                                                        ",
+      "i               asssnnnnnnnnnsa                                                        ",
+      "i               asssnnnnnnnnnnn                                                        ",
+      "i               asssnnnnnnnnnnn                                                        ",
+      "i               asssnnnnnnnnnnn                                                        ",
+      "i               asssssssssssssn                                                        ",
+      "i               aaaaaaaaaaaaaaa                                                        ",
+      "ii                                                                                     ",
+      "iiiiii**                                                                               ",
+      "iii***ii*****                                                                          ",
+      "iiiii**ii****                                                                          ",
+      "i^i^iiiiiii^^                                                                          ",
+      "i**iiiiiiii** ^  -  -  -  -  -  -  -                                                   ",
+      "i**ii^iii**** **    b    -    --   -                                                   ",
+      "^iii**ii**ii** ** b - - - -                                                            ",
+      "**ii****i^i**ii**   -   -   - b   -   - b                                              ",
+      "i**ii**i**ii**ii**  -  -  -  -  -  -                                                   ",
+      "**ii**i**ii**i{}** - -  - - -  b - -                                                   ",
+      "i**ii**ii*ii**()  ** - b  -  - -                                                       ",
+      "**ii**iii**i**() **   -  -  -   -  -                                                   ",
+      "i**ii**i**ii*i() *  - -  -  -                                                          ",
+      "**ii**ii**i**i()**                                                                     ",
       `${buildSeq(no_of_box, "g")}`
     ];
     return LEVEL_12;
@@ -3470,6 +3483,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
 
   // code/main.js
   no({ background: [0, 105, 148] });
+  layers(["bg", "ui", "game"], "game");
   loadSprite("fish", "../sprites/fish.png");
   loadSprite("grass", "../sprites/grass.png");
   loadSprite("plant", "../sprites/sea_plant.png");
@@ -3527,7 +3541,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       "g": () => [
         sprite("grass"),
         area(),
-        scale(2),
+        scale(0.25),
         solid()
       ],
       "(": () => [

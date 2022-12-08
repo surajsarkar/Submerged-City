@@ -2,6 +2,8 @@ import kaboom from "kaboom";
 // kaboom();
 
 // export let background_ocean_music =  play("underocean", { loop: true, volume: 0.8 });
+
+
 export const createGameScene = (scene_id,
     level,
     level_options,
@@ -17,16 +19,27 @@ export const createGameScene = (scene_id,
         scene_id,
         (bomb_count, harry_health, points_collected) => {
 
+
+            
+
             //background
             add([
                 sprite("gameBg", {width: width()}),
                 pos(width()/2, height()/2),
                 origin("center"),
-                z(-1),                
+                z(-1),
+                layer("bg"),
             ]);
 
-            let background_ocean_music =  play("underocean", { loop: true, volume: 0.8 });
-            background_ocean_music.play();
+
+            onKeyPress("f", ()=>{
+                fullscreen(!isFullscreen());
+            });//onKeyPress
+
+                      
+
+            // let background_ocean_music =  play("underocean", { loop: true, volume: 0.8 });
+            // background_ocean_music.play();
 
             gravity(10);
            
@@ -288,8 +301,14 @@ export const createGameScene = (scene_id,
                 }//if
             });//onCollide
 
+
+            
             let should_follow_user = false;
+            //⬆️⬆️☝️☝️📈📈
             onUpdate(() => {
+                //camera experimentaion
+                debug.log(player.pos);
+                camPos(width()/2, height()/2);
 
                 // detecting if user life is ended
                 if (player.hp() <= 0) {
@@ -315,8 +334,8 @@ export const createGameScene = (scene_id,
                 bomb_count_label.text = bomb_count;
 
                 if (!should_follow_user) {
-                    should_follow_user = bomb_count > 1 ?  true : false;
-                    wait(5, () => should_follow_user = true);//wait
+                    should_follow_user = bomb_count > 1 ?  false : false;
+                    wait(5, () => should_follow_user = false);//wait
                 }//if
 
                 let no_of_bricks_around_user = 0;
@@ -452,17 +471,20 @@ let infoBoard = (
         pos(x_cor, y_cor),
         outline(outline_width),
         color(box_color[0], box_color[1], box_color[2]),
+        layer("ui")
     ]);//board
 
     let logo = add([
         sprite(sprite_tag),
         scale(0.5),
         pos(board.pos.x + sprite_pad_x, board.pos.y + sprite_pad_y),
+        layer("ui")
     ])
 
     let info = add([
         text(initial_text, { font: font, size: font_size }),
         pos(board.pos.x + text_pad_x, board.pos.y + text_pad_y),
+        layer("ui")
     ]);//info
 
     return [board, sprite, info];
@@ -519,6 +541,9 @@ export const winLooseScene = (scene_id) => {
         (msg, points, bonus, have_next_level, poster, action) => {
 
             // background_ocean_music.pause();
+            onKeyPress("f", ()=>{
+                fullscreen(!isFullscreen());
+            });//onKeyPress
 
             //background
             add([
@@ -602,6 +627,9 @@ export const planeScene = (scene_id, sprite_tag, should_have_button, button_text
     scene(scene_id, () => {
 
         // background_ocean_music.pause();
+        onKeyPress("f", ()=>{
+                fullscreen(!isFullscreen());
+            });//onKeyPress
 
         add([
             sprite(sprite_tag, { width: width() }),

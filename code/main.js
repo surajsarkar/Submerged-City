@@ -4,8 +4,9 @@ import { createGameScene, winLooseScene, planeScene, } from "./helpers";
 import { createLevelOne } from "./level";
 
 // initialize context
-kaboom({ background: [0, 105, 148] });
+kaboom({ background: [0, 105, 148],});
 
+layers(["bg", "ui", "game"], "game");
 
 loadSprite("fish", "../sprites/fish.png");
 loadSprite("grass", "../sprites/grass.png");
@@ -68,7 +69,7 @@ createGameScene(scene_id = "level_one",
         "g": () => [
             sprite("grass"),
             area(),
-            scale(2),
+            scale(0.25),
             solid(),
         ],//grass
         "(": () => [
