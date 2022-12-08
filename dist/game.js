@@ -3122,6 +3122,11 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
                     destroy(brick);
                   }
                 });
+                every("nblade", (blade) => {
+                  if (getDistance(bomb.pos, blade.pos) < 150) {
+                    destroy(blade);
+                  }
+                });
                 destroy(bomb);
                 bounce(bomb = bomb, victim = player, radius = 200);
                 shake(120);

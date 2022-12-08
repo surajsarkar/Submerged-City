@@ -279,6 +279,12 @@ export const createGameScene = (scene_id,
                                     destroy(brick);
                                 }//if
                             })
+
+                            every("nblade", (blade)=>{
+                                if (getDistance(bomb.pos, blade.pos) < 200){
+                                    destroy(blade);
+                                }//if
+                            })
                             // debug.log(`${bomb.pos}, ${bomb.pos.x}, ${bomb.pos.y}`);
                             destroy(bomb);
                             // bounce 
