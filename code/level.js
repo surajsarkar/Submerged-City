@@ -14,53 +14,8 @@ export let LEVEL_1 = [
     "ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
 ]
 
-//Todo level 2
 
-[
-        "                                                                                       ",
-        "                                                                      ",
-        "                                                                      ",
-        "                                                                      ",
-        "                                                                      ",
-        "                                                                        ",
-        "                                                                        ",
-        "       ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss                    ",
-        "      snnnnnnnnnnnnnnnnnnnnnninbbnnnnnnnnnninnnnnnnnnnnnnnnnnnnnnns           ",
-        "     snnnnnsssssinnnnnnnnnnnniiiiinnnnnnnninnnnnnnnnnnnnnnnnnnnnnns                            ",
-        "    snnnnnnnnnnnninnnniiiinnnnnnnnnnnnnnnnnnnnnnninnnnnnnnnnnnnnnns             ",
-        "   snnnnnnnnnnnnnninnnntninnnnnnnnnnnnnnnnnnnnnnninnnnnnnnnnnnnnnns             ",
-        "iiiisnnnnnnnnnnnnnnssssssssssssssssssssssssssssssssssssssssssssssss              ",
-        "iiiis|             |siiiiiiiiiiiiisd     s                                  ",
-        "iiiiis|             |siiiiiiiiiiisd     s                                   ",
-        "iiiiiis|             |siiiiiiiiis     ts                                     ",
-        "iiiiiiis|             |siiiiiiis     ds                                       ",
-        "iiiiiiiis|            |siiiiiis      s                                       ",
-        "iiiiiiiiis|           |siiiiist     s                                        ",
-        "iiiiiiiiiis|           |siiisd    tsi                                                        ",
-        "iiiiiiiiiis|          |siisd    dsiii                                                    ",
-        "iiiiiiiiiis|           |ssd    dsiiiii                                             ",
-        "iiiiiiiiiis|             s    dsiiiiiii                                             ",
-        "iiiiiiiiiis|              s  dsiiiiiiiii                                              ",
-        "iiiiiiiiiis|               s siiiiiiiiiii                      ",
-        "iiiiiiiiiis|               ssiiiiiiiiiiiii                   ",
-        "iiiiiiiiiis|              siiiiiiiiiiiiiiii                           ",
-        "iiiiiiiiiis|           |siiiiiiiiiiiiiiiiii             ",
-        "iiiiiiiiiis|           |siiiiiiiiiiiiiiiiiiii                  ",
-        "iiiiiiiiis|            |siiiiiiiiiiiiiiiiiiiiii               ",
-        "iiiiiiiiis     {}        siiiiiiiiiiiiiiiiiiiiii                  ",
-        "iiiiiiiis      ()         siiiiiiiiiiiiiiiiiiiiii                 ",
-        "iiiiiis        ()         siiiiiiiiiiiiiiiiiiiiiii                    ",
-        "iiiiis                    siiiiiiiiiiiiiiiiiiiiiiii                         ",
-        `${buildSeq(no_of_box, "g")}`,
-    ]
-
-
-//Todo level 3
-//Todo level 4
-
-export const createLevelOne = (box_size) => {
-    let no_of_box = Math.floor(width() / box_size.width);
-    let LEVEL_1 = [
+export let LEVEL_ONE = [
         "                                                                                       ",
         "                                        aaaaaaaaaaaaaaaaa                              ",
         "                                        asssssssssssssssa                              ",
@@ -95,9 +50,55 @@ export const createLevelOne = (box_size) => {
         "**ii**iii**i**() **   -  -  -   -  -                                                   ",
         "i**ii**i**ii*i() *  - -  -  -                                                          ",
         "**ii**ii**i**i()**                                                                     ",
-        `${buildSeq(no_of_box, "g")}`,
     ]
-    return LEVEL_1;
+
+//Todo level 2
+
+export let LEVEL_TWO = [
+        "                                                                                       ",
+        "                                                                                       ",
+        "                                                                                       ",
+        "                                                                                       ",
+        "                                                                                       ",
+        "                                                                                       ",
+        "                                                                                       ",
+        "       ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss                    ",
+        "      snnnnnnnnnnnnnnnnnnnnnninbbnnnnnnnnnninnnnnnnnnnnnnnnnnnnnnns                    ",
+        "     snnnnnsssssinnnnnnnnnnnniiiiinnnnnnnninnnnnnnnnnnnnnnnnnnnnnns                    ",
+        "    snnnnnnnnnnnninnnniiiinnnnnnnnnnnnnnnnnnnnnnninnnnnnnnnnnnnnnns                    ",
+        "   snnnnnnnnnnnnnninnnntninnnnnnnnnnnnnnnnnnnnnnninnnnnnnnnnnnnnnns                    ",
+        "iiiisnnnnnnnnnnnnnnssssssssssssssssssssssssssssssssssssssssssssssss                    ",
+        "iiiis|             |siiiiiiiiiiiiisd     s                                             ",
+        "iiiiis|             |siiiiiiiiiiisd     s                                              ",
+        "iiiiiis|             |siiiiiiiiis     ts                                               ",
+        "iiiiiiis|             |siiiiiiis     ds                                                ",
+        "iiiiiiiis|            |siiiiiis      s                                                 ",
+        "iiiiiiiiis|           |siiiiist     s                                                  ",
+        "iiiiiiiiiis|           |siiisd    tsi                                                  ",
+        "iiiiiiiiiis|          |siisd    dsiii                                                  ",
+        "iiiiiiiiiis|           |ssd    dsiiiii                                                 ",
+        "iiiiiiiiiis|             s    dsiiiiiii                                                ",
+        "iiiiiiiiiis|              s  dsiiiiiiiii                                               ",
+        "iiiiiiiiiis|               s siiiiiiiiiii                                              ",
+        "iiiiiiiiiis|               ssiiiiiiiiiiiii                                             ",
+        "iiiiiiiiiis|              siiiiiiiiiiiiiiii                                            ",
+        "iiiiiiiiiis|           |siiiiiiiiiiiiiiiiii                                            ",
+        "iiiiiiiiiis|           |siiiiiiiiiiiiiiiiiiii                                          ",
+        "iiiiiiiiis|            |siiiiiiiiiiiiiiiiiiiiii                                        ",
+        "iiiiiiiiis     {}        siiiiiiiiiiiiiiiiiiiiii                                       ",
+        "iiiiiiiis      ()         siiiiiiiiiiiiiiiiiiiiii                                      ",
+        "iiiiiis        ()         siiiiiiiiiiiiiiiiiiiiiii                                     ",
+        "iiiiis                    siiiiiiiiiiiiiiiiiiiiiiii                                    ",
+    ]
+
+
+//Todo level 3
+//Todo level 4
+
+export const createLevel = (box_size, level) => {
+    let no_of_box = Math.floor(width() / box_size.width);
+    level.push(buildSeq(no_of_box, "g"));
+    return level;
 }//createLevel
 
 const buildSeq = (quantity, symbol = " ") => {

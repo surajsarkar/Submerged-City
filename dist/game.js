@@ -3432,47 +3432,47 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   }, "specifyDirection");
 
   // code/level.js
-  var createLevelOne = /* @__PURE__ */ __name((box_size2) => {
+  var LEVEL_ONE = [
+    "                                                                                       ",
+    "                                        aaaaaaaaaaaaaaaaa                              ",
+    "                                        asssssssssssssssa                              ",
+    "                                        asnnnnnnnnnnnnnsa                              ",
+    "                                        asnnnnnnnnnnnnnsa                              ",
+    "                                          nnnnsssnnnnnnsa                              ",
+    "                                          nnnnsssnnnnnnsa                              ",
+    "                                          nnnnsssnnnnnnsa                              ",
+    "                                          nnnnsssnnnnnnsa                              ",
+    "                                        ssssssssssssssssa                              ",
+    "                                                                                       ",
+    "i               asssssssssssssa                                                        ",
+    "i               asssnnnnnnnnnsa                                                        ",
+    "i               asssnnnnnnnnnsa                                                        ",
+    "i               asssnnnnnnnnnnn                                                        ",
+    "i               asssnnnnnnnnnnn                                                        ",
+    "i               asssnnnnnnnnnnn                                                        ",
+    "i               asssssssssssssn                                                        ",
+    "i               aaaaaaaaaaaaaaa                                                        ",
+    "ii                                                                                     ",
+    "iiiiii**                                                                               ",
+    "iii***ii*****                                                                          ",
+    "iiiii**ii****                                                                          ",
+    "i^i^iiiiiii^^                                                                          ",
+    "i**iiiiiiii** ^  -  -  -  -  -  -  -                                                   ",
+    "i**ii^iii**** **    b    -    --   -                                                   ",
+    "^iii**ii**ii** ** b - - - -                                                            ",
+    "**ii****i^i**ii**   -   -   - b   -   - b                                              ",
+    "i**ii**i**ii**ii**  -  -  -  -  -  -                                                   ",
+    "**ii**i**ii**i{}** - -  - - -  b - -                                                   ",
+    "i**ii**ii*ii**()  ** - b  -  - -                                                       ",
+    "**ii**iii**i**() **   -  -  -   -  -                                                   ",
+    "i**ii**i**ii*i() *  - -  -  -                                                          ",
+    "**ii**ii**i**i()**                                                                     "
+  ];
+  var createLevel = /* @__PURE__ */ __name((box_size2, level2) => {
     let no_of_box = Math.floor(width() / box_size2.width);
-    let LEVEL_12 = [
-      "                                                                                       ",
-      "                                        aaaaaaaaaaaaaaaaa                              ",
-      "                                        asssssssssssssssa                              ",
-      "                                        asnnnnnnnnnnnnnsa                              ",
-      "                                        asnnnnnnnnnnnnnsa                              ",
-      "                                          nnnnsssnnnnnnsa                              ",
-      "                                          nnnnsssnnnnnnsa                              ",
-      "                                          nnnnsssnnnnnnsa                              ",
-      "                                          nnnnsssnnnnnnsa                              ",
-      "                                        ssssssssssssssssa                              ",
-      "                                                                                       ",
-      "i               asssssssssssssa                                                        ",
-      "i               asssnnnnnnnnnsa                                                        ",
-      "i               asssnnnnnnnnnsa                                                        ",
-      "i               asssnnnnnnnnnnn                                                        ",
-      "i               asssnnnnnnnnnnn                                                        ",
-      "i               asssnnnnnnnnnnn                                                        ",
-      "i               asssssssssssssn                                                        ",
-      "i               aaaaaaaaaaaaaaa                                                        ",
-      "ii                                                                                     ",
-      "iiiiii**                                                                               ",
-      "iii***ii*****                                                                          ",
-      "iiiii**ii****                                                                          ",
-      "i^i^iiiiiii^^                                                                          ",
-      "i**iiiiiiii** ^  -  -  -  -  -  -  -                                                   ",
-      "i**ii^iii**** **    b    -    --   -                                                   ",
-      "^iii**ii**ii** ** b - - - -                                                            ",
-      "**ii****i^i**ii**   -   -   - b   -   - b                                              ",
-      "i**ii**i**ii**ii**  -  -  -  -  -  -                                                   ",
-      "**ii**i**ii**i{}** - -  - - -  b - -                                                   ",
-      "i**ii**ii*ii**()  ** - b  -  - -                                                       ",
-      "**ii**iii**i**() **   -  -  -   -  -                                                   ",
-      "i**ii**i**ii*i() *  - -  -  -                                                          ",
-      "**ii**ii**i**i()**                                                                     ",
-      `${buildSeq(no_of_box, "g")}`
-    ];
-    return LEVEL_12;
-  }, "createLevelOne");
+    level2.push(buildSeq(no_of_box, "g"));
+    return level2;
+  }, "createLevel");
   var buildSeq = /* @__PURE__ */ __name((quantity, symbol = " ") => {
     let base = "";
     for (let i = 0; i < quantity; i++) {
@@ -3511,7 +3511,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   loadSprite("chat_6", "../sprites/chat_6.png");
   loadSound("underocean", "../sprites/underocean.mp3");
   loadSound("blastsound", "../sprites/blastaudio.m4a");
-  var LEVEL_1 = createLevelOne(box_size = { width: 20, height: 20 });
+  var LEVEL_1 = createLevel(box_size = { width: 20, height: 20 }, level = LEVEL_ONE);
   createGameScene(
     scene_id = "level_one",
     level = LEVEL_1,

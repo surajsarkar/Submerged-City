@@ -1,7 +1,7 @@
 import kaboom from "kaboom";
 
 import { createGameScene, winLooseScene, planeScene, } from "./helpers";
-import { createLevelOne } from "./level";
+import { createLevel, LEVEL_ONE } from "./level";
 
 // initialize context
 kaboom({ background: [0, 105, 148],});
@@ -39,7 +39,7 @@ loadSound("blastsound", "../sprites/blastaudio.m4a");
 
 
 
-let LEVEL_1 = createLevelOne(box_size = { width: 20, height: 20 })
+let LEVEL_1 = createLevel(box_size = { width: 20, height: 20 }, level=LEVEL_ONE);
 
 createGameScene(scene_id = "level_one",
     level = LEVEL_1,
