@@ -3225,6 +3225,12 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         player.onCollide("nblade", () => {
           player.hurt(0.2);
         });
+        player.onCollide("treasure", (treasure) => {
+          destroy(treasure);
+          for (let i = 0; i < 500; i++) {
+            points_collected += 1;
+          }
+        });
         let health_button = add([
           sprite("healthLbl"),
           area({ cursor: "pointer" }),
@@ -3499,14 +3505,14 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     "                                                                                       ",
     "                                                                                       ",
     "                                         b                                             ",
+    "                  b                                                                    ",
     "                                                                                       ",
-    "                 b                                                                     ",
     "                                                                                       ",
     "       ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
     "      s    |||||             i             i                      s                    ",
-    "     s     sssss             iiiii   b     i                      s    b               ",
+    "     s     sssss             iiiii   b     i                      s    b           b   ",
     "    s      |||||      iiii                       i                s            b       ",
-    "   s             t       i                       i                s     b    b         ",
+    "   s             t       i                       i                s     b              ",
     "iiiis              ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
     "iiiis|||||         |siiiiiiiiiiiiisd     s                                             ",
     "iiiiis|         |||||siiiiiiiiiiisd     s                                              ",

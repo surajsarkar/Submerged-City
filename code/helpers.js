@@ -424,6 +424,13 @@ export const createGameScene = (scene_id,
                 player.hurt(0.2)
             });//🥷🥷
 
+            player.onCollide("treasure", (treasure)=>{
+                destroy(treasure);
+                for (let i = 0; i < 500; i++){
+                    points_collected += 1;
+                }//for
+            })
+
             let health_button = add([
                 sprite('healthLbl'),
                 area({ cursor: "pointer" }),
