@@ -147,28 +147,19 @@ export const createGameScene = (scene_id,
 
             // movement of the user
             onKeyDown("up", () => {
-                if (player.pos.y > 0) {
-                    if (player.angle === -10) {
-                        player.angle += 40;
-                    }//if
-                    player.pos = vec2(player.pos.x - 3, player.pos.y - 3);
-                }//if
+                specifyDirection(player, 0, -8)
+                player.pos = vec2(player.pos.x, player.pos.y - 8);
             });
 
-            onKeyRelease("up", () => {
-                if (player.angle === 30) {
-                    player.angle -= 40;
-                }//if 
-            });
+            // onKeyRelease("up", () => {
+            //     if (player.angle === 30) {
+            //         player.angle -= 40;
+            //     }//if 
+            // });
 
             onKeyDown("left", () => {
-                player.flipX(false);
-                if (player.pos.x > 5) {
-                    if (player.angle === -10) {
-                        player.angle += 10;
-                    }//if
-                    player.pos = vec2(player.pos.x - 4, player.pos.y);
-                }//if
+                specifyDirection(player, -4, 0);
+                player.pos = vec2(player.pos.x - 4, player.pos.y);
             });
 
             onKeyRelease("left", () => {
@@ -184,20 +175,15 @@ export const createGameScene = (scene_id,
             });
 
             onKeyDown("right", () => {
-                if (player.angle === -10) {
-                    player.angle += 20
-                }//if
                 if (player.pos.x < width() - 45) {
-                    player.flipX(true);
+                    specifyDirection(player, 4, 0);
                     player.pos = vec2(player.pos.x + 4, player.pos.y);
                 }//if
             });
 
             onKeyDown("down", () => {
-                if (player.angle === -10) {
-                    player.angle -= 30;
-                }//if
                 if (player.pos.y < height() - 45) {
+                    specifyDirection(player, 0, 4);
                     player.pos = vec2(player.pos.x, player.pos.y + 4);
                 }//if
             });

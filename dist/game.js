@@ -3012,26 +3012,12 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           play("coinCollection");
         });
         onKeyDown("up", () => {
-          if (player.pos.y > 0) {
-            if (player.angle === -10) {
-              player.angle += 40;
-            }
-            player.pos = vec2(player.pos.x - 3, player.pos.y - 3);
-          }
-        });
-        onKeyRelease("up", () => {
-          if (player.angle === 30) {
-            player.angle -= 40;
-          }
+          specifyDirection(player, 0, -8);
+          player.pos = vec2(player.pos.x, player.pos.y - 8);
         });
         onKeyDown("left", () => {
-          player.flipX(false);
-          if (player.pos.x > 5) {
-            if (player.angle === -10) {
-              player.angle += 10;
-            }
-            player.pos = vec2(player.pos.x - 4, player.pos.y);
-          }
+          specifyDirection(player, -4, 0);
+          player.pos = vec2(player.pos.x - 4, player.pos.y);
         });
         onKeyRelease("left", () => {
           if (player.angle === 0) {
@@ -3044,19 +3030,14 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           }
         });
         onKeyDown("right", () => {
-          if (player.angle === -10) {
-            player.angle += 20;
-          }
           if (player.pos.x < width() - 45) {
-            player.flipX(true);
+            specifyDirection(player, 4, 0);
             player.pos = vec2(player.pos.x + 4, player.pos.y);
           }
         });
         onKeyDown("down", () => {
-          if (player.angle === -10) {
-            player.angle -= 30;
-          }
           if (player.pos.y < height() - 45) {
+            specifyDirection(player, 0, 4);
             player.pos = vec2(player.pos.x, player.pos.y + 4);
           }
         });
