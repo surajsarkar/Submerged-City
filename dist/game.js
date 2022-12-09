@@ -3180,9 +3180,8 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
             }
           });
           every("passage", (passage) => {
-            if (getDistance(passage.pos, player.pos) < 400) {
+            if (getDistance(passage.pos, player.pos) < 250) {
               let blades = get("nblade");
-              debug.log(`${getDistance(player.pos, passage.pos)}, ${blades.length}`);
               if (blades.length !== 0) {
                 every("nblade", (blade) => {
                   blade.move(calculateVec(player, blade, 0, 0).scale(rand(0.1, 0.3)));
@@ -3527,16 +3526,16 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     "**ii**ii**i**i()**                                                                     "
   ];
   var LEVEL_TWO = [
-    "                                                                                       ",
-    "                                                                                       ",
-    "                                                                                       ",
-    "                                         b                                             ",
-    "                  b                                                                    ",
-    "                                                                                       ",
-    "                                                                                       ",
-    "       ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss                    ",
-    "      s    |||||             i             i                      s                    ",
-    "     s     sssss             iiiii   b     i                      s    b           b   ",
+    "                                                      **       **   **                 ",
+    "                                                        **   **  **   **               ",
+    "                                                       **    **    **  **              ",
+    "                                         b               **  **   **   **              ",
+    "                  b                                    **      **   **   **            ",
+    "                                                         **  **    **   **             ",
+    "                                                        ^^   ^^    ^^    **            ",
+    "       ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss       **           ",
+    "      s    |||||             i             i                      s      **            ",
+    "     s     sssss             iiiii   b     i                      s    b   ^       b   ",
     "    s      |||||      iiii                       i                s            b       ",
     "   s             t       i                       i                s     b              ",
     "iiiis              ssssssssssssssssssssssssssssssssssssssssssssssss                    ",
@@ -3545,15 +3544,15 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     "iiiiiis|             |siiiiiiiiis     ts                  ^^                           ",
     "iiiiiiis|||||     m  ||siiiiiiis     ds                   **     ^^                    ",
     "iiiiiiiis|            |siiiiiis      s           ^         **    **                    ",
-    "iiiiiiiiis|           |siiiiist     s           *   ^^      **   **                    ",
+    "iiiiiiiiis|  t        |siiiiist     s           *   ^^      **   **                    ",
     "iiiiiiiiiis||||       |siiisd    tsi ^           *   **       **  **                   ",
     "iiiiiiiiiis|  m    ||||siisd    dsiii*    b      *    **     **  **                    ",
     "iiiiiiiiiis|   m       |ssd    dsiiiii**         *   **     **    **                   ",
-    "iiiiiiiiiis||||||||      s    dsiiiiiii**       *   **     **   b  **                  ",
-    "iiiiiiiiiis|              s  dsiiiiiiiii**  b      *    **   **       **               ",
-    "iiiiiiiiiis|               s siiiiiiiiiii**     **   **    **  b   **                  ",
+    "iiiiiiiiiis||||||||           dsiiiiiii**       *   **     **   b  **                  ",
+    "iiiiiiiiiis|                 dsiiiiiiiii**  b      *    **   **       **               ",
+    "iiiiiiiiiis|                 siiiiiiiiiii**     **   **    **  b   **                  ",
     "iiiiiiiiiis|               ssiiiiiiiiiiiii**     **   **    **   **                    ",
-    "iiiiiiiiiis|              siiiiiiiiiiiiiiii**  **    **    **  **                      ",
+    "iiiiiiiiiis|   t          siiiiiiiiiiiiiiii**  **    **    **  **                      ",
     "iiiiiiiiiis|           |siiiiiiiiiiiiiiiiii***  **     **   **  **                     ",
     "iiiiiiiiiism          m siiiiiiiiiiiiiiiiiiii** ** b  **  **   **                      ",
     "iiiiiiiiism             siiiiiiiiiiiiiiiiiiiiii***     **   **  **                     ",

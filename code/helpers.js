@@ -366,9 +366,9 @@ export const createGameScene = (scene_id,
                 });//every
 
                 every("passage", (passage)=>{
-                    if (getDistance(passage.pos, player.pos) < 400){
+                    if (getDistance(passage.pos, player.pos) < 250){
                         let blades = get("nblade");
-                        debug.log(`${getDistance(player.pos, passage.pos)}, ${blades.length}`)
+                        // debug.log(`${getDistance(player.pos, passage.pos)}, ${blades.length}`)
                         if (blades.length !== 0){
                             every("nblade", (blade)=>{
                                 blade.move(calculateVec(player, blade, 0, 0).scale(rand(0.1, 0.3)));
