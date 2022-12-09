@@ -344,6 +344,27 @@ export const createGameScene = (scene_id,
                     );
                 }//if
 
+                every("mbrick", (mbrick)=>{
+                    if (getDistance(player.pos, mbrick.pos) < 45){
+                        wait(2, ()=>{
+                            play("blastsound", { loop: false, volume: 0.5, speed: 2, seek: 0 });
+                            wait(0.27, ()=>{
+                                addKaboom(mbrick.pos);
+                                destroy(mbrick);
+                                let player_mbrick_distance = getDistance(player.pos, mbrick.pos);
+    
+    
+                                if (player_mbrick_distance < 100) {
+                                    let hurt_amount = player.hp() - (player.hp() * player_mbrick_distance / 100);
+                                    player.hurt(Math.floor(hurt_amount > 0 ? hurt_amount : mod(hurt_amount)));
+                                }//if
+                                bounce(bomb = mbrick, victim = player, radius = 100);
+                                
+                            });//wait
+                        });//wait
+                    }//if
+                });//every
+
                 every("passage", (passage)=>{
                     if (getDistance(passage.pos, player.pos) < 400){
                         let blades = get("nblade");
@@ -424,7 +445,7 @@ export const createGameScene = (scene_id,
             );//onCollide
 
             player.onCollide("nblade", ()=>{
-                player.hurt(0.2)
+                player.hurt(1)
             });//🥷🥷
 
             player.onCollide("treasure", (treasure)=>{

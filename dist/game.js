@@ -3083,7 +3083,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           if (bomb_count > 0) {
             bomb_count -= 1;
             let BSPEED = 50;
-            let bomb = add([
+            let bomb2 = add([
               sprite("bomb"),
               pos(player.pos),
               area(),
@@ -3101,44 +3101,44 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
             wait(3, () => {
               play("blastsound", { loop: false, volume: 0.5, speed: 2, seek: 0 });
               wait(0.27, () => {
-                addKaboom(bomb.pos);
+                addKaboom(bomb2.pos);
                 every("fish", (fish) => {
-                  if (getDistance(bomb.pos, fish.pos) < 84) {
+                  if (getDistance(bomb2.pos, fish.pos) < 84) {
                     destroy(fish);
                     points_collected += 20;
                   }
                 });
-                let player_bomb_distance = getDistance(player.pos, bomb.pos);
+                let player_bomb_distance = getDistance(player.pos, bomb2.pos);
                 if (player_bomb_distance < 100) {
                   let hurt_amount = player.hp() - player.hp() * player_bomb_distance / 100;
                   player.hurt(Math.floor(hurt_amount > 0 ? hurt_amount : mod(hurt_amount)));
                 }
                 every("safe_space", (brick) => {
-                  if (getDistance(brick.pos, bomb.pos) <= 60) {
+                  if (getDistance(brick.pos, bomb2.pos) <= 60) {
                     destroy(brick);
                   }
                 });
                 every("dist_brick", (brick) => {
-                  if (getDistance(brick.pos, bomb.pos) <= 60) {
+                  if (getDistance(brick.pos, bomb2.pos) <= 60) {
                     destroy(brick);
                   }
                 });
                 every("nblade", (blade) => {
-                  if (getDistance(bomb.pos, blade.pos) < 200) {
+                  if (getDistance(bomb2.pos, blade.pos) < 200) {
                     destroy(blade);
                   }
                 });
-                destroy(bomb);
-                bounce(bomb = bomb, victim = player, radius = 200);
+                destroy(bomb2);
+                bounce(bomb2 = bomb2, victim = player, radius = 200);
                 shake(120);
               });
             });
           }
         });
-        player.onCollide("bomb", (bomb) => {
+        player.onCollide("bomb", (bomb2) => {
           if (bomb_count < 5) {
             bomb_count++;
-            destroy(bomb);
+            destroy(bomb2);
           }
         });
         player.onCollide("dgrass", () => {
@@ -3162,6 +3162,23 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
               result = result
             );
           }
+          every("mbrick", (mbrick) => {
+            if (getDistance(player.pos, mbrick.pos) < 45) {
+              wait(2, () => {
+                play("blastsound", { loop: false, volume: 0.5, speed: 2, seek: 0 });
+                wait(0.27, () => {
+                  addKaboom(mbrick.pos);
+                  destroy(mbrick);
+                  let player_mbrick_distance = getDistance(player.pos, mbrick.pos);
+                  if (player_mbrick_distance < 100) {
+                    let hurt_amount = player.hp() - player.hp() * player_mbrick_distance / 100;
+                    player.hurt(Math.floor(hurt_amount > 0 ? hurt_amount : mod(hurt_amount)));
+                  }
+                  bounce(bomb = mbrick, victim = player, radius = 100);
+                });
+              });
+            }
+          });
           every("passage", (passage) => {
             if (getDistance(passage.pos, player.pos) < 400) {
               let blades = get("nblade");
@@ -3224,7 +3241,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           }
         );
         player.onCollide("nblade", () => {
-          player.hurt(0.2);
+          player.hurt(1);
         });
         player.onCollide("treasure", (treasure) => {
           destroy(treasure);
@@ -3270,10 +3287,10 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     dx = dx < 0 ? -200 : 200;
     return vec2(randi(dx - 150, dx + 90), randi(dy - 400, dy + 400));
   }, "calculateVec");
-  var bounce = /* @__PURE__ */ __name((bomb, victim2, radius2) => {
-    let dx = victim2.pos.x - bomb.pos.x;
-    let dy = victim2.pos.y - bomb.pos.y;
-    let distance = getDistance(bomb.pos, victim2.pos);
+  var bounce = /* @__PURE__ */ __name((bomb2, victim2, radius2) => {
+    let dx = victim2.pos.x - bomb2.pos.x;
+    let dy = victim2.pos.y - bomb2.pos.y;
+    let distance = getDistance(bomb2.pos, victim2.pos);
     if (distance <= radius2) {
       victim2.move(vec2(dx, dy).scale(mod(distance - radius2)));
     }
@@ -3510,12 +3527,12 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     "                  b                                                                    ",
     "                                                                                       ",
     "                                                                                       ",
-    "       ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
+    "       ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss                    ",
     "      s    |||||             i             i                      s                    ",
     "     s     sssss             iiiii   b     i                      s    b           b   ",
     "    s      |||||      iiii                       i                s            b       ",
     "   s             t       i                       i                s     b              ",
-    "iiiis              ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
+    "iiiis              ssssssssssssssssssssssssssssssssssssssssssssssss                    ",
     "iiiis|||||         |siiiiiiiiiiiiisd     s                                             ",
     "iiiiis|         |||||siiiiiiiiiiisd     s                                              ",
     "iiiiiis|             |siiiiiiiiis     ts                  ^^                           ",
