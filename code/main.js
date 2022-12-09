@@ -43,6 +43,7 @@ loadSprite("chat_6", "../sprites/chat_6.png");
 
 loadSound("underocean", "../sprites/underocean.mp3");
 loadSound("blastsound", "../sprites/blastaudio.m4a");
+loadSound("coinCollection", "../sounds/score.mp3");
 
 
 

@@ -3009,6 +3009,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         player.onCollide("points", (collection) => {
           destroy(collection);
           points_collected += 10;
+          play("coinCollection");
         });
         onKeyDown("up", () => {
           if (player.pos.y > 0) {
@@ -3230,6 +3231,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           for (let i = 0; i < 500; i++) {
             points_collected += 1;
           }
+          play("coinCollection");
         });
         let health_button = add([
           sprite("healthLbl"),
@@ -3688,6 +3690,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   loadSprite("chat_6", "../sprites/chat_6.png");
   loadSound("underocean", "../sprites/underocean.mp3");
   loadSound("blastsound", "../sprites/blastaudio.m4a");
+  loadSound("coinCollection", "../sounds/score.mp3");
   var LEVEL_1 = createLevel(box_size = { width: 20, height: 20 }, level = LEVEL_ONE);
   var LEVEL_2 = createLevel(box_size = { width: 20, height: 20 }, level = LEVEL_TWO);
   level_two_cofing.pos = vec2(0, height() - LEVEL_1.length * 20);

@@ -41,6 +41,8 @@ export const createGameScene = (scene_id,
             // let background_ocean_music =  play("underocean", { loop: true, volume: 0.8 });
             // background_ocean_music.play();
 
+            // let coin_collection_sound = play("coinCollection");
+
             gravity(10);
 
             let [bomb_counter, bomb_count_sprite, bomb_count_label] = infoBoard(
@@ -140,6 +142,7 @@ export const createGameScene = (scene_id,
             player.onCollide("points", (collection) => {
                 destroy(collection);
                 points_collected += 10;
+                play("coinCollection");
             });//collision with coin
 
             // movement of the user
@@ -429,6 +432,7 @@ export const createGameScene = (scene_id,
                 for (let i = 0; i < 500; i++){
                     points_collected += 1;
                 }//for
+                play("coinCollection");
             })
 
             let health_button = add([
