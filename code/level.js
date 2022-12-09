@@ -187,6 +187,20 @@ export let level_two_cofing = {
         "safe_space",
         scale(0.25),
     ],
+    "d": ()=>[
+        sprite("mbrick"),
+        solid(),
+        area(),
+        "mbrick",
+        scale(0.25),
+    ],
+    "t": ()=>[
+        sprite("treasure"),
+        solid(),
+        area(),
+        "treasure",
+        scale(0.40),
+    ],
     "m": ()=>[
             sprite("blade"),
             area(),

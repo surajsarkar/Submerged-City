@@ -3618,6 +3618,20 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       "safe_space",
       scale(0.25)
     ],
+    "d": () => [
+      sprite("mbrick"),
+      solid(),
+      area(),
+      "mbrick",
+      scale(0.25)
+    ],
+    "t": () => [
+      sprite("treasure"),
+      solid(),
+      area(),
+      "treasure",
+      scale(0.4)
+    ],
     "m": () => [
       sprite("blade"),
       area(),
@@ -3648,6 +3662,8 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   loadSprite("gate_2_tr", "../sprites/gate_2_tr.png");
   loadSprite("bomb", "../sprites/bomb.png");
   loadSprite("blade", "../sprites/blade.png");
+  loadSprite("mbrick", "../sprites/mbrick.png");
+  loadSprite("treasure", "../sprites/treasere.png");
   loadSprite("user", "../sprites/user.png");
   loadSprite("gcoin", "../sprites/gcoin.png");
   loadSprite("wallbrick", "../sprites/wallbrick.png");
