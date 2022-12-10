@@ -161,7 +161,7 @@ createGameScene("level_three", LEVEL_3, level_three_cofing, "start", false, "", 
 
 // creating start screen
 let firstLevel = () => go("level_one", 100, 0, 100, 0);
-planeScene("start", "startBg", true, "start game", false, 0, firstLevel);
+planeScene("start", "startBg", true, "start game", false, 0, ()=> go("story_1"));
 // scene_id, sprite_tag, should_have_button, button_text, timed, waiting_time, action
 
 // stories
@@ -176,4 +176,4 @@ planeScene("story_6", "chat_6", true, "skip >", true, 2, firstLevel);
 winLooseScene("result");
 
 // go("start");
-go("level_three", 0, 100, 0);
+go("start");

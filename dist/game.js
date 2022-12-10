@@ -2928,6 +2928,8 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         onKeyPress("f", () => {
           fullscreen(!isFullscreen());
         });
+        let background_ocean_music = play("underocean", { loop: true, volume: 0.8 });
+        background_ocean_music.play();
         gravity(10);
         let [bomb_counter, bomb_count_sprite, bomb_count_label] = infoBoard(
           sprite_tag = "bomb",
@@ -3135,6 +3137,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
             });
           }
           if (player.hp() <= 0) {
+            background_ocean_music.pause();
             let result = ["!Ouch", points_collected, 0, true, "lost"];
             goNext(
               next_screen_tag2 = "start",
@@ -3210,6 +3213,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         player.onCollide(
           "passage",
           () => {
+            background_ocean_music.pause();
             let result = ["Hurrah...doing great so far", points_collected, 0, true, ""];
             let next_level_data2 = [bomb_count, player.hp(), points_collected];
             goNext(
@@ -3223,6 +3227,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           }
         );
         player.onCollide("life_stone", () => {
+          background_ocean_music.pause();
           goNext(
             next_screen_tag2,
             next_level_data,
@@ -3895,7 +3900,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   createGameScene("level_two", LEVEL_2, level_two_cofing, "level_three", false, "", []);
   createGameScene("level_three", LEVEL_3, level_three_cofing, "start", false, "", []);
   var firstLevel = /* @__PURE__ */ __name(() => go("level_one", 100, 0, 100, 0), "firstLevel");
-  planeScene("start", "startBg", true, "start game", false, 0, firstLevel);
+  planeScene("start", "startBg", true, "start game", false, 0, () => go("story_1"));
   planeScene("story_1", "chat_1", true, "skip >", true, 2, () => go("story_2"));
   planeScene("story_2", "chat_2", true, "skip >", true, 2, () => go("story_3"));
   planeScene("story_3", "chat_3", true, "skip >", true, 2, () => go("story_4"));
@@ -3903,6 +3908,6 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   planeScene("story_5", "chat_5", true, "skip >", true, 2, () => go("story_6"));
   planeScene("story_6", "chat_6", true, "skip >", true, 2, firstLevel);
   winLooseScene("result");
-  go("level_three", 0, 100, 0);
+  go("start");
 })();
 //# sourceMappingURL=game.js.map

@@ -38,8 +38,8 @@ export const createGameScene = (scene_id,
 
 
 
-            // let background_ocean_music =  play("underocean", { loop: true, volume: 0.8 });
-            // background_ocean_music.play();
+            let background_ocean_music =  play("underocean", { loop: true, volume: 0.8 });
+            background_ocean_music.play();
 
             // let coin_collection_sound = play("coinCollection");
 
@@ -335,6 +335,7 @@ export const createGameScene = (scene_id,
 
                 // detecting if user life is ended
                 if (player.hp() <= 0) {
+                    background_ocean_music.pause();
                     // msg, points, bonus, have_next_level, poster
                     let result = ["!Ouch", points_collected, 0, true, "lost"];
                     goNext(
@@ -433,6 +434,7 @@ export const createGameScene = (scene_id,
 
             // collision with passage
             player.onCollide("passage", () => {
+                background_ocean_music.pause();
                 // msg, points, bonus, have_next_level, next_level, poster
                 let result = ["Hurrah...doing great so far", points_collected, 0, true, ""];
                 let next_level_data = [bomb_count, player.hp(), points_collected];
@@ -448,6 +450,7 @@ export const createGameScene = (scene_id,
             );//onCollide
 
             player.onCollide("life_stone", ()=>{
+                background_ocean_music.pause();
                 goNext(
                     next_screen_tag,
                     next_level_data,
