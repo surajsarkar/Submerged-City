@@ -3542,6 +3542,42 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     "iiiiii   m     ()         miiiiiiiiiiiiiiiiiiiiiii** **   **   **                      ",
     "iiiiis                    siiiiiiiiiiiiiiiiiiiiiiii****                                "
   ];
+  var LEVEL_THREE = [
+    "                                                                                       ",
+    "                                                                                       ",
+    "                                                                                       ",
+    "                                                                                       ",
+    "                                                                                       ",
+    "                                                                                       ",
+    "                                                                                       ",
+    "                                                                                       ",
+    "                                                                                       ",
+    "                                                                                       ",
+    "                                                                                       ",
+    "                                                                                       ",
+    "                                                                                       ",
+    "                                                                                       ",
+    "                                                                                       ",
+    "                                                                                       ",
+    "                                                                                       ",
+    "                                                                                       ",
+    "ssssssssssssssss||||||||||||||||||||||sssssssssssssssss                                ",
+    "vvvvvvbvvbvvvvvs s|||||||||b||||||||s svvvvvvbvvbvvvvvs                                ",
+    "vvvvvvvvvvvvvvvsvvs||||||||b|||||||svvsvvvvvvvvvvvvvvvs                                ",
+    "vvvvvvvvvvvvvvvsvvvs||||||||||||||svvvsvvvvvvvvvvvvvvvs                                ",
+    "bvvvvbbbvvvvvbbsvvvvs||||||||||||svvvvsbvvvvbbbvvvvvbbs                                ",
+    "vvvvvvvvvvvvbvvsvvvvvs||||||||||svvvvvsvvvvvvvvvvvvbvvs                                ",
+    "vvvvvvvvvvvvvvvsvvvvvvs||||||||svvvvvvsvvvvvvvvvvvvvvvs                                ",
+    "vvvvvvvvvvvvvvvsvvvvvvvs||||||svvvvvvvsvvvvvvvvvvvvvvvs                                ",
+    "ssssssssssssssssvvvvvvvvs||||svvvvvvvvsssssssssssssssss                                ",
+    "ssssssssssssssssvvvvvvvvsvvssssvvvvvvvsssssssssssssssss                                ",
+    "vvvvvvvvvvvvvvvsvvvvvsspppppppsvvvvvvvsvvvvvvvvvvvvvvvs                                ",
+    "vvvvvvvvvvvvvvvsvvvvsssp     pssvvvvvvsvvvvvvvvvvvvvvvs                                ",
+    "vvvvvvvLvvvvvvvsvvvssssp     psssvvvvvsvvvvvvvvvvvvvvvs                                ",
+    "vvvvvvvvvvvppppppppppppp     psssssvvvsvvvvvvvvvvvvvvvs                                ",
+    "vvvvvvvvvvv                  pssssssvvsvvvvvvvvvvvvvvvs                                ",
+    "sssssssssss                  ssssssssssssssssssssssssss                                "
+  ];
   var createLevel = /* @__PURE__ */ __name((box_size2, level2) => {
     let no_of_box = Math.floor(width() / box_size2.width);
     level2.push(buildSeq(no_of_box, "g"));
@@ -3656,6 +3692,64 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       } }
     ]
   };
+  var level_three_cofing = {
+    width: 20,
+    height: 20,
+    "*": () => [
+      sprite("plant"),
+      area(),
+      z(randi(1, 10)),
+      scale(0.5)
+    ],
+    "^": () => [
+      sprite("plant_top"),
+      area(),
+      scale(0.5)
+    ],
+    "|": () => [
+      sprite("grass"),
+      area(),
+      scale(0.3),
+      z(randi(1, 11)),
+      rotate(0),
+      "dgrass"
+    ],
+    "g": () => [
+      sprite("grass"),
+      area(),
+      scale(0.25),
+      solid()
+    ],
+    "b": () => [
+      sprite("bomb"),
+      area(),
+      scale(0.5),
+      "bomb"
+    ],
+    "s": () => [
+      sprite("sageBrick"),
+      solid(),
+      area(),
+      "safe_space",
+      scale(0.25)
+    ],
+    "v": () => [
+      sprite("invisible_wall"),
+      area(),
+      scale(0.25),
+      "roomwall"
+    ],
+    "L": () => [
+      sprite("stone"),
+      area(),
+      scale(0.5),
+      "life_stone",
+      {
+        x: 0,
+        y: 1
+      }
+    ]
+  };
 
   // code/main.js
   no({ background: [0, 105, 148] });
@@ -3683,6 +3777,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   loadSprite("healthLbl", "../sprites/health.png");
   loadSprite("invisible_wall", "../sprites/invisible_wall.png");
   loadSprite("harry_health", "../sprites/harry_health.png");
+  loadSprite("stone", "../sprites/glowing_stone.png");
   loadSprite("startBg", "../sprites/startBg.png");
   loadSprite("scoreBg", "../sprites/scoreBg.png");
   loadSprite("gameBg", "../sprites/gameBg.png");
@@ -3697,7 +3792,9 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   loadSound("coinCollection", "../sounds/score.mp3");
   var LEVEL_1 = createLevel(box_size = { width: 20, height: 20 }, level = LEVEL_ONE);
   var LEVEL_2 = createLevel(box_size = { width: 20, height: 20 }, level = LEVEL_TWO);
+  var LEVEL_3 = createLevel(box_size = { width: 20, height: 20 }, level = LEVEL_THREE);
   level_two_cofing.pos = vec2(0, height() - LEVEL_1.length * 20);
+  level_three_cofing.pos = vec2(0, height() - LEVEL_1.length * 20);
   createGameScene(
     scene_id = "level_one",
     level = LEVEL_1,
@@ -3794,6 +3891,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     tips_params_list = []
   );
   createGameScene("level_two", LEVEL_2, level_two_cofing, "start", false, "", []);
+  createGameScene("level_three", LEVEL_3, level_three_cofing, "start", false, "", []);
   var firstLevel = /* @__PURE__ */ __name(() => go("level_one", 100, 0, 100, 0), "firstLevel");
   planeScene("start", "startBg", true, "start game", false, 0, firstLevel);
   planeScene("story_1", "chat_1", true, "skip >", true, 2, () => go("story_2"));
@@ -3803,6 +3901,6 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   planeScene("story_5", "chat_5", true, "skip >", true, 2, () => go("story_6"));
   planeScene("story_6", "chat_6", true, "skip >", true, 2, firstLevel);
   winLooseScene("result");
-  go("level_two", 0, 100, 0);
+  go("level_three", 0, 100, 0);
 })();
 //# sourceMappingURL=game.js.map

@@ -92,7 +92,46 @@ export let LEVEL_TWO = [
     ]
 
 
-//Todo level 3
+export let LEVEL_THREE = [
+        "                                                                                       ",
+        "                                                                                       ",
+        "                                                                                       ",
+        "                                                                                       ",
+        "                                                                                       ",
+        "                                                                                       ",
+        "                                                                                       ",
+        "                                                                                       ",
+        "                                                                                       ",
+        "                                                                                       ",
+        "                                                                                       ",
+        "                                                                                       ",
+        "                                                                                       ",
+        "                                                                                       ",
+        "                                                                                       ",
+        "                                                                                       ",
+        "                                                                                       ",
+        "                                                                                       ",
+        "ssssssssssssssss||||||||||||||||||||||sssssssssssssssss                                ",
+        "vvvvvvbvvbvvvvvs s|||||||||b||||||||s svvvvvvbvvbvvvvvs                                ",
+        "vvvvvvvvvvvvvvvsvvs||||||||b|||||||svvsvvvvvvvvvvvvvvvs                                ",
+        "vvvvvvvvvvvvvvvsvvvs||||||||||||||svvvsvvvvvvvvvvvvvvvs                                ",
+        "bvvvvbbbvvvvvbbsvvvvs||||||||||||svvvvsbvvvvbbbvvvvvbbs                                ",
+        "vvvvvvvvvvvvbvvsvvvvvs||||||||||svvvvvsvvvvvvvvvvvvbvvs                                ",
+        "vvvvvvvvvvvvvvvsvvvvvvs||||||||svvvvvvsvvvvvvvvvvvvvvvs                                ",
+        "vvvvvvvvvvvvvvvsvvvvvvvs||||||svvvvvvvsvvvvvvvvvvvvvvvs                                ",
+        "ssssssssssssssssvvvvvvvvs||||svvvvvvvvsssssssssssssssss                                ",
+        "ssssssssssssssssvvvvvvvvsvvssssvvvvvvvsssssssssssssssss                                ",
+        "vvvvvvvvvvvvvvvsvvvvvsspppppppsvvvvvvvsvvvvvvvvvvvvvvvs                                ",
+        "vvvvvvvvvvvvvvvsvvvvsssp     pssvvvvvvsvvvvvvvvvvvvvvvs                                ",
+        "vvvvvvvLvvvvvvvsvvvssssp     psssvvvvvsvvvvvvvvvvvvvvvs                                ",
+        "vvvvvvvvvvvppppppppppppp     psssssvvvsvvvvvvvvvvvvvvvs                                ",
+        "vvvvvvvvvvv                  pssssssvvsvvvvvvvvvvvvvvvs                                ",
+        "sssssssssss                  ssssssssssssssssssssssssss                                ",
+    ]
+
+
+
+
 //Todo level 4
 
 export const createLevel = (box_size, level) => {
@@ -210,4 +249,73 @@ export let level_two_cofing = {
             "nblade",
         {update(){this.angle += 10}}
     ]
+}
+
+
+
+export let level_three_cofing = {
+    width: 20,
+    height: 20,
+    "*": () => [
+            sprite("plant"),
+            area(),
+            z(randi(1, 10)),
+            scale(0.5)
+        ],//plant
+    "^": () => [
+        sprite("plant_top"),
+        area(),
+        scale(0.5)
+    ],//plant_top
+    "|": () => [
+        sprite("grass"),
+        area(),
+        scale(0.30),
+        z(randi(1, 11)),
+        rotate(0),
+        // body(),
+        "dgrass", //tag
+    ],//fish
+    "g": () => [
+        sprite("grass"),
+        area(),
+        scale(0.25),
+        // body(),
+        solid(),
+    ],//grass
+    "b": () => [
+        sprite("bomb"),
+        area(),
+        scale(0.5),
+        // body(),
+        "bomb", //tag
+    ],//bomb
+
+    "s": ()=>[
+        sprite("sageBrick"),
+        solid(),
+        area(),
+        // body(),
+        "safe_space",
+        scale(0.25),
+    ],
+    "v": ()=>[
+            sprite("invisible_wall"),
+            area(),
+            scale(0.25),
+            "roomwall"
+        ],
+    "L": ()=>[
+            sprite("stone"),
+            area(),
+            scale(0.5),
+            // move(vec2(this.x, this.y * -1), 10),
+            "life_stone",
+            {
+                x:0,
+                y:1,
+            }
+        ]
+    
+
 }

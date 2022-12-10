@@ -1,7 +1,7 @@
 import kaboom from "kaboom";
 
 import { createGameScene, winLooseScene, planeScene, } from "./helpers";
-import { createLevel, LEVEL_ONE, level_two_cofing, LEVEL_TWO } from "./level";
+import { createLevel, LEVEL_ONE, level_two_cofing, LEVEL_TWO, level_three_cofing, LEVEL_THREE } from "./level";
 
 // initialize context
 kaboom({ background: [0, 105, 148],});
@@ -31,6 +31,7 @@ loadSprite("sageBrick", "../sprites/sageBrick.png");
 loadSprite("healthLbl", "../sprites/health.png");
 loadSprite("invisible_wall", "../sprites/invisible_wall.png");
 loadSprite("harry_health", "../sprites/harry_health.png");
+loadSprite("stone", "../sprites/glowing_stone.png");
 loadSprite("startBg", "../sprites/startBg.png");
 loadSprite("scoreBg", "../sprites/scoreBg.png");
 loadSprite("gameBg", "../sprites/gameBg.png");
@@ -49,7 +50,9 @@ loadSound("coinCollection", "../sounds/score.mp3");
 
 let LEVEL_1 = createLevel(box_size = { width: 20, height: 20 }, level=LEVEL_ONE);
 let LEVEL_2 = createLevel(box_size = { width: 20, height: 20 }, level=LEVEL_TWO);
+let LEVEL_3 = createLevel(box_size = { width: 20, height: 20 }, level=LEVEL_THREE);
 level_two_cofing.pos = vec2(0, height() - LEVEL_1.length * 20);
+level_three_cofing.pos = vec2(0, height() - LEVEL_1.length * 20);
 
 createGameScene(scene_id = "level_one",
     level = LEVEL_1,
@@ -150,6 +153,8 @@ createGameScene(scene_id = "level_one",
 
 createGameScene("level_two", LEVEL_2, level_two_cofing, "start", false, "", [],);
 
+createGameScene("level_three", LEVEL_3, level_three_cofing, "start", false, "", [],);
+
 
 // creating start screen
 let firstLevel = () => go("level_one", 100, 0, 100, 0);
@@ -168,4 +173,4 @@ planeScene("story_6", "chat_6", true, "skip >", true, 2, firstLevel);
 winLooseScene("result");
 
 // go("start");
-go("level_two", 0, 100, 0)
+go("level_three", 0, 100, 0);
