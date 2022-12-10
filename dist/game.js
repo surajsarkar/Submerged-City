@@ -3744,9 +3744,14 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       area(),
       scale(0.5),
       "life_stone",
+      rotate(0),
+      z(10),
       {
         x: 0,
-        y: 1
+        y: 1,
+        update() {
+          this.angle += 10 * dt();
+        }
       }
     ],
     "i": () => [

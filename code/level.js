@@ -311,9 +311,14 @@ export let level_three_cofing = {
             scale(0.5),
             // move(vec2(this.x, this.y * -1), 10),
             "life_stone",
+            rotate(0),
+            z(10),
             {
                 x:0,
                 y:1,
+                update(){
+                    this.angle += 10 * dt();
+                },
             }
         ],
     "i": ()=>[
