@@ -613,18 +613,11 @@ export const winLooseScene = (scene_id) => {
                 z(-1),
             ]);
 
-            let [message_box, message] = textbox(box_width = 500,
-                box_height = 70,
-                outline_width = 2,
-                box_color = color(65, 125, 225),
-                initial_text = msg,
-                text_pad_x = 10,
-                text_pad_y = 15,
-                font = "sink",
-                font_size = 40,
-                x_cor = center().x - 250,
-                y_cor = 40,
-            );
+            let message_box = add([
+                text(`${msg}`,{font: "sink", size: 40}),
+                pos(width()/2, 40),
+                origin("center"),
+            ])
 
             let [points_box, points_collected] = textbox(box_width = 450,
                 box_height = 70,
@@ -635,7 +628,7 @@ export const winLooseScene = (scene_id) => {
                 text_pad_y = 15,
                 font = "sink",
                 font_size = 40,
-                x_cor = message_box.pos.x + 250,
+                x_cor = width()/2 + 5,
                 y_cor = message_box.pos.y + 80
             );
 
@@ -648,7 +641,7 @@ export const winLooseScene = (scene_id) => {
                 text_pad_y = 15,
                 font = "sink",
                 font_size = 40,
-                x_cor = message_box.pos.x + 250,
+                x_cor = width()/2 + 5,
                 y_cor = points_box.pos.y + 80,
             );
 
@@ -661,13 +654,13 @@ export const winLooseScene = (scene_id) => {
                 text_pad_y = 15,
                 font = "sink",
                 font_size = 40,
-                x_cor = message_box.pos.x + 250,
+                x_cor = width()/2 + 5,
                 y_cor = bonus_box.pos.y + 80,
             );
 
             add([
                 sprite(poster),
-                pos(message_box.pos.x - 300, message_box.pos.y + 80),
+                pos(width()/2 - 455, message_box.pos.y + 80),
                 scale(1),
             ])
 
