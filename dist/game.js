@@ -3133,7 +3133,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         onUpdate(() => {
           camPos(width() / 2, height() / 2);
           if (player.hp() <= 0) {
-            let result = ["!Ouch", points_collected, 0, true, "plant"];
+            let result = ["!Ouch", points_collected, 0, true, "lost"];
             goNext(
               next_screen_tag2 = "start",
               next_screen_params = [],
@@ -3357,33 +3357,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           x_cor = width() / 2 + 5,
           y_cor = message_box.pos.y + 80
         );
-        let [bonus_box, bonus_collected] = textbox(
-          box_width = 450,
-          box_height = 70,
-          outline_width = 2,
-          box_color = color(65, 125, 225),
-          initial_text = `Bonus: ${bonus}`,
-          text_pad_x = 10,
-          text_pad_y = 15,
-          font = "sink",
-          font_size = 40,
-          x_cor = width() / 2 + 5,
-          y_cor = points_box.pos.y + 80
-        );
-        let [total_box, total_points] = textbox(
-          box_width = 450,
-          box_height = 70,
-          outline_width = 2,
-          box_color = color(65, 125, 225),
-          initial_text = `Total: ${bonus + points}`,
-          text_pad_x = 10,
-          text_pad_y = 15,
-          font = "sink",
-          font_size = 40,
-          x_cor = width() / 2 + 5,
-          y_cor = bonus_box.pos.y + 80
-        );
-        add([
+        let poster_frame = add([
           sprite(poster),
           pos(width() / 2 - 455, message_box.pos.y + 80),
           scale(1)
@@ -3392,7 +3366,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           let next_level_bth = addButton(
             "Next Level ->",
             35,
-            pos(total_box.pos.x - 130, total_box.pos.y + 80),
+            pos(width() / 2, poster_frame.pos.y + 240),
             action
           );
         }
@@ -3545,21 +3519,21 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     "                                                                                       ",
     "                                                                                       ",
     "                                                                                       ",
+    "        b                                                                              ",
+    "                                                                                       ",
+    "                                                                                       ",
+    "                                    b                                                  ",
     "                                                                                       ",
     "                                                                                       ",
     "                                                                                       ",
-    "                                                                                       ",
-    "                                                                                       ",
-    "                                                                                       ",
-    "                                                                                       ",
-    "                                                                                       ",
+    "                                                                 b                     ",
     "ssssssssssssssss||||||||||||||||||||||sssssssssssssssss                                ",
     "vvvvvvbvvbvvvvvs s|||||||||b||||||||s svvvvvvbvvbvvvvvs                                ",
     "vvvvvvvvvvvvvvvsvvs||||||||b|||||||svvsvvvvvvvvvvvvvvvs                                ",
     "vvvvvvvvvvvvvvvsvvvs||||||||||||||svvvsvvvvvvvvvvvvvvvs                                ",
     "bvvvvbbbvvvvvbbsvvvvs||||||||||||svvvvsbvvvvbbbvvvvvbbs                                ",
     "vvvvvvvvvvvvbvvsvvvvvs||||||||||svvvvvsvvvvvvvvvvvvbvvs                                ",
-    "vvvvvvvvvvvvvvvsvvvvvvs||||||||svvvvvvsvvvvvvvvvvvvvvvs                                ",
+    "vvvvvvvvvvvvvvvsvvvvvvs||||||||svvvvvvsvvvvvvvvvvvvvvvs           b                    ",
     "tttttttttttttttsvvvvvvvs||||||svvvvvvvstttttttttttvvvvs                                ",
     "ssssssssssssssssvvvvvvvvs||||svvvvvvvvsssssssssssssssss                                ",
     "ssssssssssssssssvvvvvvvvsvvvvssvvvvvvvsssssssssssssssss                                ",
@@ -3790,6 +3764,8 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   loadSprite("harry_health", "../sprites/harry_health.png");
   loadSprite("stone", "../sprites/glowing_stone.png");
   loadSprite("startBg", "../sprites/startBg.png");
+  loadSprite("lost", "../sprites/you_lost.png");
+  loadSprite("levelup", "../sprites/levelup.png");
   loadSprite("scoreBg", "../sprites/scoreBg.png");
   loadSprite("gameBg", "../sprites/gameBg.png");
   loadSprite("chat_1", "../sprites/chat_1.png");
@@ -3901,7 +3877,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     tips_id = "",
     tips_params_list = []
   );
-  createGameScene("level_two", LEVEL_2, level_two_cofing, "start", false, "", []);
+  createGameScene("level_two", LEVEL_2, level_two_cofing, "level_three", false, "", []);
   createGameScene("level_three", LEVEL_3, level_three_cofing, "start", false, "", []);
   var firstLevel = /* @__PURE__ */ __name(() => go("level_one", 100, 0, 100, 0), "firstLevel");
   planeScene("start", "startBg", true, "start game", false, 0, firstLevel);

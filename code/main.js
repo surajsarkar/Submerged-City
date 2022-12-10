@@ -33,6 +33,8 @@ loadSprite("invisible_wall", "../sprites/invisible_wall.png");
 loadSprite("harry_health", "../sprites/harry_health.png");
 loadSprite("stone", "../sprites/glowing_stone.png");
 loadSprite("startBg", "../sprites/startBg.png");
+loadSprite("lost", "../sprites/you_lost.png");
+loadSprite("levelup", "../sprites/levelup.png");
 loadSprite("scoreBg", "../sprites/scoreBg.png");
 loadSprite("gameBg", "../sprites/gameBg.png");
 loadSprite("chat_1", "../sprites/chat_1.png");
@@ -151,7 +153,7 @@ createGameScene(scene_id = "level_one",
 
 
 
-createGameScene("level_two", LEVEL_2, level_two_cofing, "start", false, "", [],);
+createGameScene("level_two", LEVEL_2, level_two_cofing, "level_three", false, "", [],);
 
 createGameScene("level_three", LEVEL_3, level_three_cofing, "start", false, "", [],);
 

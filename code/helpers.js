@@ -319,7 +319,7 @@ export const createGameScene = (scene_id,
                 // detecting if user life is ended
                 if (player.hp() <= 0) {
                     // msg, points, bonus, have_next_level, poster
-                    let result = ["!Ouch", points_collected, 0, true, "plant"];
+                    let result = ["!Ouch", points_collected, 0, true, "lost"];
                     goNext(
                         next_screen_tag = "start",
                         next_screen_params = [],
@@ -632,33 +632,33 @@ export const winLooseScene = (scene_id) => {
                 y_cor = message_box.pos.y + 80
             );
 
-            let [bonus_box, bonus_collected] = textbox(box_width = 450,
-                box_height = 70,
-                outline_width = 2,
-                box_color = color(65, 125, 225),
-                initial_text = `Bonus: ${bonus}`,
-                text_pad_x = 10,
-                text_pad_y = 15,
-                font = "sink",
-                font_size = 40,
-                x_cor = width()/2 + 5,
-                y_cor = points_box.pos.y + 80,
-            );
+            // let [bonus_box, bonus_collected] = textbox(box_width = 450,
+            //     box_height = 70,
+            //     outline_width = 2,
+            //     box_color = color(65, 125, 225),
+            //     initial_text = `Bonus: ${bonus}`,
+            //     text_pad_x = 10,
+            //     text_pad_y = 15,
+            //     font = "sink",
+            //     font_size = 40,
+            //     x_cor = width()/2 + 5,
+            //     y_cor = points_box.pos.y + 80,
+            // );
 
-            let [total_box, total_points] = textbox(box_width = 450,
-                box_height = 70,
-                outline_width = 2,
-                box_color = color(65, 125, 225),
-                initial_text = `Total: ${bonus + points}`,
-                text_pad_x = 10,
-                text_pad_y = 15,
-                font = "sink",
-                font_size = 40,
-                x_cor = width()/2 + 5,
-                y_cor = bonus_box.pos.y + 80,
-            );
+            // let [total_box, total_points] = textbox(box_width = 450,
+            //     box_height = 70,
+            //     outline_width = 2,
+            //     box_color = color(65, 125, 225),
+            //     initial_text = `Total: ${bonus + points}`,
+            //     text_pad_x = 10,
+            //     text_pad_y = 15,
+            //     font = "sink",
+            //     font_size = 40,
+            //     x_cor = width()/2 + 5,
+            //     y_cor = bonus_box.pos.y + 80,
+            // );
 
-            add([
+            let poster_frame = add([
                 sprite(poster),
                 pos(width()/2 - 455, message_box.pos.y + 80),
                 scale(1),
@@ -668,7 +668,7 @@ export const winLooseScene = (scene_id) => {
                 let next_level_bth = addButton(
                     "Next Level ->",
                     35,
-                    pos(total_box.pos.x - 130, total_box.pos.y + 80),
+                    pos(width()/2, poster_frame.pos.y + 240),
                     action);
             }//if
         }
