@@ -118,15 +118,15 @@ export let LEVEL_THREE = [
         "bvvvvbbbvvvvvbbsvvvvs||||||||||||svvvvsbvvvvbbbvvvvvbbs                                ",
         "vvvvvvvvvvvvbvvsvvvvvs||||||||||svvvvvsvvvvvvvvvvvvbvvs                                ",
         "vvvvvvvvvvvvvvvsvvvvvvs||||||||svvvvvvsvvvvvvvvvvvvvvvs                                ",
-        "vvvvvvvvvvvvvvvsvvvvvvvs||||||svvvvvvvsvvvvvvvvvvvvvvvs                                ",
+        "tttttttttttttttsvvvvvvvs||||||svvvvvvvstttttttttttvvvvs                                ",
         "ssssssssssssssssvvvvvvvvs||||svvvvvvvvsssssssssssssssss                                ",
-        "ssssssssssssssssvvvvvvvvsvvssssvvvvvvvsssssssssssssssss                                ",
-        "vvvvvvvvvvvvvvvsvvvvvsspppppppsvvvvvvvsvvvvvvvvvvvvvvvs                                ",
-        "vvvvvvvvvvvvvvvsvvvvsssp     pssvvvvvvsvvvvvvvvvvvvvvvs                                ",
-        "vvvvvvvLvvvvvvvsvvvssssp     psssvvvvvsvvvvvvvvvvvvvvvs                                ",
-        "vvvvvvvvvvvppppppppppppp     psssssvvvsvvvvvvvvvvvvvvvs                                ",
-        "vvvvvvvvvvv                  pssssssvvsvvvvvvvvvvvvvvvs                                ",
-        "sssssssssss                  ssssssssssssssssssssssssss                                ",
+        "ssssssssssssssssvvvvvvvvsvvvvssvvvvvvvsssssssssssssssss                                ",
+        "vvvvvvvvvvvvvvvsvvvvvssi     isvvvvvvvsvvvvvvvvvvvvvvvs                                ",
+        "vvvvvvvvvvvvvvvsvvvvsssi     issvvvvvvsvvvvvvvvvvvvvvvs                                ",
+        "vvvvvvvLvvvvvvvsvvvssssi     isssvvvvvsvvvvvvvvvvvvvvvs                                ",
+        "vvvvvvvvvvviiiiiiiiiiiii     isssssvvvsvvvvvvvvvvvvvvvs                                ",
+        "vvvvvvvvvvv                  issssssvvstttttttttttvvvvs                                ",
+        "sssssssssss                  isssssssssssssssssssssssss                                ",
     ]
 
 
@@ -315,7 +315,21 @@ export let level_three_cofing = {
                 x:0,
                 y:1,
             }
-        ]
+        ],
+    "i": ()=>[
+        sprite("wallbrick"),
+        solid(),
+        area(),
+        "wall",
+        scale(0.25),
+    ],
+    "t": ()=>[
+        sprite("treasure"),
+        solid(),
+        area(),
+        "treasure",
+        scale(0.40),
+    ],
     
 
 }

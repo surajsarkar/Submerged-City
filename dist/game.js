@@ -3568,15 +3568,15 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     "bvvvvbbbvvvvvbbsvvvvs||||||||||||svvvvsbvvvvbbbvvvvvbbs                                ",
     "vvvvvvvvvvvvbvvsvvvvvs||||||||||svvvvvsvvvvvvvvvvvvbvvs                                ",
     "vvvvvvvvvvvvvvvsvvvvvvs||||||||svvvvvvsvvvvvvvvvvvvvvvs                                ",
-    "vvvvvvvvvvvvvvvsvvvvvvvs||||||svvvvvvvsvvvvvvvvvvvvvvvs                                ",
+    "tttttttttttttttsvvvvvvvs||||||svvvvvvvstttttttttttvvvvs                                ",
     "ssssssssssssssssvvvvvvvvs||||svvvvvvvvsssssssssssssssss                                ",
-    "ssssssssssssssssvvvvvvvvsvvssssvvvvvvvsssssssssssssssss                                ",
-    "vvvvvvvvvvvvvvvsvvvvvsspppppppsvvvvvvvsvvvvvvvvvvvvvvvs                                ",
-    "vvvvvvvvvvvvvvvsvvvvsssp     pssvvvvvvsvvvvvvvvvvvvvvvs                                ",
-    "vvvvvvvLvvvvvvvsvvvssssp     psssvvvvvsvvvvvvvvvvvvvvvs                                ",
-    "vvvvvvvvvvvppppppppppppp     psssssvvvsvvvvvvvvvvvvvvvs                                ",
-    "vvvvvvvvvvv                  pssssssvvsvvvvvvvvvvvvvvvs                                ",
-    "sssssssssss                  ssssssssssssssssssssssssss                                "
+    "ssssssssssssssssvvvvvvvvsvvvvssvvvvvvvsssssssssssssssss                                ",
+    "vvvvvvvvvvvvvvvsvvvvvssi     isvvvvvvvsvvvvvvvvvvvvvvvs                                ",
+    "vvvvvvvvvvvvvvvsvvvvsssi     issvvvvvvsvvvvvvvvvvvvvvvs                                ",
+    "vvvvvvvLvvvvvvvsvvvssssi     isssvvvvvsvvvvvvvvvvvvvvvs                                ",
+    "vvvvvvvvvvviiiiiiiiiiiii     isssssvvvsvvvvvvvvvvvvvvvs                                ",
+    "vvvvvvvvvvv                  issssssvvstttttttttttvvvvs                                ",
+    "sssssssssss                  isssssssssssssssssssssssss                                "
   ];
   var createLevel = /* @__PURE__ */ __name((box_size2, level2) => {
     let no_of_box = Math.floor(width() / box_size2.width);
@@ -3748,6 +3748,20 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         x: 0,
         y: 1
       }
+    ],
+    "i": () => [
+      sprite("wallbrick"),
+      solid(),
+      area(),
+      "wall",
+      scale(0.25)
+    ],
+    "t": () => [
+      sprite("treasure"),
+      solid(),
+      area(),
+      "treasure",
+      scale(0.4)
     ]
   };
 
