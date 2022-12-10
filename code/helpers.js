@@ -262,6 +262,17 @@ export const createGameScene = (scene_id,
                                 if (getDistance(brick.pos, bomb.pos) <= 60) {
                                     destroy(brick);
                                 }//if
+                            });
+
+                            every("roomwall", (roomwall)=>{
+                                if (getDistance(roomwall.pos, bomb.pos) < 100){
+                                    destroy(roomwall);
+                                }
+                            });
+                            every("dgrass", (dgrass)=>{
+                                if (getDistance(dgrass.pos, bomb.pos) < 100){
+                                    destroy(dgrass);
+                                }
                             })
                             every("dist_brick", (brick) => {
                                 if (getDistance(brick.pos, bomb.pos) <= 60) {

@@ -3099,6 +3099,16 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
                     destroy(brick);
                   }
                 });
+                every("roomwall", (roomwall) => {
+                  if (getDistance(roomwall.pos, bomb2.pos) < 100) {
+                    destroy(roomwall);
+                  }
+                });
+                every("dgrass", (dgrass) => {
+                  if (getDistance(dgrass.pos, bomb2.pos) < 100) {
+                    destroy(dgrass);
+                  }
+                });
                 every("dist_brick", (brick) => {
                   if (getDistance(brick.pos, bomb2.pos) <= 60) {
                     destroy(brick);
