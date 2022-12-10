@@ -147,7 +147,7 @@ export const createGameScene = (scene_id,
 
             // movement of the user
             onKeyDown("up", () => {
-                specifyDirection(player, 0, -8)
+                specifyDirection(player, 0, -8, true)
                 player.pos = vec2(player.pos.x, player.pos.y - 8);
             });
 
@@ -158,41 +158,41 @@ export const createGameScene = (scene_id,
             // });
 
             onKeyDown("left", () => {
-                specifyDirection(player, -4, 0);
+                specifyDirection(player, -4, 0, true);
                 player.pos = vec2(player.pos.x - 4, player.pos.y);
             });
 
-            onKeyRelease("left", () => {
-                if (player.angle === 0) {
-                    player.angle -= 10;
-                }//if
-            });
+            // onKeyRelease("left", () => {
+            //     if (player.angle === 0) {
+            //         player.angle -= 10;
+            //     }//if
+            // });
 
-            onKeyRelease("right", () => {
-                if (player.angle === 10) {
-                    player.angle -= 20;
-                }//if
-            });
+            // onKeyRelease("right", () => {
+            //     if (player.angle === 10) {
+            //         player.angle -= 20;
+            //     }//if
+            // });
 
             onKeyDown("right", () => {
                 if (player.pos.x < width() - 45) {
-                    specifyDirection(player, 4, 0);
+                    specifyDirection(player, 4, 0, true);
                     player.pos = vec2(player.pos.x + 4, player.pos.y);
                 }//if
             });
 
             onKeyDown("down", () => {
                 if (player.pos.y < height() - 45) {
-                    specifyDirection(player, 0, 4);
+                    specifyDirection(player, 0, 4, true);
                     player.pos = vec2(player.pos.x, player.pos.y + 4);
                 }//if
             });
 
-            onKeyRelease("down", () => {
-                if (player.angle === -40) {
-                    player.angle += 30;
-                }//if
-            });
+            // onKeyRelease("down", () => {
+            //     if (player.angle === -40) {
+            //         player.angle += 30;
+            //     }//if
+            // });
 
             // adding bomb 
             onKeyPress(["w", "a", "s", "d"], () => {
@@ -308,16 +308,11 @@ export const createGameScene = (scene_id,
             });//onCollide
 
 
+            let toxic_walls_count = get("roomwall").length;
+
             player.onCollide("dgrass", ()=>{
                 player.hurt(5);
             });//onCollide
-
-
-            player.onCollide("dgrass", (dgrass) => {
-                player.hurt(0.1);
-            })
-
-
 
             let should_follow_user = false;
             let should_blade_move = true;
@@ -326,6 +321,17 @@ export const createGameScene = (scene_id,
                 //camera experimentaion
                 // debug.log(player.pos);
                 camPos(width() / 2, height() / 2);
+
+                if (toxic_walls_count > 0){
+                
+                let toxic_brick_around_player = 0;
+                let player_in_toxic_room = false;
+                every("roomwall", (toxic_wall)=>{
+                    if (getDistance(toxic_wall.pos, player.pos) < 10){
+                        player.hurt(0.5);
+                    }
+                });
+            }
 
                 // detecting if user life is ended
                 if (player.hp() <= 0) {
@@ -428,7 +434,7 @@ export const createGameScene = (scene_id,
             // collision with passage
             player.onCollide("passage", () => {
                 // msg, points, bonus, have_next_level, next_level, poster
-                let result = ["Hurrah...doing great so far", points_collected, 0, true, "plant"];
+                let result = ["Hurrah...doing great so far", points_collected, 0, true, ""];
                 let next_level_data = [bomb_count, player.hp(), points_collected];
                 goNext(
                     next_screen_tag,
@@ -440,6 +446,18 @@ export const createGameScene = (scene_id,
                 );
             },
             );//onCollide
+
+            player.onCollide("life_stone", ()=>{
+                goNext(
+                    next_screen_tag,
+                    next_level_data,
+                    has_tips,
+                    tips_id,
+                    tips_params_list,
+                    ["You did it!", points_collected, 0, true, "winner"]
+                    
+                )
+            })
 
             player.onCollide("nblade", ()=>{
                 player.hurt(1)
@@ -739,32 +757,34 @@ let goNext = (
 
 }//goNext
 
-let specifyDirection = (game_object, move_x, move_y,) => {
+let specifyDirection = (game_object, move_x, move_y, reverse=false) => {
     let object_angle = game_object.angle;
     if (move_x > 0 && move_y === 0) { // (+, 0)
-        game_object.flipX(false);
-        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - 600 * dt();
+        game_object.flipX(reverse ? true : false);
+        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - reverse ? -600 * dt() : 600 * dt();
     } else if (move_x > 0 && move_y > 0) {// (+, +)
-        game_object.flipX(false);
-        game_object.angle += object_angle === 20 ? 0 : changeSign(object_angle) + 600 * dt();
+        game_object.flipX(reverse? true : false);
+        game_object.angle += object_angle === 20 ? 0 : changeSign(object_angle) + reverse ? -600 * dt() : 600 * dt();
     } else if (move_x === 0 && move_y > 0) {// (0, +)
-        game_object.flipX(false);
-        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) + 600 * dt();
+        game_object.flipX(reverse ? true : false);
+        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) + reverse ? 600 * dt() : 600 * dt();
     } else if (move_x > 0 && move_y < 0) {// (+, -)
-        game_object.flipX(false);
-        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - 600 * dt();
+        game_object.flipX(reverse ? true : false);
+        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - reverse ? 600 * dt() : 600 * dt();
     } else if (move_x === 0 && move_y < 0) {// (0, -)
-        game_object.flipX(false);
-        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - 2700 * dt();
+        game_object.flipX(reverse? true : false);
+        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - reverse ? 2700 * dt() : 2700 * dt();
     } else if (move_x < 0 && move_y < 0) {// (-, -)
-        game_object.flipX(true);
-        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) + 600 * dt();
+        game_object.flipX(reverse ? false : true);
+        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) + reverse ? 600 * dt() : 600 * dt();
     } else if (move_x < 0 && move_y === 0) {// (-, 0)
-        game_object.flipX(true);
+        game_object.flipX(reverse ? false : true);
         game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle);
     } else if (move_x < 0 && move_y > 0) {// (-, +)
-        game_object.flipX(true);
-        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - 600 * dt();
+        game_object.flipX(reverse ? false : true);
+        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - reverse ? 600 * dt() : 600 * dt();
+    }else if (move_x === 0 && move_y === 0){
+        game_object.flipX(reverse ? true : false);
     }
 
 }//specifyDirection

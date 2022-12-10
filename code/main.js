@@ -35,6 +35,7 @@ loadSprite("stone", "../sprites/glowing_stone.png");
 loadSprite("startBg", "../sprites/startBg.png");
 loadSprite("lost", "../sprites/you_lost.png");
 loadSprite("levelup", "../sprites/levelup.png");
+loadSprite("winner", "../sprites/winner.png");
 loadSprite("scoreBg", "../sprites/scoreBg.png");
 loadSprite("gameBg", "../sprites/gameBg.png");
 loadSprite("chat_1", "../sprites/chat_1.png");

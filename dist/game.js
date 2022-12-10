@@ -3132,16 +3132,23 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
             destroy(bomb2);
           }
         });
+        let toxic_walls_count = get("roomwall").length;
         player.onCollide("dgrass", () => {
           player.hurt(5);
-        });
-        player.onCollide("dgrass", (dgrass) => {
-          player.hurt(0.1);
         });
         let should_follow_user = false;
         let should_blade_move = true;
         onUpdate(() => {
           camPos(width() / 2, height() / 2);
+          if (toxic_walls_count > 0) {
+            let toxic_brick_around_player = 0;
+            let player_in_toxic_room = false;
+            every("roomwall", (toxic_wall) => {
+              if (getDistance(toxic_wall.pos, player.pos) < 10) {
+                player.hurt(0.5);
+              }
+            });
+          }
           if (player.hp() <= 0) {
             let result = ["!Ouch", points_collected, 0, true, "lost"];
             goNext(
@@ -3218,11 +3225,11 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         player.onCollide(
           "passage",
           () => {
-            let result = ["Hurrah...doing great so far", points_collected, 0, true, "plant"];
-            let next_level_data = [bomb_count, player.hp(), points_collected];
+            let result = ["Hurrah...doing great so far", points_collected, 0, true, ""];
+            let next_level_data2 = [bomb_count, player.hp(), points_collected];
             goNext(
               next_screen_tag2,
-              next_level_data,
+              next_level_data2,
               has_tips2,
               tips_id2,
               tips_params_list2,
@@ -3230,6 +3237,16 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
             );
           }
         );
+        player.onCollide("life_stone", () => {
+          goNext(
+            next_screen_tag2,
+            next_level_data,
+            has_tips2,
+            tips_id2,
+            tips_params_list2,
+            ["You did it!", points_collected, 0, true, "winner"]
+          );
+        });
         player.onCollide("nblade", () => {
           player.hurt(1);
         });
@@ -3416,32 +3433,34 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       );
     }
   }, "goNext");
-  var specifyDirection = /* @__PURE__ */ __name((game_object, move_x, move_y) => {
+  var specifyDirection = /* @__PURE__ */ __name((game_object, move_x, move_y, reverse = false) => {
     let object_angle = game_object.angle;
     if (move_x > 0 && move_y === 0) {
-      game_object.flipX(false);
-      game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - 600 * dt();
+      game_object.flipX(reverse ? true : false);
+      game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - reverse ? -600 * dt() : 600 * dt();
     } else if (move_x > 0 && move_y > 0) {
-      game_object.flipX(false);
-      game_object.angle += object_angle === 20 ? 0 : changeSign(object_angle) + 600 * dt();
+      game_object.flipX(reverse ? true : false);
+      game_object.angle += object_angle === 20 ? 0 : changeSign(object_angle) + reverse ? -600 * dt() : 600 * dt();
     } else if (move_x === 0 && move_y > 0) {
-      game_object.flipX(false);
-      game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) + 600 * dt();
+      game_object.flipX(reverse ? true : false);
+      game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) + reverse ? 600 * dt() : 600 * dt();
     } else if (move_x > 0 && move_y < 0) {
-      game_object.flipX(false);
-      game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - 600 * dt();
+      game_object.flipX(reverse ? true : false);
+      game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - reverse ? 600 * dt() : 600 * dt();
     } else if (move_x === 0 && move_y < 0) {
-      game_object.flipX(false);
-      game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - 2700 * dt();
+      game_object.flipX(reverse ? true : false);
+      game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - reverse ? 2700 * dt() : 2700 * dt();
     } else if (move_x < 0 && move_y < 0) {
-      game_object.flipX(true);
-      game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) + 600 * dt();
+      game_object.flipX(reverse ? false : true);
+      game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) + reverse ? 600 * dt() : 600 * dt();
     } else if (move_x < 0 && move_y === 0) {
-      game_object.flipX(true);
+      game_object.flipX(reverse ? false : true);
       game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle);
     } else if (move_x < 0 && move_y > 0) {
-      game_object.flipX(true);
-      game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - 600 * dt();
+      game_object.flipX(reverse ? false : true);
+      game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - reverse ? 600 * dt() : 600 * dt();
+    } else if (move_x === 0 && move_y === 0) {
+      game_object.flipX(reverse ? true : false);
     }
   }, "specifyDirection");
 
@@ -3776,6 +3795,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   loadSprite("startBg", "../sprites/startBg.png");
   loadSprite("lost", "../sprites/you_lost.png");
   loadSprite("levelup", "../sprites/levelup.png");
+  loadSprite("winner", "../sprites/winner.png");
   loadSprite("scoreBg", "../sprites/scoreBg.png");
   loadSprite("gameBg", "../sprites/gameBg.png");
   loadSprite("chat_1", "../sprites/chat_1.png");
