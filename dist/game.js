@@ -3012,38 +3012,23 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           play("coinCollection");
         });
         onKeyDown("up", () => {
-          specifyDirection(player, 0, -8);
+          specifyDirection(player, 0, -8, true);
           player.pos = vec2(player.pos.x, player.pos.y - 8);
         });
         onKeyDown("left", () => {
-          specifyDirection(player, -4, 0);
+          specifyDirection(player, -4, 0, true);
           player.pos = vec2(player.pos.x - 4, player.pos.y);
-        });
-        onKeyRelease("left", () => {
-          if (player.angle === 0) {
-            player.angle -= 10;
-          }
-        });
-        onKeyRelease("right", () => {
-          if (player.angle === 10) {
-            player.angle -= 20;
-          }
         });
         onKeyDown("right", () => {
           if (player.pos.x < width() - 45) {
-            specifyDirection(player, 4, 0);
+            specifyDirection(player, 4, 0, true);
             player.pos = vec2(player.pos.x + 4, player.pos.y);
           }
         });
         onKeyDown("down", () => {
           if (player.pos.y < height() - 45) {
-            specifyDirection(player, 0, 4);
+            specifyDirection(player, 0, 4, true);
             player.pos = vec2(player.pos.x, player.pos.y + 4);
-          }
-        });
-        onKeyRelease("down", () => {
-          if (player.angle === -40) {
-            player.angle += 30;
           }
         });
         onKeyPress(["w", "a", "s", "d"], () => {
