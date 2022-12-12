@@ -61,3 +61,21 @@ Red bricks 👇👇
 White grass area 👇👇 
 
 <img src="./readme_assets/level_2dgrass.png"/>
+
+
+`Level 3 play`
+
+In this level you have four rooms of which 3 contains treasures and all of those room are poisionous, you have a have a **tunnel** which is safe and a short cut to the stone but there are lot of **white** grass before tunnel, and you won't got much bombs outside poisionous rooms, here where you will need to use the surplus bombs, treasures, which were provided in the previous level.
+
+* Collecting coins is similar to the previous levels
+* Accumulating bombs is similar to previous levels.
+* If you get inside of any without destrouing it, your health points will start degrading.
+* If you touch the stone, that will mark as completion of level.
+
+Stone 👇👇 
+
+<img src="./sprites/glowing_stone_2.png"/>
+
+Tunnel 👇👇 
+
+<img src="./readme_assets/tunnel.png"/>

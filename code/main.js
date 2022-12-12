@@ -175,4 +175,4 @@ planeScene("story_6", "chat_6", true, "skip >", true, 2, () => go("level_one", 0
 winLooseScene("result");
 
 // go("start");
-go("start");
+go("level_three", 0, 100, 0);
