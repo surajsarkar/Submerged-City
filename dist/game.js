@@ -3907,6 +3907,6 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   planeScene("story_5", "chat_5", true, "skip >", true, 2, () => go("story_6"));
   planeScene("story_6", "chat_6", true, "skip >", true, 2, () => go("level_one", 0, 100, 0));
   winLooseScene("result");
-  go("start");
+  go("level_two", 5, 100, 0);
 })();
 //# sourceMappingURL=game.js.map
