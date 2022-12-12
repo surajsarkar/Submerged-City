@@ -45,11 +45,19 @@ In this level you might find it surplus bombs and treasures comparing to what yo
 * If you get closer to gate(passage to next level), rotating blades will start following you,
 * Each **collision with blade** will degrade your health by **1** points
 
+
 Treasure img 👇👇 
+
 <img src="./sprites/treasere.png"/>
+
 Blades👇👇 
+
 <img src="./sprites/blade.png"/>
+
 Red bricks 👇👇
+
 <img src="./sprites/mbrick.png"/>
+
 White grass area 👇👇 
+
 <img src="./readme_assets/level_2dgrass.png"/>
