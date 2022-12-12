@@ -17,7 +17,11 @@ export const createGameScene = (scene_id,
     **/
     scene(
         scene_id,
-        (bomb_count, harry_health, points_collected) => {
+        (
+            bomb_count, 
+            harry_health, 
+            points_collected
+        ) => {
 
 
 
@@ -392,8 +396,8 @@ export const createGameScene = (scene_id,
                 bomb_count_label.text = bomb_count;
 
                 if (!should_follow_user) {
-                    should_follow_user = bomb_count > 1 ? false : false;
-                    wait(5, () => should_follow_user = false);//wait
+                    should_follow_user = bomb_count > 1 ? true : false;
+                    wait(5, () => should_follow_user = true);//wait
                 }//if
 
                 let no_of_bricks_around_user = 0;

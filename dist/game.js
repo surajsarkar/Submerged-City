@@ -3180,8 +3180,8 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           p_hel_label.text = player.hp();
           bomb_count_label.text = bomb_count;
           if (!should_follow_user) {
-            should_follow_user = bomb_count > 1 ? false : false;
-            wait(5, () => should_follow_user = false);
+            should_follow_user = bomb_count > 1 ? true : false;
+            wait(5, () => should_follow_user = true);
           }
           let no_of_bricks_around_user = 0;
           every("iwall", (safeSpace) => {
@@ -3899,14 +3899,13 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   );
   createGameScene("level_two", LEVEL_2, level_two_cofing, "level_three", false, "", []);
   createGameScene("level_three", LEVEL_3, level_three_cofing, "start", false, "", []);
-  var firstLevel = /* @__PURE__ */ __name(() => go("level_one", 100, 0, 100, 0), "firstLevel");
   planeScene("start", "startBg", true, "start game", false, 0, () => go("story_1"));
   planeScene("story_1", "chat_1", true, "skip >", true, 2, () => go("story_2"));
   planeScene("story_2", "chat_2", true, "skip >", true, 2, () => go("story_3"));
   planeScene("story_3", "chat_3", true, "skip >", true, 2, () => go("story_4"));
   planeScene("story_4", "chat_4", true, "skip >", true, 2, () => go("story_5"));
   planeScene("story_5", "chat_5", true, "skip >", true, 2, () => go("story_6"));
-  planeScene("story_6", "chat_6", true, "skip >", true, 2, firstLevel);
+  planeScene("story_6", "chat_6", true, "skip >", true, 2, () => go("level_one", 0, 100, 0));
   winLooseScene("result");
   go("start");
 })();
