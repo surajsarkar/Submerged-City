@@ -702,7 +702,7 @@ export const winLooseScene = (scene_id) => {
 
             if (have_next_level) {
                 let next_level_bth = addButton(
-                    "Next Level ->",
+                    "Next ->",
                     35,
                     pos(width()/2, poster_frame.pos.y + 240),
                     action);

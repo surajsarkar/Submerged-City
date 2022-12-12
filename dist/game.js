@@ -3381,7 +3381,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         ]);
         if (have_next_level) {
           let next_level_bth = addButton(
-            "Next Level ->",
+            "Next ->",
             35,
             pos(width() / 2, poster_frame.pos.y + 240),
             action
