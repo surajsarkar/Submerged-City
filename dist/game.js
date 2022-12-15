@@ -3014,16 +3014,15 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           play("coinCollection");
         });
         onKeyDown("up", () => {
-          specifyDirection(player, 0, -8, true);
           player.pos = vec2(player.pos.x, player.pos.y - 8);
         });
         onKeyDown("left", () => {
-          specifyDirection(player, -4, 0, true);
+          player.flipX(false);
           player.pos = vec2(player.pos.x - 4, player.pos.y);
         });
         onKeyDown("right", () => {
           if (player.pos.x < width() - 45) {
-            specifyDirection(player, 4, 0, true);
+            player.flipX(true);
             player.pos = vec2(player.pos.x + 4, player.pos.y);
           }
         });
