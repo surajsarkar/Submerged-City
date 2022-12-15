@@ -764,34 +764,34 @@ let goNext = (
 
 }//goNext
 
-let specifyDirection = (game_object, move_x, move_y, reverse=false) => {
+let specifyDirection = (game_object, move_x, move_y,) => {
     let object_angle = game_object.angle;
     if (move_x > 0 && move_y === 0) { // (+, 0)
-        game_object.flipX(reverse ? true : false);
-        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - reverse ? -600 * dt() : 600 * dt();
+        game_object.flipX(false);
+        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - 600 * dt();
     } else if (move_x > 0 && move_y > 0) {// (+, +)
-        game_object.flipX(reverse? true : false);
-        game_object.angle += object_angle === 20 ? 0 : changeSign(object_angle) + reverse ? -600 * dt() : 600 * dt();
+        game_object.flipX(false);
+        game_object.angle += object_angle === 20 ? 0 : changeSign(object_angle) + 600 * dt();
     } else if (move_x === 0 && move_y > 0) {// (0, +)
-        game_object.flipX(reverse ? true : false);
-        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) + reverse ? 600 * dt() : 600 * dt();
+        game_object.flipX(false);
+        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) + 600 * dt();
     } else if (move_x > 0 && move_y < 0) {// (+, -)
-        game_object.flipX(reverse ? true : false);
-        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - reverse ? 600 * dt() : 600 * dt();
+        game_object.flipX(false);
+        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - 600 * dt();
     } else if (move_x === 0 && move_y < 0) {// (0, -)
-        game_object.flipX(reverse? true : false);
-        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - reverse ? 2700 * dt() : 2700 * dt();
+        game_object.flipX(false);
+        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - 2700 * dt();
     } else if (move_x < 0 && move_y < 0) {// (-, -)
-        game_object.flipX(reverse ? false : true);
-        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) + reverse ? 600 * dt() : 600 * dt();
+        game_object.flipX(true);
+        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) + 600 * dt();
     } else if (move_x < 0 && move_y === 0) {// (-, 0)
-        game_object.flipX(reverse ? false : true);
+        game_object.flipX(true);
         game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle);
     } else if (move_x < 0 && move_y > 0) {// (-, +)
-        game_object.flipX(reverse ? false : true);
-        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - reverse ? 600 * dt() : 600 * dt();
+        game_object.flipX(true);
+        game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - 600 * dt();
     }else if (move_x === 0 && move_y === 0){
-        game_object.flipX(reverse ? true : false);
+        game_object.flipX(false);
     }
 
 }//specifyDirection

@@ -3423,34 +3423,34 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       );
     }
   }, "goNext");
-  var specifyDirection = /* @__PURE__ */ __name((game_object, move_x, move_y, reverse = false) => {
+  var specifyDirection = /* @__PURE__ */ __name((game_object, move_x, move_y) => {
     let object_angle = game_object.angle;
     if (move_x > 0 && move_y === 0) {
-      game_object.flipX(reverse ? true : false);
-      game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - reverse ? -600 * dt() : 600 * dt();
+      game_object.flipX(false);
+      game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - 600 * dt();
     } else if (move_x > 0 && move_y > 0) {
-      game_object.flipX(reverse ? true : false);
-      game_object.angle += object_angle === 20 ? 0 : changeSign(object_angle) + reverse ? -600 * dt() : 600 * dt();
+      game_object.flipX(false);
+      game_object.angle += object_angle === 20 ? 0 : changeSign(object_angle) + 600 * dt();
     } else if (move_x === 0 && move_y > 0) {
-      game_object.flipX(reverse ? true : false);
-      game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) + reverse ? 600 * dt() : 600 * dt();
+      game_object.flipX(false);
+      game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) + 600 * dt();
     } else if (move_x > 0 && move_y < 0) {
-      game_object.flipX(reverse ? true : false);
-      game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - reverse ? 600 * dt() : 600 * dt();
+      game_object.flipX(false);
+      game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - 600 * dt();
     } else if (move_x === 0 && move_y < 0) {
-      game_object.flipX(reverse ? true : false);
-      game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - reverse ? 2700 * dt() : 2700 * dt();
+      game_object.flipX(false);
+      game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - 2700 * dt();
     } else if (move_x < 0 && move_y < 0) {
-      game_object.flipX(reverse ? false : true);
-      game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) + reverse ? 600 * dt() : 600 * dt();
+      game_object.flipX(true);
+      game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) + 600 * dt();
     } else if (move_x < 0 && move_y === 0) {
-      game_object.flipX(reverse ? false : true);
+      game_object.flipX(true);
       game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle);
     } else if (move_x < 0 && move_y > 0) {
-      game_object.flipX(reverse ? false : true);
-      game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - reverse ? 600 * dt() : 600 * dt();
+      game_object.flipX(true);
+      game_object.angle += object_angle === -20 ? 0 : changeSign(object_angle) - 600 * dt();
     } else if (move_x === 0 && move_y === 0) {
-      game_object.flipX(reverse ? true : false);
+      game_object.flipX(false);
     }
   }, "specifyDirection");
 
@@ -3907,6 +3907,6 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   planeScene("story_5", "chat_5", true, "skip >", true, 2, () => go("story_6"));
   planeScene("story_6", "chat_6", true, "skip >", true, 2, () => go("level_one", 0, 100, 0));
   winLooseScene("result");
-  go("level_three", 0, 100, 0);
+  go("level_one", 100, 1e4, 0);
 })();
 //# sourceMappingURL=game.js.map
