@@ -44,6 +44,13 @@ loadSprite("chat_3", "../sprites/chat_3.png");
 loadSprite("chat_4", "../sprites/chat_4.png");
 loadSprite("chat_5", "../sprites/chat_5.png");
 loadSprite("chat_6", "../sprites/chat_6.png");
+loadSprite("chat_7", "../sprites/chat_7.png");
+loadSprite("chat_8", "../sprites/chat_8.png");
+loadSprite("chat_9", "../sprites/chat_9.png");
+loadSprite("chat_10", "../sprites/chat_10.png");
+loadSprite("chat_11", "../sprites/chat_11.png");
+loadSprite("chat_12", "../sprites/chat_12.png");
+loadSprite("tips", "../sprites/tips.png");
 
 loadSound("underocean", "../sprites/underocean.mp3");
 loadSound("blastsound", "../sprites/blastaudio.m4a");
@@ -169,10 +176,17 @@ planeScene("story_2", "chat_2", true, "skip >", true, 2, () => go("story_3"));
 planeScene("story_3", "chat_3", true, "skip >", true, 2, () => go("story_4"));
 planeScene("story_4", "chat_4", true, "skip >", true, 2, () => go("story_5"));
 planeScene("story_5", "chat_5", true, "skip >", true, 2, () => go("story_6"));
-planeScene("story_6", "chat_6", true, "skip >", true, 2, () => go("level_one", 0, 100, 0));
+planeScene("story_6", "chat_6", true, "skip >", true, 2, () => go("story_7"));
+planeScene("story_7", "chat_7", true, "skip >", true, 2, () => go("story_8"));
+planeScene("story_8", "chat_8", true, "skip >", true, 2, () => go("story_9"));
+planeScene("story_9", "chat_9", true, "skip >", true, 2, () => go("story_10"));
+planeScene("story_10", "chat_10", true, "skip >", true, 2, () => go("story_11"));
+planeScene("story_11", "chat_11", true, "skip >", true, 2, () => go("story_12"));
+planeScene("story_12", "chat_12", true, "skip >", true, 2, () => go("tips"));
+planeScene("tips", "tips", true, "start >", false, 0, () => go("level_one", 0, 100, 0));
 
 // creating result screen 
 winLooseScene("result");
 
 // go("start");
-go("level_one", 100, 10000, 0);
+go("start");
