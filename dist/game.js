@@ -3017,8 +3017,10 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           player.pos = vec2(player.pos.x, player.pos.y - 8);
         });
         onKeyDown("left", () => {
-          player.flipX(false);
-          player.pos = vec2(player.pos.x - 4, player.pos.y);
+          if (player.pos.x > 45) {
+            player.flipX(false);
+            player.pos = vec2(player.pos.x - 4, player.pos.y);
+          }
         });
         onKeyDown("right", () => {
           if (player.pos.x < width() - 45) {
@@ -3028,7 +3030,6 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         });
         onKeyDown("down", () => {
           if (player.pos.y < height() - 45) {
-            specifyDirection(player, 0, 4, true);
             player.pos = vec2(player.pos.x, player.pos.y + 4);
           }
         });

@@ -161,8 +161,10 @@ export const createGameScene = (scene_id,
             // });
 
             onKeyDown("left", () => {
-                player.flipX(false);
-                player.pos = vec2(player.pos.x - 4, player.pos.y);
+                if (player.pos.x > 45){
+                    player.flipX(false);
+                    player.pos = vec2(player.pos.x - 4, player.pos.y);
+                }
             });
 
             // onKeyRelease("left", () => {
@@ -186,7 +188,6 @@ export const createGameScene = (scene_id,
 
             onKeyDown("down", () => {
                 if (player.pos.y < height() - 45) {
-                    specifyDirection(player, 0, 4, true);
                     player.pos = vec2(player.pos.x, player.pos.y + 4);
                 }//if
             });
