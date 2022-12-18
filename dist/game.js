@@ -3115,10 +3115,8 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           }
         });
         player.onCollide("bomb", (bomb2) => {
-          if (bomb_count < 5) {
-            bomb_count++;
-            destroy(bomb2);
-          }
+          bomb_count++;
+          destroy(bomb2);
         });
         let toxic_walls_count = get("roomwall").length;
         player.onCollide("dgrass", () => {

@@ -306,10 +306,8 @@ export const createGameScene = (scene_id,
 
             // bomb collision 
             player.onCollide("bomb", (bomb) => {
-                if (bomb_count < 5) {
-                    bomb_count++;
-                    destroy(bomb);
-                }//if
+                bomb_count++;
+                destroy(bomb);
             });//onCollide
 
 
